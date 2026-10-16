@@ -1,0 +1,14 @@
+# Root Git Ignore
+.env
+.env.local
+.DS_Store
+Thumbs.db
+
+# Child project caches
+**/node_modules/
+**/dist/
+**/__pycache__/
+**/*.py[cod]
+**/venv/
+**/.venv/
+**/.pytest_cache/
