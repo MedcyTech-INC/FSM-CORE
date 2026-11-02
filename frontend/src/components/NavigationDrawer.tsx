@@ -42,11 +42,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   if (!isOpen) return null;
 
   const initials = user
-    ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
-    : 'AV';
+    ? `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase() || 'FC'
+    : 'FC';
 
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
   const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
+  const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
 
   const pipelineItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '', enabled: true },
@@ -55,10 +56,10 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   ].filter((item) => item.enabled);
 
   const targetItems = [
+    { id: 'revenue-leakage', label: 'Revenue Leakage', icon: ShieldAlert, badge: 'Alerts', enabled: true },
     { id: 'targets', label: 'Monthly Targets', icon: Target, badge: '', enabled: true },
     ...(isManager ? [{ id: 'team-targets', label: 'Team Targets', icon: BarChart3, badge: '', enabled: true }] : []),
-    ...(isManager ? [{ id: 'revenue-leakage', label: 'Revenue Leakage', icon: ShieldAlert, badge: 'Alerts', enabled: true }] : []),
-    ...(isSeniorManager ? [{ id: 'leakage-rules', label: 'Warning Rules', icon: Sliders, badge: '', enabled: true }] : []),
+    ...(isSeniorManager ? [{ id: 'leakage-rules', label: 'Revenue Leakage Rules', icon: Sliders, badge: '', enabled: true }] : []),
   ];
 
   const fieldItems = [
@@ -118,10 +119,10 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <div>
                 <h4 className="font-extrabold text-slate-900 text-xs leading-tight">
-                  {user ? `${user.first_name} ${user.last_name}` : 'Alex Vance'}
+                  {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Field User' : 'Field User'}
                 </h4>
                 <p className="text-[10px] font-bold text-[#6B52B6] uppercase tracking-tight mt-0.5">
-                  {user?.rank || 'General Director'}
+                  {user?.rank || user?.role || 'Field Executive'}
                 </p>
               </div>
             </div>
@@ -147,10 +148,11 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                         onSelectTab(item.id);
                         onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
                           ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                        }`}
+                      }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
@@ -171,7 +173,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           {/* Section: Targets & Quotas */}
           <div className="mt-5 pt-4 border-t border-slate-100">
             <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
-              Targets & Leakage
+              Revenue & Targets
             </span>
             <nav className="space-y-1">
               {targetItems.map((item) => {
@@ -184,10 +186,11 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       onSelectTab(item.id);
                       onClose();
                     }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
                         ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                      }`}
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
@@ -221,10 +224,11 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                         onSelectTab(item.id);
                         onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
                           ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                        }`}
+                      }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
@@ -254,10 +258,11 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                         onSelectTab(item.id);
                         onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
                           ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                        }`}
+                      }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
@@ -292,10 +297,11 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                         onSelectTab(item.id);
                         onClose();
                       }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${isActive
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
                           ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                        }`}
+                      }`}
                     >
                       <div className="flex items-center gap-3">
                         <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
