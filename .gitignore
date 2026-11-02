@@ -3,6 +3,7 @@
 .env.local
 .DS_Store
 Thumbs.db
+~$*
 
 # Child project caches
 **/node_modules/

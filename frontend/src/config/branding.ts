@@ -12,8 +12,8 @@ export interface BrandingConfig {
 }
 
 export const branding: BrandingConfig = {
-  companyName: import.meta.env.VITE_COMPANY_NAME || "FSM Core",
-  portalSubtitle: import.meta.env.VITE_PORTAL_SUBTITLE || "HRMS PORTAL",
-  logoInitials: import.meta.env.VITE_COMPANY_SHORT_CODE || "FC",
-  footerText: import.meta.env.VITE_FOOTER_TEXT || "FSM Multi-Vertical HRMS",
+  companyName: import.meta.env.VITE_COMPANY_NAME || "Medcy FSM",
+  portalSubtitle: import.meta.env.VITE_PORTAL_SUBTITLE || "Field Sales Management",
+  logoInitials: import.meta.env.VITE_COMPANY_SHORT_CODE || "M",
+  footerText: import.meta.env.VITE_FOOTER_TEXT || "Medcy Field Sales & Lead Management Platform",
 };

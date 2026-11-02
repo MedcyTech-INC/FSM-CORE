@@ -7,6 +7,8 @@ import { AttendancePage } from './pages/AttendancePage';
 import { VisitsPage } from './pages/VisitsPage';
 import { LeavesPage } from './pages/LeavesPage';
 import { TasksPage } from './pages/TasksPage';
+import { LeadsPage } from './lead_management';
+import { FollowupsPage } from './followups';
 
 export const App: React.FC = () => {
   const { isAuthenticated, loadSession } = useAuthStore();
@@ -27,6 +29,8 @@ export const App: React.FC = () => {
       {currentTab === 'attendance' && <AttendancePage />}
       {currentTab === 'leaves' && <LeavesPage />}
       {currentTab === 'tasks' && <TasksPage />}
+      {currentTab === 'leads' && <LeadsPage />}
+      {currentTab === 'followups' && <FollowupsPage />}
     </AppShell>
   );
 };

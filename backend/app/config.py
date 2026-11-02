@@ -23,6 +23,11 @@ class TableRegistry(BaseSettings):
     field_visits: str = Field(default="field_visits", alias="TABLE_FIELD_VISITS")
     tasks: str = Field(default="tasks", alias="TABLE_TASKS")
     audit_log: str = Field(default="audit_log", alias="TABLE_AUDIT_LOG")
+    lead_customers: str = Field(default="lead_customers", alias="TABLE_LEAD_CUSTOMERS")
+    leads: str = Field(default="leads", alias="TABLE_LEADS")
+    lead_history: str = Field(default="lead_history", alias="TABLE_LEAD_HISTORY")
+    followups: str = Field(default="followups", alias="TABLE_FOLLOWUPS")
+    followup_history: str = Field(default="followup_history", alias="TABLE_FOLLOWUP_HISTORY")
 
 
 class Settings(BaseSettings):

@@ -2,11 +2,14 @@ import React from 'react';
 import {
   X,
   Home,
-  Camera,
+  MapPin,
   CalendarDays,
   Moon,
   CheckSquare,
-  Heart,
+  TrendingUp,
+  BellRing,
+  LogOut,
+  ChevronRight,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { branding } from '../config/branding';
@@ -24,84 +27,91 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   currentTab,
   onSelectTab,
 }) => {
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
 
   if (!isOpen) return null;
 
   const initials = user
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
-    : 'TB';
+    : 'AV';
 
-  const menuItems = [
-    { id: 'dashboard', label: 'Home Dashboard', icon: Home },
-    { id: 'visits', label: 'Visit Log', icon: Camera },
-    { id: 'attendance', label: 'My Attendance', icon: CalendarDays },
+  const pipelineItems = [
+    { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '' },
+    { id: 'leads', label: 'Lead Management', icon: TrendingUp, badge: 'Pipeline' },
+    { id: 'followups', label: 'Follow-ups', icon: BellRing, badge: 'Actions' },
+  ];
+
+  const fieldItems = [
+    { id: 'visits', label: 'Doctor Visits', icon: MapPin },
+    { id: 'tasks', label: 'Work Assignments', icon: CheckSquare },
+  ];
+
+  const attendanceItems = [
+    { id: 'attendance', label: 'Attendance Log', icon: CalendarDays },
     { id: 'leaves', label: 'Leave Requests', icon: Moon },
-    { id: 'tasks', label: 'Work Assignment', icon: CheckSquare },
   ];
 
   return (
     <div className="fixed inset-0 z-50 flex">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-slate-950/40 backdrop-blur-md transition-opacity duration-300"
         onClick={onClose}
       />
 
       {/* Drawer Panel */}
-      <div className="relative w-80 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between z-10 animate-in slide-in-from-left duration-200">
+      <div className="relative w-80 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between z-10 animate-in slide-in-from-left duration-200 border-r border-slate-200">
         <div className="p-6 overflow-y-auto flex-1">
-          {/* Company Branding Header */}
-          <div className="flex items-center justify-between pb-6 border-b border-slate-100">
+          {/* Header */}
+          <div className="flex items-center justify-between pb-5 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-[#00897B] text-white flex items-center justify-center font-bold text-lg shadow-md shadow-teal-700/20">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] text-white flex items-center justify-center font-extrabold text-base shadow-md shadow-[#6B52B6]/25">
                 {branding.logoInitials}
               </div>
               <div>
-                <h3 className="font-extrabold text-slate-900 text-base leading-tight">
+                <h3 className="font-extrabold text-slate-900 text-sm tracking-tight leading-tight">
                   {branding.companyName}
                 </h3>
-                <span className="text-[11px] font-bold text-[#00897B] tracking-wider uppercase block">
+                <span className="text-[10px] font-bold text-[#6B52B6] tracking-wider uppercase block mt-0.5">
                   {branding.portalSubtitle}
                 </span>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors"
+              className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 stroke-[2.2]" />
             </button>
           </div>
 
-          {/* User Profile Card */}
-          <div className="mt-6 p-4 rounded-2xl bg-[#F0FDF9] border border-teal-100/80 flex items-center justify-between">
+          {/* User Profile */}
+          <div className="mt-5 p-3.5 rounded-2xl bg-gradient-to-br from-purple-50/50 via-white to-slate-50 border border-purple-200/60 shadow-sm flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#00897B] text-white flex items-center justify-center font-bold text-sm shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xs ring-1 ring-slate-200 shadow-sm">
                 {initials}
               </div>
               <div>
-                <h4 className="font-bold text-slate-900 text-sm leading-tight">
-                  {user ? `${user.first_name} ${user.last_name}` : 'Test BE'}
+                <h4 className="font-extrabold text-slate-900 text-xs leading-tight">
+                  {user ? `${user.first_name} ${user.last_name}` : 'Alex Vance'}
                 </h4>
-                <p className="text-[11px] font-medium text-slate-500 uppercase tracking-tight mt-0.5">
-                  {user?.rank || 'BUSINESS EXECUTIVE'}
+                <p className="text-[10px] font-bold text-[#6B52B6] uppercase tracking-tight mt-0.5">
+                  {user?.rank || 'General Director'}
                 </p>
               </div>
             </div>
-            <button className="text-[11px] font-extrabold text-[#00897B] tracking-wider hover:underline">
-              PROFILE
-            </button>
+            <span className="text-[9px] font-black uppercase px-2 py-0.5 bg-white text-[#6B52B6] rounded-md border border-purple-200 shadow-sm">
+              ONLINE
+            </span>
           </div>
 
-          {/* Section: Employee Dashboards */}
-          <div className="mt-8">
-            <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block mb-3 px-2">
-              Employee Dashboards
+          {/* Section: Sales Pipeline */}
+          <div className="mt-6">
+            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+              Sales Pipeline
             </span>
-
             <nav className="space-y-1">
-              {menuItems.map((item) => {
+              {pipelineItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = currentTab === item.id;
                 return (
@@ -111,14 +121,85 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       onSelectTab(item.id);
                       onClose();
                     }}
-                    className={`w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-[#E6F7F5] text-[#00897B] border border-teal-200/80 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                   >
-                    <Icon className={`w-5 h-5 ${isActive ? 'text-[#00897B]' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-[#6B52B6]">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Section: Field Operations */}
+          <div className="mt-5 pt-4 border-t border-slate-100">
+            <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+              Field Operations
+            </span>
+            <nav className="space-y-1">
+              {fieldItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = currentTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onSelectTab(item.id);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                      <span>{item.label}</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Section: Attendance & HR */}
+          <div className="mt-5 pt-4 border-t border-slate-100">
+            <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+              Attendance & Time
+            </span>
+            <nav className="space-y-1">
+              {attendanceItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = currentTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onSelectTab(item.id);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                      <span>{item.label}</span>
+                    </div>
                   </button>
                 );
               })}
@@ -126,10 +207,21 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-slate-100 flex items-center justify-center gap-2 text-xs font-semibold text-slate-400 bg-slate-50/60">
-          <Heart className="w-4 h-4 text-[#00897B]" />
-          <span>{branding.footerText}</span>
+        {/* Drawer Bottom: Sign Out */}
+        <div className="p-4 border-t border-slate-100">
+          <button
+            onClick={() => {
+              logout();
+              onClose();
+            }}
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-all cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <LogOut className="w-4 h-4 stroke-[2]" />
+              <span>Sign Out</span>
+            </div>
+            <ChevronRight className="w-3.5 h-3.5" />
+          </button>
         </div>
       </div>
     </div>

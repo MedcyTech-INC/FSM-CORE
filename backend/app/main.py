@@ -14,6 +14,8 @@ from app.routers import (
     leaves_router,
     tasks_router,
 )
+from app.lead_management import router as lead_management_router
+from app.followups import router as followups_router
 
 settings = get_settings()
 
@@ -67,6 +69,8 @@ def create_app() -> FastAPI:
     app.include_router(field_visits_router)
     app.include_router(leaves_router)
     app.include_router(tasks_router)
+    app.include_router(lead_management_router)
+    app.include_router(followups_router)
 
     # Global Exception Handlers
     @app.exception_handler(Exception)

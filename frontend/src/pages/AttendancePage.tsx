@@ -27,7 +27,7 @@ export const AttendancePage: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#00897B]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#6B52B6]" />
             <h2 className="text-2xl font-black text-slate-900 tracking-tight">{currentMonth}</h2>
           </div>
 
@@ -49,7 +49,7 @@ export const AttendancePage: React.FC = () => {
               <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                 Present Days
               </span>
-              <span className="text-3xl font-black text-[#00897B]">4</span>
+              <span className="text-3xl font-black text-[#6B52B6]">4</span>
             </div>
             <div className="w-12 h-12 rounded-2xl bg-[#ECFDF5] border border-emerald-200 text-emerald-600 flex items-center justify-center">
               <Check className="w-6 h-6 stroke-[3]" />
@@ -101,7 +101,7 @@ export const AttendancePage: React.FC = () => {
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#00897B]" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#6B52B6]" />
             <h3 className="text-xl font-bold text-slate-900 tracking-tight">
               My Attendance Sheet - {currentMonth}
             </h3>
@@ -110,7 +110,7 @@ export const AttendancePage: React.FC = () => {
           {/* Legend */}
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#00897B]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#6B52B6]" />
               <span>Present</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -155,7 +155,7 @@ export const AttendancePage: React.FC = () => {
                     <span className="text-xs font-bold text-slate-600">{cell.day}</span>
                     <div className="self-end">
                       {cell.status === 'present' && (
-                        <span className="w-2.5 h-2.5 rounded-full bg-[#00897B] block" />
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#6B52B6] block" />
                       )}
                       {cell.status === 'holiday' && (
                         <span className="w-2.5 h-2.5 rounded-full bg-slate-300 block" />
