@@ -6,6 +6,7 @@ from app.routers.field_sessions import router as field_sessions_router
 from app.routers.field_visits import router as field_visits_router
 from app.routers.leaves import router as leaves_router
 from app.routers.tasks import router as tasks_router
+from app.routers.holidays import router as holidays_router
 
 __all__ = [
     "auth_router",
@@ -16,4 +17,5 @@ __all__ = [
     "field_visits_router",
     "leaves_router",
     "tasks_router",
+    "holidays_router",
 ]

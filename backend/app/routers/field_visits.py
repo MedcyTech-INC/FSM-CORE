@@ -1,3 +1,4 @@
+import logging
 import uuid
 from datetime import date, datetime, timezone
 from typing import List, Optional
@@ -11,6 +12,7 @@ from app.models.employee import Employee
 from app.models.field_visit import FieldVisit, VisitStatus
 from app.schemas.field import FieldVisitCreate, FieldVisitStart, FieldVisitComplete, FieldVisitResponse
 
+logger = logging.getLogger("fsm_core.field_visits")
 router = APIRouter(prefix="/api/field-visits", tags=["Field Visits & DCR"])
 
 
@@ -106,6 +108,97 @@ async def complete_visit(
         merged = dict(visit.custom_fields or {})
         merged.update(data.custom_fields)
         visit.custom_fields = merged
+
+    # Publish VisitCompletedEvent to transactional outbox for Monthly Target tracking
+    if visit.target_type and visit.target_type.upper() in ["DOCTOR", "HOSPITAL", "CLINIC"]:
+        from app.shared_contracts.events import VisitCompletedEvent, publish_event
+        from app.features.monthly_target.outbox import OutboxSweeper
+
+        # Read actual geofence validity from the visit record / custom fields
+        custom = visit.custom_fields or {}
+        is_valid_geofence = False
+        if "is_valid_geofence" in custom:
+            is_valid_geofence = bool(custom["is_valid_geofence"])
+        elif "geofence_verified" in custom:
+            is_valid_geofence = bool(custom["geofence_verified"])
+        elif "is_geofence_valid" in custom:
+            is_valid_geofence = bool(custom["is_geofence_valid"])
+
+        event = VisitCompletedEvent(
+            visit_id=visit.id,
+            representative_id=visit.employee_id,
+            completed_at=now,
+            is_valid_geofence=is_valid_geofence,
+        )
+        event_id = await publish_event(db, event)
+
+        # Store event_id in custom_fields for lineage and downstream reversals
+        merged = dict(visit.custom_fields or {})
+        merged["target_event_id"] = str(event_id)
+        merged["is_valid_geofence"] = is_valid_geofence
+        visit.custom_fields = merged
+
+        await db.commit()
+        await db.refresh(visit)
+        try:
+            await OutboxSweeper.process_single_row(db, event_id)
+        except Exception as exc:
+            logger.error(
+                f"Failed immediate outbox processing for event {event_id} on visit {visit.id}: {str(exc)}",
+                exc_info=True,
+            )
+            # Background sweeper will retry if transient failure
+        return visit
+
+    await db.commit()
+    await db.refresh(visit)
+    return visit
+
+
+@router.patch("/{visit_id}/cancel", response_model=FieldVisitResponse)
+async def cancel_visit(
+    visit_id: uuid.UUID,
+    reason: Optional[str] = None,
+    current_employee: Employee = Depends(get_current_employee),
+    db: AsyncSession = Depends(get_db)
+):
+    """Cancel a field visit. If previously completed and credited, emits VisitCancelledEvent for target reversal."""
+    now = datetime.now(timezone.utc)
+    stmt = select(FieldVisit).where(FieldVisit.id == visit_id, FieldVisit.employee_id == current_employee.id)
+    visit = (await db.execute(stmt)).scalar_one_or_none()
+
+    if not visit:
+        raise HTTPException(status_code=404, detail="Field visit not found")
+
+    was_completed = (visit.status == VisitStatus.COMPLETED.value)
+    visit.status = VisitStatus.CANCELLED.value
+
+    # If previously completed and logged for targets, publish reversal event
+    if was_completed and visit.target_type and visit.target_type.upper() in ["DOCTOR", "HOSPITAL", "CLINIC"]:
+        from app.shared_contracts.events import VisitCancelledEvent, publish_event
+        from app.features.monthly_target.outbox import OutboxSweeper
+
+        custom = visit.custom_fields or {}
+        orig_event_id_str = custom.get("target_event_id")
+        orig_event_id = uuid.UUID(orig_event_id_str) if orig_event_id_str else visit.id
+
+        event = VisitCancelledEvent(
+            original_event_id=orig_event_id,
+            visit_id=visit.id,
+            reason=reason or "Visit cancelled after completion",
+        )
+        event_id = await publish_event(db, event)
+        await db.commit()
+        await db.refresh(visit)
+        try:
+            await OutboxSweeper.process_single_row(db, event_id)
+        except Exception as exc:
+            logger.error(
+                f"Failed immediate outbox processing for reversal event {event_id} on visit {visit.id}: {str(exc)}",
+                exc_info=True,
+            )
+            # Background sweeper will retry if transient failure
+        return visit
 
     await db.commit()
     await db.refresh(visit)

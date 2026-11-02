@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   X,
   Home,
@@ -7,6 +6,10 @@ import {
   Moon,
   CheckSquare,
   Heart,
+  Target,
+  BarChart3,
+  ShieldAlert,
+  Sliders,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { branding } from '../config/branding';
@@ -32,8 +35,31 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
     : 'TB';
 
+  const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
+  const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
+
   const menuItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home },
+    { id: 'targets', label: 'Monthly Targets', icon: Target },
+    ...(isManager ? [{ id: 'team-targets', label: 'Team Targets', icon: BarChart3 }] : []),
+    ...(isManager
+      ? [
+          {
+            id: 'revenue-leakage',
+            label: 'Operational Warnings',
+            icon: ShieldAlert,
+          },
+        ]
+      : []),
+    ...(isSeniorManager
+      ? [
+          {
+            id: 'leakage-rules',
+            label: 'Warning Rules',
+            icon: Sliders,
+          },
+        ]
+      : []),
     { id: 'visits', label: 'Visit Log', icon: Camera },
     { id: 'attendance', label: 'My Attendance', icon: CalendarDays },
     { id: 'leaves', label: 'Leave Requests', icon: Moon },

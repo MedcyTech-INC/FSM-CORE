@@ -13,7 +13,10 @@ from app.routers import (
     field_visits_router,
     leaves_router,
     tasks_router,
+    holidays_router,
 )
+from app.features.monthly_target.router import router as monthly_targets_router
+from app.features.revenue_leakage.router import router as revenue_leakage_router
 
 settings = get_settings()
 
@@ -24,8 +27,8 @@ def create_app() -> FastAPI:
         title=settings.app_name,
         description="Master Core FSM Engine - Universal Multi-Vertical Platform",
         version="1.0.0",
-        docs_url="/docs" if settings.debug else None,
-        redoc_url="/redoc" if settings.debug else None,
+        docs_url="/docs" if (settings.debug or settings.app_env != "production") else None,
+        redoc_url="/redoc" if (settings.debug or settings.app_env != "production") else None,
     )
 
     # CORS Middleware
@@ -67,15 +70,24 @@ def create_app() -> FastAPI:
     app.include_router(field_visits_router)
     app.include_router(leaves_router)
     app.include_router(tasks_router)
+    app.include_router(holidays_router)
+    app.include_router(monthly_targets_router)
+    app.include_router(revenue_leakage_router)
 
-    # Global Exception Handlers
+    from app.core.errors import register_error_handlers
+    register_error_handlers(app)
+
+    # Fallback uncaught exception handler
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={
-                "error": "Internal Server Error",
-                "detail": str(exc) if settings.debug else "An unexpected error occurred."
+                "error": {
+                    "code": "internal_error",
+                    "message": "Internal Server Error",
+                    "details": str(exc) if settings.debug else "An unexpected error occurred.",
+                }
             }
         )
 

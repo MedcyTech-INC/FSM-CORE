@@ -69,6 +69,15 @@ class Settings(BaseSettings):
     max_accuracy_threshold_meters: float = 100.0
     max_allowed_speed_kmh: float = 140.0
 
+    # Business Timezone, Currency & Monthly Target Policy (Locked Decisions D1, D4, D8, D11, D12)
+    business_tz: str = Field(default="Asia/Kolkata", alias="BUSINESS_TZ")
+    currency: str = Field(default="INR", alias="CURRENCY")
+    visit_counting_mode: str = Field(default="submission", alias="VISIT_COUNTING_MODE")  # "submission" or "approval"
+    late_event_grace_days: int = Field(default=3, alias="LATE_EVENT_GRACE_DAYS")
+    enable_customer_product_targets: bool = Field(default=False, alias="ENABLE_CUSTOMER_PRODUCT_TARGETS")
+    archive_after_months: int = Field(default=24, alias="ARCHIVE_AFTER_MONTHS")
+    fsm_schema: str = Field(default="fsm_app", alias="FSM_SCHEMA")
+
     # Dynamic Table Registry Instance
     tables: TableRegistry = Field(default_factory=TableRegistry)
 
