@@ -8,6 +8,8 @@ import {
   LeaveBalance,
   LeaveRequest,
   TaskItem,
+  ExpenseClaim,
+  ExpenseUploadReceiptResult,
 } from '../types/api';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
@@ -89,18 +91,92 @@ let mockTasks: TaskItem[] = [
   },
 ];
 
+let mockExpenses: ExpenseClaim[] = [
+  {
+    id: 'exp-1',
+    employee_id: '11111111-1111-1111-1111-111111111111',
+    category: 'fuel',
+    amount: 850.0,
+    claim_date: new Date().toISOString().split('T')[0],
+    description: 'Field visit round trip to South Mumbai clinics',
+    is_split_bill: false,
+    validation_status: 'passed',
+    validation_flags: [],
+    status: 'submitted',
+    employee_name: 'Alex Vance',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'exp-2',
+    employee_id: '22222222-2222-2222-2222-222222222222',
+    category: 'food_allowance',
+    amount: 450.0,
+    claim_date: new Date().toISOString().split('T')[0],
+    description: 'Lunch meeting with Dr. Jane Smith (Cardiology)',
+    is_split_bill: true,
+    split_with_employee_id: '11111111-1111-1111-1111-111111111111',
+    receipt_invoice_number: 'INV-88902',
+    total_receipt_amount: 900.0,
+    validation_status: 'passed',
+    validation_flags: [
+      { code: 'SHARED_BILL_LEGITIMATE', severity: 'info', message: 'split bill verified with colleague' }
+    ],
+    status: 'manager_approved',
+    employee_name: 'Rahul Sharma',
+    split_with_employee_name: 'Alex Vance',
+    manager_review_note: 'Approved for client meeting',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'exp-3',
+    employee_id: '33333333-3333-3333-3333-333333333333',
+    category: 'accommodation',
+    amount: 6800.0,
+    claim_date: new Date().toISOString().split('T')[0],
+    description: '3-day zonal conference hotel stay (Exceeds ₹5,000 threshold)',
+    is_split_bill: false,
+    validation_status: 'passed',
+    validation_flags: [],
+    status: 'pending_zsm_approval',
+    employee_name: 'Amit Patel',
+    manager_review_note: 'Verified attendance at conference. Forwarded to ZSM for high-value clearance.',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'exp-4',
+    employee_id: '11111111-1111-1111-1111-111111111111',
+    category: 'travel_ticket',
+    amount: 1250.0,
+    claim_date: new Date().toISOString().split('T')[0],
+    description: 'Intercity train ticket to Pune distribution center',
+    is_split_bill: false,
+    validation_status: 'flagged',
+    validation_flags: [
+      { code: 'BLURRED_RECEIPT', severity: 'warning', message: 'Invoice number not legible in camera capture' }
+    ],
+    status: 'sent_back',
+    employee_name: 'Alex Vance',
+    review_note: 'Receipt photo is slightly blurred. Please re-upload clear GST invoice with legible date.',
+    manager_review_note: 'Receipt photo is slightly blurred. Please re-upload clear GST invoice with legible date.',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  }
+];
+
 class ApiClient {
   private getAuthHeader(): HeadersInit {
     const token = localStorage.getItem('access_token');
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
-  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-    const isDemo = localStorage.getItem('access_token')?.startsWith('demo-jwt');
-    if (isDemo) {
-      throw new Error('DEMO_MODE_ACTIVE');
-    }
+  private isDevDemo(): boolean {
+    return !!(import.meta.env.DEV && localStorage.getItem('access_token')?.startsWith('demo-jwt'));
+  }
 
+  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${BASE_URL}${endpoint}`;
     const headers = {
       'Content-Type': 'application/json',
@@ -141,7 +217,7 @@ class ApiClient {
 
   // Employee Endpoints
   async getMyProfile(): Promise<User> {
-    return this.request<User>('/api/employees/me').catch(() => {
+    if (this.isDevDemo()) {
       const saved = localStorage.getItem('demo_user');
       if (saved) return JSON.parse(saved);
       return {
@@ -154,23 +230,23 @@ class ApiClient {
         territory: 'HQ / Northern Zone',
         is_active: true,
       };
-    });
+    }
+    return this.request<User>('/api/employees/me');
   }
 
   async getDirectory(): Promise<User[]> {
-    return this.request<User[]>('/api/employees/directory').catch(() => []);
+    if (this.isDevDemo()) return [];
+    return this.request<User[]>('/api/employees/directory');
   }
 
   // Attendance Endpoints
   async getTodayAttendance(): Promise<AttendanceRecord | null> {
-    return this.request<AttendanceRecord | null>('/api/attendance/today').catch(() => mockAttendance);
+    if (this.isDevDemo()) return mockAttendance;
+    return this.request<AttendanceRecord | null>('/api/attendance/today');
   }
 
   async clockIn(lat: number, lon: number, accuracy?: number, proof_image?: string): Promise<AttendanceRecord> {
-    return this.request<AttendanceRecord>('/api/attendance/clock-in', {
-      method: 'POST',
-      body: JSON.stringify({ latitude: lat, longitude: lon, accuracy_meters: accuracy, proof_image }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       mockAttendance = {
         id: 'att-' + Date.now(),
         employee_id: '11111111-1111-1111-1111-111111111111',
@@ -185,14 +261,15 @@ class ApiClient {
         breaks: [],
       };
       return mockAttendance;
+    }
+    return this.request<AttendanceRecord>('/api/attendance/clock-in', {
+      method: 'POST',
+      body: JSON.stringify({ latitude: lat, longitude: lon, accuracy_meters: accuracy, proof_image }),
     });
   }
 
   async clockOut(lat: number, lon: number, summary?: string): Promise<AttendanceRecord> {
-    return this.request<AttendanceRecord>('/api/attendance/clock-out', {
-      method: 'POST',
-      body: JSON.stringify({ latitude: lat, longitude: lon, summary }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       if (mockAttendance) {
         mockAttendance.punch_out_time = new Date().toISOString();
         mockAttendance.punch_out_lat = lat;
@@ -201,14 +278,15 @@ class ApiClient {
         mockAttendance.working_minutes = 480;
       }
       return mockAttendance!;
+    }
+    return this.request<AttendanceRecord>('/api/attendance/clock-out', {
+      method: 'POST',
+      body: JSON.stringify({ latitude: lat, longitude: lon, summary }),
     });
   }
 
   async startBreak(reason?: string): Promise<BreakRecord> {
-    return this.request<BreakRecord>('/api/breaks/start', {
-      method: 'POST',
-      body: JSON.stringify({ reason }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const b: BreakRecord = {
         id: 'brk-' + Date.now(),
         attendance_id: mockAttendance?.id || 'att-1',
@@ -220,14 +298,15 @@ class ApiClient {
         mockAttendance.breaks.push(b);
       }
       return b;
+    }
+    return this.request<BreakRecord>('/api/breaks/start', {
+      method: 'POST',
+      body: JSON.stringify({ reason }),
     });
   }
 
   async endBreak(): Promise<BreakRecord> {
-    return this.request<BreakRecord>('/api/breaks/end', {
-      method: 'POST',
-      body: JSON.stringify({}),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const open = mockAttendance?.breaks.find((b) => !b.end_time);
       if (open) {
         open.end_time = new Date().toISOString();
@@ -235,15 +314,16 @@ class ApiClient {
         return open;
       }
       throw new Error('No open break');
+    }
+    return this.request<BreakRecord>('/api/breaks/end', {
+      method: 'POST',
+      body: JSON.stringify({}),
     });
   }
 
   // Field Sessions & Visits
   async startFieldSession(lat: number, lon: number): Promise<FieldSession> {
-    return this.request<FieldSession>('/api/field-sessions/start', {
-      method: 'POST',
-      body: JSON.stringify({ latitude: lat, longitude: lon }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       mockSession = {
         id: 'sess-' + Date.now(),
         employee_id: '11111111-1111-1111-1111-111111111111',
@@ -254,14 +334,15 @@ class ApiClient {
         status: 'ACTIVE',
       };
       return mockSession;
+    }
+    return this.request<FieldSession>('/api/field-sessions/start', {
+      method: 'POST',
+      body: JSON.stringify({ latitude: lat, longitude: lon }),
     });
   }
 
   async endFieldSession(sessionId: string, lat: number, lon: number): Promise<FieldSession> {
-    return this.request<FieldSession>(`/api/field-sessions/${sessionId}/end`, {
-      method: 'POST',
-      body: JSON.stringify({ latitude: lat, longitude: lon }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       if (mockSession) {
         mockSession.end_time = new Date().toISOString();
         mockSession.end_lat = lat;
@@ -270,19 +351,21 @@ class ApiClient {
         mockSession.status = 'COMPLETED';
       }
       return mockSession!;
+    }
+    return this.request<FieldSession>(`/api/field-sessions/${sessionId}/end`, {
+      method: 'POST',
+      body: JSON.stringify({ latitude: lat, longitude: lon }),
     });
   }
 
   async listVisits(visitDate?: string): Promise<FieldVisit[]> {
+    if (this.isDevDemo()) return mockVisits;
     const q = visitDate ? `?visit_date=${visitDate}` : '';
-    return this.request<FieldVisit[]>(`/api/field-visits/${q}`).catch(() => mockVisits);
+    return this.request<FieldVisit[]>(`/api/field-visits/${q}`);
   }
 
   async createVisit(data: Partial<FieldVisit>): Promise<FieldVisit> {
-    return this.request<FieldVisit>('/api/field-visits/', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const v: FieldVisit = {
         id: 'v-' + Date.now(),
         employee_id: '11111111-1111-1111-1111-111111111111',
@@ -294,14 +377,15 @@ class ApiClient {
       };
       mockVisits.push(v);
       return v;
+    }
+    return this.request<FieldVisit>('/api/field-visits/', {
+      method: 'POST',
+      body: JSON.stringify(data),
     });
   }
 
   async startVisit(visitId: string, lat: number, lon: number, proofPhoto?: string): Promise<FieldVisit> {
-    return this.request<FieldVisit>(`/api/field-visits/${visitId}/start`, {
-      method: 'PATCH',
-      body: JSON.stringify({ latitude: lat, longitude: lon, proof_photo: proofPhoto }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const v = mockVisits.find((x) => x.id === visitId);
       if (v) {
         v.arrival_time = new Date().toISOString();
@@ -312,14 +396,15 @@ class ApiClient {
         return v;
       }
       throw new Error('Visit not found');
+    }
+    return this.request<FieldVisit>(`/api/field-visits/${visitId}/start`, {
+      method: 'PATCH',
+      body: JSON.stringify({ latitude: lat, longitude: lon, proof_photo: proofPhoto }),
     });
   }
 
   async completeVisit(visitId: string, notes: string, customFields?: Record<string, any>): Promise<FieldVisit> {
-    return this.request<FieldVisit>(`/api/field-visits/${visitId}/complete`, {
-      method: 'PATCH',
-      body: JSON.stringify({ discussion_notes: notes, custom_fields: customFields }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const v = mockVisits.find((x) => x.id === visitId);
       if (v) {
         v.completion_time = new Date().toISOString();
@@ -329,23 +414,26 @@ class ApiClient {
         return v;
       }
       throw new Error('Visit not found');
+    }
+    return this.request<FieldVisit>(`/api/field-visits/${visitId}/complete`, {
+      method: 'PATCH',
+      body: JSON.stringify({ discussion_notes: notes, custom_fields: customFields }),
     });
   }
 
   // Leaves & Tasks
   async getLeaveBalances(): Promise<LeaveBalance[]> {
-    return this.request<LeaveBalance[]>('/api/leaves/balances').catch(() => mockBalances);
+    if (this.isDevDemo()) return mockBalances;
+    return this.request<LeaveBalance[]>('/api/leaves/balances');
   }
 
   async getMyLeaveRequests(): Promise<LeaveRequest[]> {
-    return this.request<LeaveRequest[]>('/api/leaves/my-requests').catch(() => mockRequests);
+    if (this.isDevDemo()) return mockRequests;
+    return this.request<LeaveRequest[]>('/api/leaves/my-requests');
   }
 
   async applyLeave(leaveType: string, startDate: string, endDate: string, reason: string): Promise<LeaveRequest> {
-    return this.request<LeaveRequest>('/api/leaves/apply', {
-      method: 'POST',
-      body: JSON.stringify({ leave_type: leaveType, start_date: startDate, end_date: endDate, reason }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const lr: LeaveRequest = {
         id: 'lr-' + Date.now(),
         employee_id: '11111111-1111-1111-1111-111111111111',
@@ -359,25 +447,186 @@ class ApiClient {
       };
       mockRequests.unshift(lr);
       return lr;
+    }
+    return this.request<LeaveRequest>('/api/leaves/apply', {
+      method: 'POST',
+      body: JSON.stringify({ leave_type: leaveType, start_date: startDate, end_date: endDate, reason }),
     });
   }
 
   async listTasks(): Promise<TaskItem[]> {
-    return this.request<TaskItem[]>('/api/tasks/').catch(() => mockTasks);
+    if (this.isDevDemo()) return mockTasks;
+    return this.request<TaskItem[]>('/api/tasks/');
   }
 
   async updateTaskStatus(taskId: string, status: string): Promise<TaskItem> {
-    return this.request<TaskItem>(`/api/tasks/${taskId}/status`, {
-      method: 'PATCH',
-      body: JSON.stringify({ status }),
-    }).catch(() => {
+    if (this.isDevDemo()) {
       const t = mockTasks.find((x) => x.id === taskId);
       if (t) {
         t.status = status as any;
         return t;
       }
       throw new Error('Task not found');
+    }
+    return this.request<TaskItem>(`/api/tasks/${taskId}/status`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
     });
+  }
+
+  // Expense Management Endpoints
+  async uploadExpenseReceipt(
+    file: Blob,
+    clientTimestamp?: string,
+    latitude?: number,
+    longitude?: number
+  ): Promise<ExpenseUploadReceiptResult> {
+    if (this.isDevDemo()) {
+      return {
+        receipt_url: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" fill="%23f1f5f9"><rect width="100%" height="100%" fill="%23f8fafc"/><text x="20" y="40" fill="%23475569" font-family="sans-serif">Live Photo Receipt Proof</text></svg>',
+        image_sha256: 'mock-sha256-' + Date.now(),
+        timestamp_delta_seconds: 1.2,
+        extracted_amount: 850.0,
+        extracted_invoice_number: 'INV-44102',
+      };
+    }
+
+    const formData = new FormData();
+    formData.append('file', file, 'receipt.jpg');
+    if (clientTimestamp) formData.append('client_timestamp', clientTimestamp);
+    if (latitude !== undefined) formData.append('latitude', latitude.toString());
+    if (longitude !== undefined) formData.append('longitude', longitude.toString());
+
+    const token = localStorage.getItem('access_token');
+    const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {};
+
+    const res = await fetch(`${BASE_URL}/api/expenses/upload-receipt`, {
+      method: 'POST',
+      headers,
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || 'Failed to upload receipt');
+    }
+    return res.json();
+  }
+
+  async submitExpenseClaim(claim: Partial<ExpenseClaim>): Promise<ExpenseClaim> {
+    if (this.isDevDemo()) {
+      const newExp: ExpenseClaim = {
+        id: 'exp-' + Date.now(),
+        employee_id: '11111111-1111-1111-1111-111111111111',
+        category: (claim.category as any) || 'miscellaneous',
+        amount: claim.amount || 0,
+        claim_date: claim.claim_date || new Date().toISOString().split('T')[0],
+        description: claim.description,
+        is_split_bill: claim.is_split_bill || false,
+        split_with_employee_id: claim.split_with_employee_id,
+        receipt_invoice_number: claim.receipt_invoice_number,
+        total_receipt_amount: claim.total_receipt_amount,
+        receipt_url: claim.receipt_url,
+        image_sha256: claim.image_sha256,
+        validation_status: 'passed',
+        validation_flags: [],
+        status: 'submitted',
+        employee_name: 'Alex Vance',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      mockExpenses.unshift(newExp);
+      return newExp;
+    }
+    return this.request<ExpenseClaim>('/api/expenses/submit', {
+      method: 'POST',
+      body: JSON.stringify(claim),
+    });
+  }
+
+  async getMyExpenseClaims(): Promise<ExpenseClaim[]> {
+    if (this.isDevDemo()) return mockExpenses;
+    return this.request<ExpenseClaim[]>('/api/expenses/my-claims');
+  }
+
+  async getTeamExpenseClaims(): Promise<ExpenseClaim[]> {
+    if (this.isDevDemo()) return mockExpenses;
+    return this.request<ExpenseClaim[]>('/api/expenses/team-claims');
+  }
+
+  async reviewExpenseClaim(expenseId: string, action: string, note?: string): Promise<ExpenseClaim> {
+    if (this.isDevDemo()) {
+      const exp = mockExpenses.find((e) => e.id === expenseId);
+      if (exp) {
+        if (action === 'APPROVE') {
+          exp.status = exp.amount > 5000 ? 'pending_zsm_approval' : 'manager_approved';
+        } else if (action === 'SEND_BACK') {
+          exp.status = 'sent_back';
+        } else {
+          exp.status = 'rejected';
+        }
+        exp.review_note = note;
+        exp.manager_review_note = note;
+        exp.reviewed_at = new Date().toISOString();
+        return exp;
+      }
+      throw new Error('Expense claim not found');
+    }
+    return this.request<ExpenseClaim>(`/api/expenses/${expenseId}/review`, {
+      method: 'POST',
+      body: JSON.stringify({ action, review_note: note }),
+    });
+  }
+
+  async resubmitExpenseClaim(expenseId: string, payload: Partial<ExpenseClaim>): Promise<ExpenseClaim> {
+    if (this.isDevDemo()) {
+      const exp = mockExpenses.find((e) => e.id === expenseId);
+      if (exp) {
+        if (payload.amount !== undefined) exp.amount = payload.amount;
+        if (payload.description !== undefined) exp.description = payload.description;
+        if (payload.receipt_url !== undefined) exp.receipt_url = payload.receipt_url;
+        if (payload.image_sha256 !== undefined) exp.image_sha256 = payload.image_sha256;
+        exp.status = 'submitted';
+        exp.updated_at = new Date().toISOString();
+        return exp;
+      }
+      throw new Error('Expense claim not found');
+    }
+    return this.request<ExpenseClaim>(`/api/expenses/${expenseId}/resubmit`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async getFinanceExpenseClaims(): Promise<ExpenseClaim[]> {
+    if (this.isDevDemo()) {
+      return mockExpenses.filter((e) =>
+        ['manager_approved', 'zsm_approved', 'finance_verified', 'approved', 'reimbursed'].includes(e.status)
+      );
+    }
+    return this.request<ExpenseClaim[]>('/api/expenses/finance-queue');
+  }
+
+  async disburseExpenseClaim(expenseId: string, paymentReference: string, note?: string): Promise<ExpenseClaim> {
+    if (this.isDevDemo()) {
+      const exp = mockExpenses.find((e) => e.id === expenseId);
+      if (exp) {
+        exp.status = 'reimbursed';
+        exp.payment_reference = paymentReference;
+        exp.finance_review_note = note;
+        exp.reimbursed_at = new Date().toISOString();
+        return exp;
+      }
+      throw new Error('Expense claim not found');
+    }
+    return this.request<ExpenseClaim>(`/api/expenses/${expenseId}/disburse`, {
+      method: 'POST',
+      body: JSON.stringify({ payment_reference: paymentReference, note }),
+    });
+  }
+
+  async reimburseExpenseClaim(expenseId: string): Promise<ExpenseClaim> {
+    return this.disburseExpenseClaim(expenseId, 'BANK-UTR-' + Math.floor(100000 + Math.random() * 900000));
   }
 }
 

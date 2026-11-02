@@ -29,6 +29,7 @@ import app.models  # noqa: F401
 from app.models.employee import Employee, EmployeeRole
 from app.models.office_location import OfficeLocation
 from app.models.leave_balance import LeaveBalance
+from app.models.system_config import SystemConfig
 from app.services.auth_service import AuthService
 
 
@@ -119,9 +120,42 @@ async def provision_client_database(admin_email: str, admin_password: str, db_ur
                     session.add(lb)
                 print("  ✔ Seeded standard leave quotas")
 
+                # Seed initial system configuration (feature flags)
+                stmt_cfg = select(SystemConfig).where(SystemConfig.id == 1)
+                existing_cfg = (await session.execute(stmt_cfg)).scalar_one_or_none()
+                if not existing_cfg:
+                    initial_features = {
+                        "attendance": settings.features.attendance,
+                        "field_visits": settings.features.field_visits,
+                        "leaves": settings.features.leaves,
+                        "tasks": settings.features.tasks,
+                        "expenses": settings.features.expenses,
+                        "analytics": settings.features.analytics,
+                    }
+                    cfg = SystemConfig(id=1, features=initial_features)
+                    session.add(cfg)
+                    print("  ✔ Seeded persistent system feature flags")
+
                 await session.commit()
             else:
                 print(f"  ℹ Admin account already exists: {admin_email}")
+
+                # Ensure system_config is present even if admin already exists
+                stmt_cfg = select(SystemConfig).where(SystemConfig.id == 1)
+                existing_cfg = (await session.execute(stmt_cfg)).scalar_one_or_none()
+                if not existing_cfg:
+                    initial_features = {
+                        "attendance": settings.features.attendance,
+                        "field_visits": settings.features.field_visits,
+                        "leaves": settings.features.leaves,
+                        "tasks": settings.features.tasks,
+                        "expenses": settings.features.expenses,
+                        "analytics": settings.features.analytics,
+                    }
+                    cfg = SystemConfig(id=1, features=initial_features)
+                    session.add(cfg)
+                    await session.commit()
+                    print("  ✔ Seeded missing system feature flags")
 
         # Step 4: Verification Check
         print("\n[4/4] Validating database integrity...")

@@ -9,6 +9,9 @@ from app.models.field_session import FieldSession, FieldSessionStatus
 from app.models.field_visit import FieldVisit, VisitStatus
 from app.models.task import Task, TaskPriority, TaskStatus
 from app.models.audit_log import AuditLog
+from app.models.system_config import SystemConfig
+from app.lead_management.models import Lead, LeadCustomer, LeadHistory, LeadStage, LeadPriority
+from app.followups.models import Followup, FollowupHistory, FollowupStatus, FollowupActionType, FollowupPriority
 
 __all__ = [
     "Employee",
@@ -30,4 +33,15 @@ __all__ = [
     "TaskPriority",
     "TaskStatus",
     "AuditLog",
+    "SystemConfig",
+    "Lead",
+    "LeadCustomer",
+    "LeadHistory",
+    "LeadStage",
+    "LeadPriority",
+    "Followup",
+    "FollowupHistory",
+    "FollowupStatus",
+    "FollowupActionType",
+    "FollowupPriority",
 ]

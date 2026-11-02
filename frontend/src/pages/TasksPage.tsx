@@ -38,7 +38,7 @@ export const TasksPage: React.FC = () => {
       {/* Top Banner Card matching localhost_9590_tasks.png */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#E6F7F5] text-[#00897B] flex items-center justify-center border border-teal-100">
+          <div className="w-14 h-14 rounded-2xl bg-[#F5F3FF] text-[#6B52B6] flex items-center justify-center border border-purple-100">
             <CheckSquare className="w-7 h-7 stroke-[2.2]" />
           </div>
           <div>
@@ -165,7 +165,7 @@ export const TasksPage: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search work description, notes, or employee..."
-            className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/90 rounded-2xl text-xs font-semibold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]"
+            className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/90 rounded-2xl text-xs font-semibold placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]"
           />
         </div>
 
