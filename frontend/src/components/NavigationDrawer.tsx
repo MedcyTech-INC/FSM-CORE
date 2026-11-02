@@ -2,7 +2,6 @@ import React from 'react';
 import {
   X,
   Home,
-  MapPin,
   CalendarDays,
   Moon,
   CheckSquare,
@@ -16,6 +15,7 @@ import {
   Target,
   ShieldAlert,
   Sliders,
+  Camera,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -63,8 +63,8 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   ];
 
   const fieldItems = [
-    { id: 'visits', label: 'Doctor Visits', icon: MapPin, enabled: features.field_visits },
-    { id: 'tasks', label: 'Work Assignments', icon: CheckSquare, enabled: features.tasks },
+    { id: 'visits', label: 'Visit Log', icon: Camera, enabled: features.field_visits },
+    { id: 'tasks', label: 'Work Assignment', icon: CheckSquare, enabled: features.tasks },
   ].filter((item) => item.enabled);
 
   const financeItems = [
@@ -73,7 +73,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   ].filter((item) => item.enabled);
 
   const attendanceItems = [
-    { id: 'attendance', label: 'Attendance Log', icon: CalendarDays, enabled: features.attendance },
+    { id: 'attendance', label: 'My Attendance', icon: CalendarDays, enabled: features.attendance },
     { id: 'leaves', label: 'Leave Requests', icon: Moon, enabled: features.leaves },
   ].filter((item) => item.enabled);
 

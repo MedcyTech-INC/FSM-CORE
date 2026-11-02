@@ -4,7 +4,6 @@ import {
   Bell,
   Search,
   Home,
-  MapPin,
   Moon,
   LogOut,
   CalendarDays,
@@ -18,6 +17,7 @@ import {
   Wand2,
   Target,
   ShieldAlert,
+  Camera,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -63,17 +63,17 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
       case 'leakage-scans':
         return { title: 'Scanner Audit Runs', subtitle: 'Log of automatic detector runs and outcomes' };
       case 'visits':
-        return { title: 'Doctor Visits', subtitle: 'Field check-ins, GPS verification & proofs' };
+        return { title: 'Visit Log', subtitle: 'Doctor visits, field check-ins & GPS verification' };
       case 'expenses':
         return { title: 'Expense Management', subtitle: 'Travel mileage, meal allowances & manager approvals' };
       case 'analytics':
         return { title: 'Executive Analytics', subtitle: 'Coverage ratios, team KPIs & territory performance' };
       case 'attendance':
-        return { title: 'Attendance Log', subtitle: 'Timesheet, daily punch hours & history' };
+        return { title: 'My Attendance', subtitle: 'Timesheet, daily punch hours & history' };
       case 'leaves':
-        return { title: 'Leave Management', subtitle: 'Leave balances, requests & approvals' };
+        return { title: 'Leave Requests', subtitle: 'Leave balances, requests & approvals' };
       case 'tasks':
-        return { title: 'Work Assignments', subtitle: 'Daily doctor beat & territory tasks' };
+        return { title: 'Work Assignment', subtitle: 'Daily doctor beat & territory tasks' };
       default:
         return { title: branding.companyName, subtitle: branding.portalSubtitle };
     }
@@ -265,8 +265,8 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <MapPin className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                    <span>Doctor Visits</span>
+                    <Camera className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Visit Log</span>
                   </div>
                 </button>
               )}
@@ -282,7 +282,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 >
                   <div className="flex items-center gap-3">
                     <CheckSquare className={`w-4 h-4 stroke-[2.2] ${currentTab === 'tasks' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                    <span>Work Tasks</span>
+                    <span>Work Assignment</span>
                   </div>
                 </button>
               )}
@@ -349,7 +349,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 >
                   <div className="flex items-center gap-3">
                     <CalendarDays className={`w-4 h-4 stroke-[2.2] ${currentTab === 'attendance' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                    <span>Attendance Log</span>
+                    <span>My Attendance</span>
                   </div>
                 </button>
               )}
