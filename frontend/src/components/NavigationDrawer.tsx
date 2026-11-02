@@ -10,8 +10,12 @@ import {
   BellRing,
   LogOut,
   ChevronRight,
+  Receipt,
+  BarChart3,
+  Wand2,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
+import { useFeatureStore } from '../store/featureStore';
 import { branding } from '../config/branding';
 
 interface NavigationDrawerProps {
@@ -19,6 +23,7 @@ interface NavigationDrawerProps {
   onClose: () => void;
   currentTab: string;
   onSelectTab: (tab: string) => void;
+  onOpenWizard?: () => void;
 }
 
 export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
@@ -26,8 +31,10 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onClose,
   currentTab,
   onSelectTab,
+  onOpenWizard,
 }) => {
   const { user, logout } = useAuthStore();
+  const { features } = useFeatureStore();
 
   if (!isOpen) return null;
 
@@ -35,21 +42,28 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
     : 'AV';
 
+  const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
+
   const pipelineItems = [
-    { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '' },
-    { id: 'leads', label: 'Lead Management', icon: TrendingUp, badge: 'Pipeline' },
-    { id: 'followups', label: 'Follow-ups', icon: BellRing, badge: 'Actions' },
-  ];
+    { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '', enabled: true },
+    { id: 'leads', label: 'Lead Management', icon: TrendingUp, badge: 'Pipeline', enabled: features.leads },
+    { id: 'followups', label: 'Follow-ups', icon: BellRing, badge: 'Actions', enabled: features.followups },
+  ].filter((item) => item.enabled);
 
   const fieldItems = [
-    { id: 'visits', label: 'Doctor Visits', icon: MapPin },
-    { id: 'tasks', label: 'Work Assignments', icon: CheckSquare },
-  ];
+    { id: 'visits', label: 'Doctor Visits', icon: MapPin, enabled: features.field_visits },
+    { id: 'tasks', label: 'Work Assignments', icon: CheckSquare, enabled: features.tasks },
+  ].filter((item) => item.enabled);
+
+  const financeItems = [
+    { id: 'expenses', label: 'Expense Claims', icon: Receipt, enabled: features.expenses },
+    ...(canViewAnalytics ? [{ id: 'analytics', label: 'Executive Analytics', icon: BarChart3, badge: 'KPIs', enabled: features.analytics }] : []),
+  ].filter((item) => item.enabled);
 
   const attendanceItems = [
-    { id: 'attendance', label: 'Attendance Log', icon: CalendarDays },
-    { id: 'leaves', label: 'Leave Requests', icon: Moon },
-  ];
+    { id: 'attendance', label: 'Attendance Log', icon: CalendarDays, enabled: features.attendance },
+    { id: 'leaves', label: 'Leave Requests', icon: Moon, enabled: features.leaves },
+  ].filter((item) => item.enabled);
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -106,105 +120,174 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           </div>
 
           {/* Section: Sales Pipeline */}
-          <div className="mt-6">
-            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
-              Sales Pipeline
-            </span>
-            <nav className="space-y-1">
-              {pipelineItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = currentTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      onSelectTab(item.id);
-                      onClose();
-                    }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                    {item.badge && (
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-[#6B52B6]">
-                        {item.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
+          {pipelineItems.length > 0 && (
+            <div className="mt-6">
+              <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+                Sales Pipeline
+              </span>
+              <nav className="space-y-1">
+                {pipelineItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = currentTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onSelectTab(item.id);
+                        onClose();
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                      {item.badge && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-[#6B52B6]">
+                          {item.badge}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
 
           {/* Section: Field Operations */}
-          <div className="mt-5 pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
-              Field Operations
-            </span>
-            <nav className="space-y-1">
-              {fieldItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = currentTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      onSelectTab(item.id);
-                      onClose();
-                    }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
+          {fieldItems.length > 0 && (
+            <div className="mt-5 pt-4 border-t border-slate-100">
+              <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+                Field Operations
+              </span>
+              <nav className="space-y-1">
+                {fieldItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = currentTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onSelectTab(item.id);
+                        onClose();
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
+
+          {/* Section: Financials & Executive Analytics */}
+          {financeItems.length > 0 && (
+            <div className="mt-5 pt-4 border-t border-slate-100">
+              <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+                Finance & Performance
+              </span>
+              <nav className="space-y-1">
+                {financeItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = currentTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onSelectTab(item.id);
+                        onClose();
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                      {'badge' in item && item.badge && (
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                          {item.badge}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
 
           {/* Section: Attendance & HR */}
-          <div className="mt-5 pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
-              Attendance & Time
-            </span>
-            <nav className="space-y-1">
-              {attendanceItems.map((item) => {
-                const Icon = item.icon;
-                const isActive = currentTab === item.id;
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      onSelectTab(item.id);
-                      onClose();
-                    }}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      isActive
-                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                      <span>{item.label}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </nav>
-          </div>
+          {attendanceItems.length > 0 && (
+            <div className="mt-5 pt-4 border-t border-slate-100">
+              <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+                Attendance & Time
+              </span>
+              <nav className="space-y-1">
+                {attendanceItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = currentTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => {
+                        onSelectTab(item.id);
+                        onClose();
+                      }}
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <span>{item.label}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          )}
+
+          {/* Quick Config / Setup Wizard */}
+          {onOpenWizard && (
+            <div className="mt-6 pt-5 border-t border-slate-100">
+              <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block mb-2 px-2">
+                Administration
+              </span>
+              <button
+                onClick={() => {
+                  onOpenWizard();
+                  onClose();
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-purple-50 border border-purple-200 text-[#6B52B6] font-bold text-xs hover:bg-purple-100 transition-all shadow-sm"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Wand2 className="w-4 h-4 text-[#6B52B6]" />
+                  <span>Client Setup Wizard</span>
+                </div>
+                <span className="text-[10px] bg-purple-200 text-[#6B52B6] px-2 py-0.5 rounded-full uppercase font-mono font-bold">
+                  Config
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Drawer Bottom: Sign Out */}

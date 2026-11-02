@@ -13,10 +13,15 @@ import {
   BellRing,
   MoreHorizontal,
   ChevronRight,
+  Receipt,
+  BarChart3,
+  Wand2,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
+import { useFeatureStore } from '../store/featureStore';
 import { branding } from '../config/branding';
 import { NavigationDrawer } from './NavigationDrawer';
+import { SetupWizardModal } from './SetupWizardModal';
 
 interface AppShellProps {
   currentTab: string;
@@ -26,7 +31,9 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, children }) => {
   const { user, logout } = useAuthStore();
+  const { features } = useFeatureStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [wizardOpen, setWizardOpen] = useState(false);
 
   const initials = user
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
@@ -43,6 +50,10 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
         return { title: 'Follow-ups & Commitments', subtitle: 'Scheduled doctor calls, visits & SLA tracking' };
       case 'visits':
         return { title: 'Doctor Visits', subtitle: 'Field check-ins, GPS verification & proofs' };
+      case 'expenses':
+        return { title: 'Expense Management', subtitle: 'Travel mileage, meal allowances & manager approvals' };
+      case 'analytics':
+        return { title: 'Executive Analytics', subtitle: 'Coverage ratios, team KPIs & territory performance' };
       case 'attendance':
         return { title: 'Attendance Log', subtitle: 'Timesheet, daily punch hours & history' };
       case 'leaves':
@@ -55,6 +66,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
   };
 
   const pageInfo = getPageTitle();
+  const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex flex-col selection:bg-[#6B52B6] selection:text-white">
@@ -64,6 +76,13 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
         onClose={() => setDrawerOpen(false)}
         currentTab={currentTab}
         onSelectTab={onTabChange}
+        onOpenWizard={() => setWizardOpen(true)}
+      />
+
+      {/* Dynamic Client Setup Wizard Modal */}
+      <SetupWizardModal
+        isOpen={wizardOpen}
+        onClose={() => setWizardOpen(false)}
       />
 
       {/* ===================================================================== */}
@@ -114,7 +133,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
         </div>
 
         {/* Navigation Categories */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
           {/* SECTION: Commercial Pipeline */}
           <div>
             <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
@@ -135,39 +154,43 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 </div>
               </button>
 
-              <button
-                onClick={() => onTabChange('leads')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'leads'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <TrendingUp className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leads' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Lead Management</span>
-                </div>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100/80 text-[#6B52B6]">
-                  Pipeline
-                </span>
-              </button>
+              {features.leads && (
+                <button
+                  onClick={() => onTabChange('leads')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'leads'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <TrendingUp className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leads' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Lead Management</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100/80 text-[#6B52B6]">
+                    Pipeline
+                  </span>
+                </button>
+              )}
 
-              <button
-                onClick={() => onTabChange('followups')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'followups'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <BellRing className={`w-4 h-4 stroke-[2.2] ${currentTab === 'followups' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Follow-ups</span>
-                </div>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
-                  Actions
-                </span>
-              </button>
+              {features.followups && (
+                <button
+                  onClick={() => onTabChange('followups')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'followups'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <BellRing className={`w-4 h-4 stroke-[2.2] ${currentTab === 'followups' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Follow-ups</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
+                    Actions
+                  </span>
+                </button>
+              )}
             </nav>
           </div>
 
@@ -177,69 +200,120 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               Field Operations
             </span>
             <nav className="space-y-1">
-              <button
-                onClick={() => onTabChange('visits')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'visits'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <MapPin className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Doctor Visits</span>
-                </div>
-              </button>
+              {features.field_visits && (
+                <button
+                  onClick={() => onTabChange('visits')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'visits'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <MapPin className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Doctor Visits</span>
+                  </div>
+                </button>
+              )}
 
-              <button
-                onClick={() => onTabChange('tasks')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'tasks'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <CheckSquare className={`w-4 h-4 stroke-[2.2] ${currentTab === 'tasks' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Work Tasks</span>
-                </div>
-              </button>
+              {features.tasks && (
+                <button
+                  onClick={() => onTabChange('tasks')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'tasks'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <CheckSquare className={`w-4 h-4 stroke-[2.2] ${currentTab === 'tasks' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Work Tasks</span>
+                  </div>
+                </button>
+              )}
             </nav>
           </div>
 
-          {/* SECTION: Time & Attendance */}
+          {/* SECTION: Financials & Executive Analytics */}
+          <div>
+            <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
+              Finance & Performance
+            </span>
+            <nav className="space-y-1">
+              {features.expenses && (
+                <button
+                  onClick={() => onTabChange('expenses')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'expenses'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Receipt className={`w-4 h-4 stroke-[2.2] ${currentTab === 'expenses' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Expense Claims</span>
+                  </div>
+                </button>
+              )}
+
+              {features.analytics && canViewAnalytics && (
+                <button
+                  onClick={() => onTabChange('analytics')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'analytics'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <BarChart3 className={`w-4 h-4 stroke-[2.2] ${currentTab === 'analytics' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Executive Analytics</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
+                    KPIs
+                  </span>
+                </button>
+              )}
+            </nav>
+          </div>
+
+          {/* SECTION: Attendance & HR */}
           <div>
             <span className="text-[10px] font-extrabold text-slate-400 tracking-widest uppercase block mb-2 px-3">
               Attendance & HR
             </span>
             <nav className="space-y-1">
-              <button
-                onClick={() => onTabChange('attendance')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'attendance'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <CalendarDays className={`w-4 h-4 stroke-[2.2] ${currentTab === 'attendance' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Attendance Log</span>
-                </div>
-              </button>
+              {features.attendance && (
+                <button
+                  onClick={() => onTabChange('attendance')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'attendance'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <CalendarDays className={`w-4 h-4 stroke-[2.2] ${currentTab === 'attendance' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Attendance Log</span>
+                  </div>
+                </button>
+              )}
 
-              <button
-                onClick={() => onTabChange('leaves')}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  currentTab === 'leaves'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Moon className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leaves' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
-                  <span>Leave Requests</span>
-                </div>
-              </button>
+              {features.leaves && (
+                <button
+                  onClick={() => onTabChange('leaves')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'leaves'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Moon className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leaves' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Leave Requests</span>
+                  </div>
+                </button>
+              )}
             </nav>
           </div>
         </div>
@@ -286,14 +360,24 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               </div>
             </div>
 
-            {/* Right: Search + Direct Mode + Bell + Profile */}
+            {/* Right: Setup Wizard + Search + Direct Mode + Bell + Profile */}
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* Setup Wizard Button */}
+              <button
+                onClick={() => setWizardOpen(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 border border-purple-200 text-[#6B52B6] hover:bg-purple-100 rounded-full text-xs font-bold transition-all shadow-sm"
+                title="Launch Client Setup Wizard"
+              >
+                <Wand2 className="w-3.5 h-3.5 text-[#6B52B6] animate-pulse" />
+                <span className="hidden sm:inline">Setup Wizard</span>
+              </button>
+
               {/* Desktop Search Input */}
-              <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 bg-slate-100/80 border border-slate-200/80 rounded-xl text-xs text-slate-500 w-56 lg:w-64 focus-within:ring-2 focus-within:ring-[#6B52B6]/20 focus-within:border-[#6B52B6] transition-all">
+              <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 bg-slate-100/80 border border-slate-200/80 rounded-xl text-xs text-slate-500 w-52 xl:w-60 focus-within:ring-2 focus-within:ring-[#6B52B6]/20 focus-within:border-[#6B52B6] transition-all">
                 <Search className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
                   type="text"
-                  placeholder="Search doctors, leads..."
+                  placeholder="Search..."
                   className="bg-transparent border-none text-slate-800 text-xs w-full focus:outline-none placeholder-slate-400"
                 />
               </div>
@@ -313,7 +397,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white" />
               </button>
 
-              {/* User Avatar (Mobile & Desktop) */}
+              {/* User Avatar */}
               <div className="flex items-center gap-2 p-1 bg-white border border-slate-200 rounded-full shadow-sm">
                 <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-slate-900 to-slate-700 text-white flex items-center justify-center font-bold text-[11px]">
                   {initials}
@@ -386,7 +470,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
             <span className="text-[10px]">Visits</span>
           </button>
 
-          {/* 5. More / Menu (Opens Drawer for Attendance, Leaves, Tasks, Logout) */}
+          {/* 5. More / Menu (Opens Drawer for Expenses, Analytics, Attendance, Leaves, Tasks, Logout) */}
           <button
             onClick={() => setDrawerOpen(true)}
             className="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-400 hover:text-slate-600 font-semibold transition-all"
