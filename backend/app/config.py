@@ -24,6 +24,17 @@ class TableRegistry(BaseSettings):
     tasks: str = Field(default="tasks", alias="TABLE_TASKS")
     audit_log: str = Field(default="audit_log", alias="TABLE_AUDIT_LOG")
 
+    # Feature: Pipeline & Daily Sales Plan Tables
+    customers: str = Field(default="fsm_customers", alias="TABLE_CUSTOMERS")
+    leads: str = Field(default="fsm_leads", alias="TABLE_LEADS")
+    followups: str = Field(default="fsm_followups", alias="TABLE_FOLLOWUPS")
+    activity_history: str = Field(default="fsm_activity_history", alias="TABLE_ACTIVITY_HISTORY")
+    monthly_targets: str = Field(default="fsm_monthly_targets", alias="TABLE_MONTHLY_TARGETS")
+    daily_sales_plans: str = Field(default="fsm_daily_sales_plans", alias="TABLE_DAILY_SALES_PLANS")
+    daily_sales_plan_items: str = Field(default="fsm_daily_sales_plan_items", alias="TABLE_DAILY_SALES_PLAN_ITEMS")
+    daily_sales_plan_item_obligations: str = Field(default="fsm_daily_sales_plan_item_obligations", alias="TABLE_DAILY_SALES_PLAN_ITEM_OBLIGATIONS")
+    daily_sales_plan_revisions: str = Field(default="fsm_daily_sales_plan_revisions", alias="TABLE_DAILY_SALES_PLAN_REVISIONS")
+
 
 class Settings(BaseSettings):
     """
@@ -68,6 +79,20 @@ class Settings(BaseSettings):
     default_geofence_radius_meters: int = 150
     max_accuracy_threshold_meters: float = 100.0
     max_allowed_speed_kmh: float = 140.0
+
+    # AI Daily Sales Plan Optimization Settings (Configurable)
+    plan_standard_shift_hours: float = 8.5
+    plan_mandatory_lunch_minutes: int = 45
+    plan_chronic_backlog_days: int = 7
+    plan_chronic_backlog_urgency_cap: float = 40.0
+    plan_osrm_timeout_seconds: float = 4.0
+    plan_haversine_winding_factor: float = 1.2
+    plan_haversine_avg_speed_kmh: float = 30.0
+    plan_weight_urgency: float = 0.30
+    plan_weight_deal_value: float = 0.25
+    plan_weight_target_pacing: float = 0.20
+    plan_weight_lead_priority: float = 0.15
+    plan_weight_recency_decay: float = 0.10
 
     # Dynamic Table Registry Instance
     tables: TableRegistry = Field(default_factory=TableRegistry)

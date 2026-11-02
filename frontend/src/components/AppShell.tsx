@@ -10,6 +10,7 @@ import {
   Users,
   CalendarDays,
   CheckSquare,
+  Route,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { branding } from '../config/branding';
@@ -22,7 +23,7 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, children }) => {
-  const { user, logout } = useAuthStore();
+  const { user, logout, togglePersona } = useAuthStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const initials = user
@@ -71,11 +72,20 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
 
           {/* Right: Direct Mode, Notifications, Search, User Avatar */}
           <div className="flex items-center gap-2 md:gap-3">
-            {/* Direct Mode Pill */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200/80 rounded-full text-xs font-semibold text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-slate-400" />
-              <span>Direct Mode</span>
-            </div>
+            {/* Persona Quick Switcher Pill (Manager <-> Field Rep) */}
+            <button
+              onClick={() => togglePersona()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black transition-all shadow-xs border hover:scale-[1.02] bg-gradient-to-r from-teal-50 via-emerald-50 to-teal-100 text-teal-950 border-teal-300"
+              title="Click to switch between Manager View and Field Representative View"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#00897B] animate-pulse" />
+              <span>
+                {user?.role === 'MR' ? '💼 Rep Mode: Rahul Sharma' : '👔 Manager Mode: Alex Vance'}
+              </span>
+              <span className="text-[10px] font-bold text-teal-700 bg-white/80 px-1.5 py-0.5 rounded-full ml-0.5">
+                Switch
+              </span>
+            </button>
 
             {/* Notification Bell */}
             <button className="relative w-9 h-9 flex items-center justify-center rounded-full bg-slate-50 border border-slate-200/70 text-slate-600 hover:bg-slate-100 transition-colors">
@@ -140,6 +150,20 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
             )}
             <MapPin className="w-5 h-5" />
             <span className="text-[10px] font-bold">Visits</span>
+          </button>
+
+          {/* AI Route & Sales Plan */}
+          <button
+            onClick={() => onTabChange('daily-plan')}
+            className={`flex flex-col items-center gap-1 transition-colors relative py-1 px-2.5 ${
+              currentTab === 'daily-plan' ? 'text-[#00897B]' : 'text-slate-400 hover:text-slate-600'
+            }`}
+          >
+            {currentTab === 'daily-plan' && (
+              <span className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-[#00897B] rounded-full" />
+            )}
+            <Route className="w-5 h-5" />
+            <span className="text-[10px] font-bold">AI Route</span>
           </button>
 
           {/* Attendance */}

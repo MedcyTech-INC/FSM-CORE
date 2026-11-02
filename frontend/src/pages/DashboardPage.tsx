@@ -150,6 +150,29 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         </div>
       </div>
 
+      {/* AI Daily Sales Plan Quick Hero Card */}
+      <div className="bg-gradient-to-r from-teal-900 via-slate-900 to-[#1E293B] rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-bold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
+            <span>AI Route Optimization</span>
+          </div>
+          <h2 className="text-xl md:text-2xl font-extrabold tracking-tight">
+            Today's AI Sales Plan & Route
+          </h2>
+          <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
+            MCDA candidate prioritization with target pacing boost, 2-Opt TSPTW dynamic travel minimization, and automated 45-minute lunch break scheduling.
+          </p>
+        </div>
+
+        <button
+          onClick={() => onNavigate?.('daily-plan')}
+          className="px-6 py-3.5 rounded-2xl bg-[#00897B] hover:bg-teal-600 text-white font-extrabold text-xs shadow-md shadow-teal-900/40 transition-all hover:scale-[1.03] inline-flex items-center justify-center gap-2 self-start md:self-auto shrink-0"
+        >
+          <span>Open Sales Route</span>
+        </button>
+      </div>
+
       {/* Attendance Summary Section */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="flex items-center justify-between mb-6">

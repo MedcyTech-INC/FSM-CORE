@@ -7,6 +7,7 @@ import {
   Moon,
   CheckSquare,
   Heart,
+  Route,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { branding } from '../config/branding';
@@ -34,6 +35,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
 
   const menuItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home },
+    { id: 'daily-plan', label: 'AI Daily Sales Plan', icon: Route },
     { id: 'visits', label: 'Visit Log', icon: Camera },
     { id: 'attendance', label: 'My Attendance', icon: CalendarDays },
     { id: 'leaves', label: 'Leave Requests', icon: Moon },

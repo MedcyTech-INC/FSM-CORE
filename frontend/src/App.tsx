@@ -7,6 +7,7 @@ import { AttendancePage } from './pages/AttendancePage';
 import { VisitsPage } from './pages/VisitsPage';
 import { LeavesPage } from './pages/LeavesPage';
 import { TasksPage } from './pages/TasksPage';
+import { DailyPlanPage } from './pages/DailyPlanPage';
 
 export const App: React.FC = () => {
   const { isAuthenticated, loadSession } = useAuthStore();
@@ -23,6 +24,7 @@ export const App: React.FC = () => {
   return (
     <AppShell currentTab={currentTab} onTabChange={setCurrentTab}>
       {currentTab === 'dashboard' && <DashboardPage onNavigate={setCurrentTab} />}
+      {currentTab === 'daily-plan' && <DailyPlanPage />}
       {currentTab === 'visits' && <VisitsPage />}
       {currentTab === 'attendance' && <AttendancePage />}
       {currentTab === 'leaves' && <LeavesPage />}
