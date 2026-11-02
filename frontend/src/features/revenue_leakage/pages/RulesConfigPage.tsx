@@ -42,7 +42,7 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
           className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Dashboard</span>
+          <span>Back to Revenue Leakage</span>
         </button>
 
         {onNavigateToScans && (
@@ -58,13 +58,13 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
       <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-lg bg-teal-50 text-[#00897B] font-bold text-xs border border-teal-100">
-              Rule Management
+            <span className="px-2.5 py-0.5 rounded-lg bg-rose-50 text-rose-700 font-bold text-xs border border-rose-200">
+              Revenue Leakage Protection
             </span>
-            <span className="text-xs text-slate-400">Senior Leadership Only</span>
+            <span className="text-xs text-slate-400">Rule Parameters</span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Warning Rules & Cadence Parameters
+            Revenue Leakage Rules & Detection Parameters
           </h1>
           <p className="text-xs text-slate-500 mt-1 max-w-xl">
             Configure working-day thresholds, attention escalation ratios, cool-down periods, and auto-clearing streak requirements.

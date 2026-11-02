@@ -13,7 +13,7 @@ export interface BrandingConfig {
 
 export const branding: BrandingConfig = {
   companyName: import.meta.env.VITE_COMPANY_NAME || "FSM Core",
-  portalSubtitle: import.meta.env.VITE_PORTAL_SUBTITLE || "HRMS PORTAL",
+  portalSubtitle: import.meta.env.VITE_PORTAL_SUBTITLE || "OPERATIONS PORTAL",
   logoInitials: import.meta.env.VITE_COMPANY_SHORT_CODE || "FC",
-  footerText: import.meta.env.VITE_FOOTER_TEXT || "FSM Multi-Vertical HRMS",
+  footerText: import.meta.env.VITE_FOOTER_TEXT || "FSM Core Multi-Vertical Platform",
 };

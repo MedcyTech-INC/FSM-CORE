@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   X,
   Home,
@@ -32,38 +33,51 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   if (!isOpen) return null;
 
   const initials = user
-    ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
-    : 'TB';
+    ? `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase() || 'FC'
+    : 'FC';
 
   const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
-  const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
 
-  const menuItems = [
+  const operationalItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home },
-    { id: 'targets', label: 'Monthly Targets', icon: Target },
-    ...(isManager ? [{ id: 'team-targets', label: 'Team Targets', icon: BarChart3 }] : []),
-    ...(isManager
-      ? [
-          {
-            id: 'revenue-leakage',
-            label: 'Operational Warnings',
-            icon: ShieldAlert,
-          },
-        ]
-      : []),
-    ...(isSeniorManager
-      ? [
-          {
-            id: 'leakage-rules',
-            label: 'Warning Rules',
-            icon: Sliders,
-          },
-        ]
-      : []),
-    { id: 'visits', label: 'Visit Log', icon: Camera },
+    { id: 'visits', label: 'Field Visit Log', icon: Camera },
     { id: 'attendance', label: 'My Attendance', icon: CalendarDays },
     { id: 'leaves', label: 'Leave Requests', icon: Moon },
     { id: 'tasks', label: 'Work Assignment', icon: CheckSquare },
+  ];
+
+  const intelligenceItems = [
+    {
+      id: 'revenue-leakage',
+      label: 'Revenue Leakage',
+      badge: 'Alerts',
+      icon: ShieldAlert,
+    },
+    {
+      id: 'leakage-rules',
+      label: 'Revenue Leakage Rules',
+      icon: Sliders,
+    },
+    {
+      id: 'targets',
+      label: 'Monthly Targets',
+      icon: Target,
+    },
+    ...(isManager
+      ? [
+          {
+            id: 'team-targets',
+            label: 'Team Targets',
+            icon: BarChart3,
+          },
+        ]
+      : [
+          {
+            id: 'team-targets',
+            label: 'Team Targets',
+            icon: BarChart3,
+          },
+        ]),
   ];
 
   return (
@@ -108,26 +122,67 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </div>
               <div>
                 <h4 className="font-bold text-slate-900 text-sm leading-tight">
-                  {user ? `${user.first_name} ${user.last_name}` : 'Test BE'}
+                  {user ? `${user.first_name} ${user.last_name}` : 'Field User'}
                 </h4>
                 <p className="text-[11px] font-medium text-slate-500 uppercase tracking-tight mt-0.5">
-                  {user?.rank || 'BUSINESS EXECUTIVE'}
+                  {user?.rank || user?.role || 'FIELD OPERATIONS'}
                 </p>
               </div>
             </div>
-            <button className="text-[11px] font-extrabold text-[#00897B] tracking-wider hover:underline">
-              PROFILE
-            </button>
+            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-teal-100 text-[#00897B] tracking-wider">
+              {user?.role || 'ACTIVE'}
+            </span>
           </div>
 
-          {/* Section: Employee Dashboards */}
-          <div className="mt-8">
-            <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block mb-3 px-2">
-              Employee Dashboards
+          {/* Section: Revenue & Target Intelligence */}
+          <div className="mt-6">
+            <div className="flex items-center justify-between px-2 mb-2">
+              <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block">
+                Revenue & Performance
+              </span>
+              <span className="text-[10px] font-bold text-rose-500 uppercase">Core</span>
+            </div>
+
+            <nav className="space-y-1">
+              {intelligenceItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = currentTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onSelectTab(item.id);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all ${
+                      isActive
+                        ? 'bg-[#E6F7F5] text-[#00897B] border border-teal-200/80 shadow-sm'
+                        : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <Icon className={`w-5 h-5 ${isActive ? 'text-[#00897B]' : 'text-slate-500'}`} />
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-rose-100 text-rose-700">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Section: Field Operations */}
+          <div className="mt-6">
+            <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block mb-2 px-2">
+              Field Operations
             </span>
 
             <nav className="space-y-1">
-              {menuItems.map((item) => {
+              {operationalItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = currentTab === item.id;
                 return (

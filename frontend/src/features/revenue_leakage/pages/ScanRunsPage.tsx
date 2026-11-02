@@ -66,7 +66,7 @@ export const ScanRunsPage: React.FC<ScanRunsPageProps> = ({ onBack }) => {
           className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Warning Rules</span>
+          <span>Back to Leakage Rules</span>
         </button>
 
         <button

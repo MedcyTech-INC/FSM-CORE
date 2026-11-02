@@ -48,7 +48,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
     return (
       <div className="p-12 text-center bg-white rounded-3xl border border-slate-100 shadow-sm animate-pulse">
         <Clock className="w-8 h-8 text-[#00897B] animate-spin mx-auto mb-3" />
-        <p className="text-xs font-bold text-slate-700">Loading operational warning details...</p>
+        <p className="text-xs font-bold text-slate-700">Loading revenue leakage details...</p>
       </div>
     );
   }
@@ -102,7 +102,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
           className="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Operational Warnings</span>
+          <span>Back to Revenue Leakage</span>
         </button>
 
         {alert.status === 'active' && (

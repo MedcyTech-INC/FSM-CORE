@@ -90,13 +90,13 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
       <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-lg bg-teal-50 text-[#00897B] font-bold text-xs border border-teal-100">
-              Operational Warnings
+            <span className="px-2.5 py-0.5 rounded-lg bg-rose-50 text-rose-700 font-bold text-xs border border-rose-200">
+              Revenue Leakage Detection
             </span>
             <span className="text-xs text-slate-400">Nightly Scanner Active</span>
           </div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-            Field Operational Warnings
+            Revenue Leakage Alerts & Oversight
           </h1>
           <p className="text-xs text-slate-500 mt-1 max-w-xl">
             Automated compliance and run-rate oversight across client cadence, open leads, order frequency, and territory pace.
