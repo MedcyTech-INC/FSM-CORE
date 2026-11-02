@@ -23,17 +23,58 @@ export const useAuthStore = create<AuthState>((set) => ({
   login: async (email, password) => {
     set({ isLoading: true, error: null });
 
-    // Instant Demo Mode fallback for direct evaluation
-    if (email === 'admin@fsm.com' || email === 'field@fsm.com' || email.endsWith('@fsm.com')) {
+    // Instant Demo Mode fallback for direct evaluation (strictly limited to local development)
+    if (import.meta.env.DEV && (email === 'admin@fsm.com' || email === 'field@fsm.com' || email.endsWith('@fsm.com'))) {
       const isField = email.startsWith('field');
+      const isFinance = email.startsWith('finance');
+      const isZsm = email.startsWith('zsm');
+      const isRsm = email.startsWith('rsm') || email.startsWith('manager');
+
+      let role: User['role'] = 'ADMIN';
+      let firstName = 'Alex';
+      let lastName = 'Vance';
+      let rank = 'General Director';
+      let territory = 'All Territories (HQ)';
+      let userId = '11111111-1111-1111-1111-111111111111';
+
+      if (isFinance) {
+        role = 'FINANCE';
+        firstName = 'Pooja';
+        lastName = 'Mehta';
+        rank = 'Finance & Accounts Officer';
+        territory = 'Corporate Finance Division';
+        userId = '55555555-5555-5555-5555-555555555555';
+      } else if (isZsm) {
+        role = 'ZSM';
+        firstName = 'Deepak';
+        lastName = 'Verma';
+        rank = 'Zonal Sales Manager';
+        territory = 'West Zone';
+        userId = '44444444-4444-4444-4444-444444444444';
+      } else if (isRsm) {
+        role = 'RSM';
+        firstName = 'Vikram';
+        lastName = 'Malhotra';
+        rank = 'Regional Sales Manager';
+        territory = 'Maharashtra Region';
+        userId = '33333333-3333-3333-3333-333333333333';
+      } else if (isField) {
+        role = 'MR';
+        firstName = 'Rahul';
+        lastName = 'Sharma';
+        rank = 'Senior Field Executive';
+        territory = 'South Mumbai Zone';
+        userId = '22222222-2222-2222-2222-222222222222';
+      }
+
       const demoUser: User = {
-        id: isField ? '22222222-2222-2222-2222-222222222222' : '11111111-1111-1111-1111-111111111111',
+        id: userId,
         email,
-        first_name: isField ? 'Rahul' : 'Alex',
-        last_name: isField ? 'Sharma' : 'Vance',
-        role: isField ? 'MR' : 'ADMIN',
-        rank: isField ? 'Senior Field Executive' : 'General Director',
-        territory: isField ? 'South Mumbai Zone' : 'All Territories (HQ)',
+        first_name: firstName,
+        last_name: lastName,
+        role,
+        rank,
+        territory,
         is_active: true,
       };
 
@@ -91,7 +132,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
 
     const savedDemoUser = localStorage.getItem('demo_user');
-    if (savedDemoUser) {
+    if (import.meta.env.DEV && savedDemoUser) {
       try {
         set({ user: JSON.parse(savedDemoUser), isAuthenticated: true, isLoading: false });
         return;

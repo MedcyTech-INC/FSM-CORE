@@ -32,6 +32,7 @@ fsm/
 │
 └── docs/                     # Reference Architecture & Design Assets
     ├── architecture/         # Target architecture specifications & reading guides
+    ├── features/             # Executive analytics & feature feasibility docs
     └── screenshots/          # Baseline design system & UI references
 ```
 

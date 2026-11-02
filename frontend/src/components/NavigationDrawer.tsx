@@ -6,9 +6,13 @@ import {
   CalendarDays,
   Moon,
   CheckSquare,
+  Receipt,
+  BarChart3,
   Heart,
+  Wand2,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
+import { useFeatureStore } from '../store/featureStore';
 import { branding } from '../config/branding';
 
 interface NavigationDrawerProps {
@@ -16,6 +20,7 @@ interface NavigationDrawerProps {
   onClose: () => void;
   currentTab: string;
   onSelectTab: (tab: string) => void;
+  onOpenWizard?: () => void;
 }
 
 export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
@@ -23,8 +28,10 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   onClose,
   currentTab,
   onSelectTab,
+  onOpenWizard,
 }) => {
   const { user } = useAuthStore();
+  const { features } = useFeatureStore();
 
   if (!isOpen) return null;
 
@@ -32,13 +39,19 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
     : 'TB';
 
-  const menuItems = [
-    { id: 'dashboard', label: 'Home Dashboard', icon: Home },
-    { id: 'visits', label: 'Visit Log', icon: Camera },
-    { id: 'attendance', label: 'My Attendance', icon: CalendarDays },
-    { id: 'leaves', label: 'Leave Requests', icon: Moon },
-    { id: 'tasks', label: 'Work Assignment', icon: CheckSquare },
+  const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
+
+  const allMenuItems = [
+    { id: 'dashboard', label: 'Home Dashboard', icon: Home, enabled: true },
+    { id: 'attendance', label: 'My Attendance', icon: CalendarDays, enabled: features.attendance },
+    { id: 'visits', label: 'Visit Log', icon: Camera, enabled: features.field_visits },
+    { id: 'expenses', label: 'Expense Claims', icon: Receipt, enabled: features.expenses },
+    { id: 'analytics', label: 'Executive Analytics', icon: BarChart3, enabled: features.analytics && canViewAnalytics },
+    { id: 'leaves', label: 'Leave Requests', icon: Moon, enabled: features.leaves },
+    { id: 'tasks', label: 'Work Assignment', icon: CheckSquare, enabled: features.tasks },
   ];
+
+  const menuItems = allMenuItems.filter((item) => item.enabled);
 
   return (
     <div className="fixed inset-0 z-50 flex">
@@ -124,6 +137,30 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               })}
             </nav>
           </div>
+
+          {/* Quick Config / Setup Wizard */}
+          {onOpenWizard && (
+            <div className="mt-6 pt-5 border-t border-slate-100">
+              <span className="text-[11px] font-extrabold text-slate-400 tracking-wider uppercase block mb-2 px-2">
+                Administration
+              </span>
+              <button
+                onClick={() => {
+                  onOpenWizard();
+                  onClose();
+                }}
+                className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-teal-50/70 border border-teal-200 text-teal-900 font-bold text-xs hover:bg-teal-100/70 transition-all shadow-sm"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Wand2 className="w-4 h-4 text-teal-700" />
+                  <span>Client Setup Wizard</span>
+                </div>
+                <span className="text-[10px] bg-teal-200/90 text-teal-900 px-2 py-0.5 rounded-full uppercase font-mono font-bold">
+                  Config
+                </span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Footer */}

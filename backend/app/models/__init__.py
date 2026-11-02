@@ -9,6 +9,7 @@ from app.models.field_session import FieldSession, FieldSessionStatus
 from app.models.field_visit import FieldVisit, VisitStatus
 from app.models.task import Task, TaskPriority, TaskStatus
 from app.models.audit_log import AuditLog
+from app.models.system_config import SystemConfig
 
 __all__ = [
     "Employee",
@@ -30,4 +31,5 @@ __all__ = [
     "TaskPriority",
     "TaskStatus",
     "AuditLog",
+    "SystemConfig",
 ]

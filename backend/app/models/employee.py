@@ -14,6 +14,7 @@ class EmployeeRole(str, enum.Enum):
     ZSM = "ZSM"    # Zonal Sales Manager
     RSM = "RSM"    # Regional Sales Manager
     MR = "MR"      # Medical Representative / Field Officer / Field Executive
+    FINANCE = "FINANCE"  # Finance & Accounts / Disbursement Officer
 
 
 class Employee(Base, UUIDPrimaryKeyMixin, TimestampMixin):

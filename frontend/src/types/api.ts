@@ -8,7 +8,7 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
-  role: 'ADMIN' | 'GM' | 'ZSM' | 'RSM' | 'MR';
+  role: 'ADMIN' | 'GM' | 'ZSM' | 'RSM' | 'MR' | 'FINANCE';
   rank?: string;
   territory?: string;
   is_active: boolean;
@@ -115,3 +115,71 @@ export interface TaskItem {
   status: 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'OVERDUE';
   completed_at?: string;
 }
+
+export interface ValidationFlag {
+  code: string;
+  severity: 'info' | 'warning' | 'fraud';
+  message: string;
+}
+
+export interface ExpenseClaim {
+  id: string;
+  employee_id: string;
+  field_session_id?: string;
+  category: 'fuel' | 'travel_ticket' | 'food_allowance' | 'accommodation' | 'toll_parking' | 'client_entertainment' | 'miscellaneous';
+  amount: number;
+  claim_date: string;
+  receipt_url?: string;
+  description?: string;
+  is_split_bill: boolean;
+  split_with_employee_id?: string;
+  receipt_invoice_number?: string;
+  total_receipt_amount?: number;
+  image_sha256?: string;
+  validation_status: 'passed' | 'flagged' | 'suspicious';
+  validation_flags: ValidationFlag[];
+  status:
+    | 'draft'
+    | 'submitted'
+    | 'sent_back'
+    | 'pending_zsm_approval'
+    | 'manager_approved'
+    | 'zsm_approved'
+    | 'finance_verified'
+    | 'approved'
+    | 'reimbursed'
+    | 'rejected';
+  reviewed_by?: string;
+  reviewed_at?: string;
+  review_note?: string;
+  reimbursed_at?: string;
+
+  // Multi-tier audit trail
+  manager_reviewed_by?: string;
+  manager_reviewed_at?: string;
+  manager_review_note?: string;
+
+  zsm_reviewed_by?: string;
+  zsm_reviewed_at?: string;
+  zsm_review_note?: string;
+
+  finance_reviewed_by?: string;
+  finance_reviewed_at?: string;
+  finance_review_note?: string;
+  payment_reference?: string;
+
+  created_at: string;
+  updated_at: string;
+  employee_name?: string;
+  split_with_employee_name?: string;
+}
+
+export interface ExpenseUploadReceiptResult {
+  receipt_url: string;
+  image_sha256: string;
+  timestamp_delta_seconds: number;
+  extracted_amount?: number;
+  extracted_invoice_number?: string;
+  extracted_date?: string;
+}
+

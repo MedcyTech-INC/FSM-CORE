@@ -23,6 +23,26 @@ class TableRegistry(BaseSettings):
     field_visits: str = Field(default="field_visits", alias="TABLE_FIELD_VISITS")
     tasks: str = Field(default="tasks", alias="TABLE_TASKS")
     audit_log: str = Field(default="audit_log", alias="TABLE_AUDIT_LOG")
+    expenses: str = Field(default="expenses", alias="TABLE_EXPENSES")
+    analytics_daily_summary: str = Field(default="analytics_daily_summary", alias="TABLE_ANALYTICS_DAILY_SUMMARY")
+    leads: str = Field(default="leads", alias="TABLE_LEADS")
+    system_config: str = Field(default="system_config", alias="TABLE_SYSTEM_CONFIG")
+
+
+class FeatureRegistry(BaseSettings):
+    """
+    Client Feature Registry.
+    Controls which modular features are enabled for the current client deployment.
+    Allows turning modules on or off dynamically via configuration/wizard.
+    """
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+
+    attendance: bool = Field(default=True, alias="FEATURE_ATTENDANCE")
+    field_visits: bool = Field(default=True, alias="FEATURE_FIELD_VISITS")
+    leaves: bool = Field(default=True, alias="FEATURE_LEAVES")
+    tasks: bool = Field(default=True, alias="FEATURE_TASKS")
+    expenses: bool = Field(default=False, alias="FEATURE_EXPENSES")
+    analytics: bool = Field(default=False, alias="FEATURE_ANALYTICS")
 
 
 class Settings(BaseSettings):
@@ -71,6 +91,9 @@ class Settings(BaseSettings):
 
     # Dynamic Table Registry Instance
     tables: TableRegistry = Field(default_factory=TableRegistry)
+
+    # Dynamic Feature Registry Instance
+    features: FeatureRegistry = Field(default_factory=FeatureRegistry)
 
     @field_validator("database_url", mode="before")
     @classmethod
