@@ -21,9 +21,12 @@ from app.routers import (
     field_visits_router,
     leaves_router,
     tasks_router,
+    holidays_router,
 )
 from app.lead_management import router as lead_management_router
 from app.followups import router as followups_router
+from app.features.monthly_target.router import router as monthly_targets_router
+from app.features.revenue_leakage.router import router as revenue_leakage_router
 
 settings = get_settings()
 
@@ -52,8 +55,8 @@ def create_app() -> FastAPI:
         title=settings.app_name,
         description="Master Core FSM Engine - Universal Multi-Vertical Platform",
         version="1.0.0",
-        docs_url="/docs" if settings.debug else None,
-        redoc_url="/redoc" if settings.debug else None,
+        docs_url="/docs" if (settings.debug or settings.app_env != "production") else None,
+        redoc_url="/redoc" if (settings.debug or settings.app_env != "production") else None,
         lifespan=lifespan,
     )
 
@@ -100,6 +103,8 @@ def create_app() -> FastAPI:
             "followups": getattr(settings.features, "followups", True),
             "expenses": settings.features.expenses,
             "analytics": settings.features.analytics,
+            "monthly_targets": getattr(settings.features, "monthly_targets", True),
+            "revenue_leakage": getattr(settings.features, "revenue_leakage", True),
         }
 
     @app.post("/api/config/features", tags=["System"])
@@ -135,6 +140,8 @@ def create_app() -> FastAPI:
             "followups": getattr(settings.features, "followups", True),
             "expenses": settings.features.expenses,
             "analytics": settings.features.analytics,
+            "monthly_targets": getattr(settings.features, "monthly_targets", True),
+            "revenue_leakage": getattr(settings.features, "revenue_leakage", True),
         }
 
     # Core Foundation Routers (Always Mounted)
@@ -144,7 +151,7 @@ def create_app() -> FastAPI:
     app.include_router(breaks_router)
     app.include_router(field_sessions_router)
 
-    # Modular Feature Routers (Mounted Only When Enabled in Client Setup)
+    # Modular Feature Routers (Mounted When Enabled in Client Setup)
     if settings.features.field_visits:
         app.include_router(field_visits_router)
 
@@ -176,14 +183,28 @@ def create_app() -> FastAPI:
     except ImportError:
         pass
 
-    # Global Exception Handlers
+    # Monthly Targets, Holidays & Revenue Leakage Detection Routers
+    app.include_router(holidays_router)
+    if getattr(settings.features, "monthly_targets", True):
+        app.include_router(monthly_targets_router)
+
+    if getattr(settings.features, "revenue_leakage", True):
+        app.include_router(revenue_leakage_router)
+
+    from app.core.errors import register_error_handlers
+    register_error_handlers(app)
+
+    # Fallback uncaught exception handler
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             content={
-                "error": "Internal Server Error",
-                "detail": str(exc) if settings.debug else "An unexpected error occurred."
+                "error": {
+                    "code": "internal_error",
+                    "message": "Internal Server Error",
+                    "details": str(exc) if settings.debug else "An unexpected error occurred.",
+                }
             }
         )
 

@@ -7,6 +7,11 @@ logger = logging.getLogger("fsm_core.database")
 
 settings = get_settings()
 
+connect_args = {}
+if "asyncpg" in settings.database_url:
+    # Critic Gap P-2: Disable prepared statement cache on transaction-mode pooler (port 6543)
+    connect_args["statement_cache_size"] = 0
+
 engine: AsyncEngine = create_async_engine(
     settings.database_url,
     echo=settings.db_echo,
@@ -14,6 +19,7 @@ engine: AsyncEngine = create_async_engine(
     max_overflow=settings.db_max_overflow,
     pool_timeout=settings.db_pool_timeout,
     pool_pre_ping=True,  # Automatically detects disconnected pool connections
+    connect_args=connect_args,
 )
 
 

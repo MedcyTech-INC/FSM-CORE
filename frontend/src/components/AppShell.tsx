@@ -16,6 +16,8 @@ import {
   Receipt,
   BarChart3,
   Wand2,
+  Target,
+  ShieldAlert,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -39,6 +41,8 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
     ? `${user.first_name[0] || ''}${user.last_name[0] || ''}`.toUpperCase()
     : 'AV';
 
+  const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
+
   // Get current section title for desktop header
   const getPageTitle = () => {
     switch (currentTab) {
@@ -48,6 +52,16 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
         return { title: 'Lead Management', subtitle: 'Doctors, opportunities & commercial stages' };
       case 'followups':
         return { title: 'Follow-ups & Commitments', subtitle: 'Scheduled doctor calls, visits & SLA tracking' };
+      case 'targets':
+        return { title: 'Monthly Targets & Pacing', subtitle: 'Personal doctor visit quotas & daily run-rates' };
+      case 'team-targets':
+        return { title: 'Team Target Allocations', subtitle: 'Territory targets & performance tracking' };
+      case 'revenue-leakage':
+        return { title: 'Revenue Leakage Detection', subtitle: 'Automated warnings for neglected doctors & stalled pipeline' };
+      case 'leakage-rules':
+        return { title: 'Leakage Detection Rules', subtitle: 'Configure risk thresholds & scan parameters' };
+      case 'leakage-scans':
+        return { title: 'Scanner Audit Runs', subtitle: 'Log of automatic detector runs and outcomes' };
       case 'visits':
         return { title: 'Doctor Visits', subtitle: 'Field check-ins, GPS verification & proofs' };
       case 'expenses':
@@ -188,6 +202,47 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                   </div>
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
                     Actions
+                  </span>
+                </button>
+              )}
+            </nav>
+          </div>
+
+          {/* SECTION: Targets & Risk */}
+          <div>
+            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+              Targets & Risk
+            </span>
+            <nav className="space-y-1">
+              <button
+                onClick={() => onTabChange('targets')}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  currentTab === 'targets' || currentTab === 'team-targets'
+                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Target className={`w-4 h-4 stroke-[2.2] ${currentTab === 'targets' || currentTab === 'team-targets' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                  <span>Monthly Targets</span>
+                </div>
+              </button>
+
+              {isManager && (
+                <button
+                  onClick={() => onTabChange('revenue-leakage')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'revenue-leakage' || currentTab === 'leakage-rules' || currentTab === 'leakage-scans'
+                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <ShieldAlert className={`w-4 h-4 stroke-[2.2] ${currentTab === 'revenue-leakage' || currentTab === 'leakage-rules' || currentTab === 'leakage-scans' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <span>Revenue Leakage</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700">
+                    Alerts
                   </span>
                 </button>
               )}
@@ -457,20 +512,20 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
             <span className="text-[10px]">Follow-ups</span>
           </button>
 
-          {/* 4. Visits */}
+          {/* 4. Targets */}
           <button
-            onClick={() => onTabChange('visits')}
+            onClick={() => onTabChange('targets')}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${
-              currentTab === 'visits'
+              currentTab === 'targets' || currentTab === 'team-targets'
                 ? 'text-[#6B52B6] font-extrabold bg-purple-50 scale-105'
                 : 'text-slate-400 hover:text-slate-600 font-semibold'
             }`}
           >
-            <MapPin className="w-5 h-5 stroke-[2.2]" />
-            <span className="text-[10px]">Visits</span>
+            <Target className="w-5 h-5 stroke-[2.2]" />
+            <span className="text-[10px]">Targets</span>
           </button>
 
-          {/* 5. More / Menu (Opens Drawer for Expenses, Analytics, Attendance, Leaves, Tasks, Logout) */}
+          {/* 5. More / Menu (Opens Drawer for Visits, Expenses, Analytics, Leakage, Attendance, Leaves, Tasks, Logout) */}
           <button
             onClick={() => setDrawerOpen(true)}
             className="flex flex-col items-center gap-1 py-1 px-3 rounded-2xl text-slate-400 hover:text-slate-600 font-semibold transition-all"

@@ -12,13 +12,24 @@ import { LeadsPage } from './lead_management';
 import { FollowupsPage } from './followups';
 import { ExpensesPage } from './features/expenses';
 import { AnalyticsPage } from './features/analytics';
+import { MyTargetsPage } from './features/monthly_target/pages/MyTargetsPage';
+import { TargetsListPage } from './features/monthly_target/pages/TargetsListPage';
+import { TargetDetailPage } from './features/monthly_target/pages/TargetDetailPage';
+import { AlertsDashboardPage } from './features/revenue_leakage/pages/AlertsDashboardPage';
+import { AlertDetailPage } from './features/revenue_leakage/pages/AlertDetailPage';
+import { RulesConfigPage } from './features/revenue_leakage/pages/RulesConfigPage';
+import { ScanRunsPage } from './features/revenue_leakage/pages/ScanRunsPage';
 
 export const App: React.FC = () => {
-  const { isAuthenticated, loadSession, user } = useAuthStore();
+  const { user, isAuthenticated, loadSession } = useAuthStore();
   const { features, loadFeatures } = useFeatureStore();
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
+  const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
 
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
+  const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
+  const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
 
   useEffect(() => {
     loadSession();
@@ -37,19 +48,71 @@ export const App: React.FC = () => {
     if (currentTab === 'followups' && !features.followups) setCurrentTab('dashboard');
   }, [features, currentTab, canViewAnalytics]);
 
+  const handleTabChange = (tab: string) => {
+    setSelectedTargetId(null);
+    setSelectedAlertId(null);
+    setCurrentTab(tab);
+  };
+
   if (!isAuthenticated) {
     return <LoginPage />;
   }
 
   return (
-    <AppShell currentTab={currentTab} onTabChange={setCurrentTab}>
-      {currentTab === 'dashboard' && <DashboardPage onNavigate={setCurrentTab} />}
-      {features.field_visits && currentTab === 'visits' && <VisitsPage />}
-      {features.attendance && currentTab === 'attendance' && <AttendancePage />}
+    <AppShell currentTab={currentTab} onTabChange={handleTabChange}>
+      {currentTab === 'dashboard' && <DashboardPage onNavigate={handleTabChange} />}
       {features.leads && currentTab === 'leads' && <LeadsPage />}
       {features.followups && currentTab === 'followups' && <FollowupsPage />}
       {features.expenses && currentTab === 'expenses' && <ExpensesPage />}
       {features.analytics && canViewAnalytics && currentTab === 'analytics' && <AnalyticsPage />}
+
+      {/* Monthly Targets Module */}
+      {currentTab === 'targets' && (
+        <MyTargetsPage
+          onNavigateToTeamTargets={() => handleTabChange('team-targets')}
+          canManageTargets={isManager}
+        />
+      )}
+      {currentTab === 'team-targets' &&
+        (selectedTargetId ? (
+          <TargetDetailPage
+            targetId={selectedTargetId}
+            onBack={() => setSelectedTargetId(null)}
+          />
+        ) : (
+          <TargetsListPage
+            onSelectTarget={(id) => setSelectedTargetId(id)}
+            onNavigateToMyTargets={() => handleTabChange('targets')}
+          />
+        ))}
+
+      {/* Revenue Leakage Detection Module */}
+      {currentTab === 'revenue-leakage' &&
+        (selectedAlertId ? (
+          <AlertDetailPage
+            alertId={selectedAlertId}
+            onBack={() => setSelectedAlertId(null)}
+          />
+        ) : (
+          <AlertsDashboardPage
+            onSelectAlert={(id) => setSelectedAlertId(id)}
+            onNavigateToRules={() => handleTabChange('leakage-rules')}
+            canConfigureRules={isSeniorManager}
+          />
+        ))}
+      {currentTab === 'leakage-rules' && (
+        <RulesConfigPage
+          onBack={() => handleTabChange('revenue-leakage')}
+          onNavigateToScans={() => handleTabChange('leakage-scans')}
+        />
+      )}
+      {currentTab === 'leakage-scans' && (
+        <ScanRunsPage onBack={() => handleTabChange('leakage-rules')} />
+      )}
+
+      {/* Field Operations & Attendance */}
+      {features.field_visits && currentTab === 'visits' && <VisitsPage />}
+      {features.attendance && currentTab === 'attendance' && <AttendancePage />}
       {features.leaves && currentTab === 'leaves' && <LeavesPage />}
       {features.tasks && currentTab === 'tasks' && <TasksPage />}
     </AppShell>

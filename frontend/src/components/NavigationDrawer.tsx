@@ -13,6 +13,9 @@ import {
   Receipt,
   BarChart3,
   Wand2,
+  Target,
+  ShieldAlert,
+  Sliders,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -43,12 +46,21 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
     : 'AV';
 
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
+  const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
+  const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
 
   const pipelineItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '', enabled: true },
     { id: 'leads', label: 'Lead Management', icon: TrendingUp, badge: 'Pipeline', enabled: features.leads },
     { id: 'followups', label: 'Follow-ups', icon: BellRing, badge: 'Actions', enabled: features.followups },
   ].filter((item) => item.enabled);
+
+  const targetItems = [
+    { id: 'targets', label: 'Monthly Targets', icon: Target, badge: '', enabled: true },
+    ...(isManager ? [{ id: 'team-targets', label: 'Team Targets', icon: BarChart3, badge: '', enabled: true }] : []),
+    ...(isManager ? [{ id: 'revenue-leakage', label: 'Revenue Leakage', icon: ShieldAlert, badge: 'Alerts', enabled: true }] : []),
+    ...(isSeniorManager ? [{ id: 'leakage-rules', label: 'Warning Rules', icon: Sliders, badge: '', enabled: true }] : []),
+  ];
 
   const fieldItems = [
     { id: 'visits', label: 'Doctor Visits', icon: MapPin, enabled: features.field_visits },
@@ -157,6 +169,43 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
               </nav>
             </div>
           )}
+
+          {/* Section: Targets & Quotas */}
+          <div className="mt-5 pt-4 border-t border-slate-100">
+            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+              Targets & Leakage
+            </span>
+            <nav className="space-y-1">
+              {targetItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = currentTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onSelectTab(item.id);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                      <span>{item.label}</span>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700">
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
 
           {/* Section: Field Operations */}
           {fieldItems.length > 0 && (
