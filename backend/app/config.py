@@ -32,6 +32,17 @@ class TableRegistry(BaseSettings):
     analytics_daily_summary: str = Field(default="analytics_daily_summary", alias="TABLE_ANALYTICS_DAILY_SUMMARY")
     system_config: str = Field(default="system_config", alias="TABLE_SYSTEM_CONFIG")
 
+    # Feature: Pipeline & Daily Sales Plan Tables
+    customers: str = Field(default="fsm_customers", alias="TABLE_CUSTOMERS")
+    fsm_leads: str = Field(default="fsm_leads", alias="TABLE_FSM_LEADS")
+    fsm_followups: str = Field(default="fsm_followups", alias="TABLE_FSM_FOLLOWUPS")
+    activity_history: str = Field(default="fsm_activity_history", alias="TABLE_ACTIVITY_HISTORY")
+    monthly_targets: str = Field(default="fsm_monthly_targets", alias="TABLE_MONTHLY_TARGETS")
+    daily_sales_plans: str = Field(default="fsm_daily_sales_plans", alias="TABLE_DAILY_SALES_PLANS")
+    daily_sales_plan_items: str = Field(default="fsm_daily_sales_plan_items", alias="TABLE_DAILY_SALES_PLAN_ITEMS")
+    daily_sales_plan_item_obligations: str = Field(default="fsm_daily_sales_plan_item_obligations", alias="TABLE_DAILY_SALES_PLAN_ITEM_OBLIGATIONS")
+    daily_sales_plan_revisions: str = Field(default="fsm_daily_sales_plan_revisions", alias="TABLE_DAILY_SALES_PLAN_REVISIONS")
+
 
 class FeatureRegistry(BaseSettings):
     """
@@ -49,6 +60,9 @@ class FeatureRegistry(BaseSettings):
     followups: bool = Field(default=True, alias="FEATURE_FOLLOWUPS")
     expenses: bool = Field(default=True, alias="FEATURE_EXPENSES")
     analytics: bool = Field(default=True, alias="FEATURE_ANALYTICS")
+    monthly_targets: bool = Field(default=True, alias="FEATURE_MONTHLY_TARGETS")
+    revenue_leakage: bool = Field(default=True, alias="FEATURE_REVENUE_LEAKAGE")
+    daily_sales_plan: bool = Field(default=True, alias="FEATURE_DAILY_SALES_PLAN")
 
 
 class Settings(BaseSettings):
@@ -103,6 +117,20 @@ class Settings(BaseSettings):
     enable_customer_product_targets: bool = Field(default=False, alias="ENABLE_CUSTOMER_PRODUCT_TARGETS")
     archive_after_months: int = Field(default=24, alias="ARCHIVE_AFTER_MONTHS")
     fsm_schema: str = Field(default="fsm_app", alias="FSM_SCHEMA")
+
+    # AI Daily Sales Plan Optimization Settings (Configurable)
+    plan_standard_shift_hours: float = 8.5
+    plan_mandatory_lunch_minutes: int = 45
+    plan_chronic_backlog_days: int = 7
+    plan_chronic_backlog_urgency_cap: float = 40.0
+    plan_osrm_timeout_seconds: float = 4.0
+    plan_haversine_winding_factor: float = 1.2
+    plan_haversine_avg_speed_kmh: float = 30.0
+    plan_weight_urgency: float = 0.30
+    plan_weight_deal_value: float = 0.25
+    plan_weight_target_pacing: float = 0.20
+    plan_weight_lead_priority: float = 0.15
+    plan_weight_recency_decay: float = 0.10
 
     # Dynamic Table Registry Instance
     tables: TableRegistry = Field(default_factory=TableRegistry)

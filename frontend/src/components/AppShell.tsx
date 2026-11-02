@@ -18,6 +18,7 @@ import {
   Target,
   ShieldAlert,
   Camera,
+  Route,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -32,7 +33,7 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, children }) => {
-  const { user, logout } = useAuthStore();
+  const { user, logout, togglePersona } = useAuthStore();
   const { features } = useFeatureStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
@@ -48,6 +49,8 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
     switch (currentTab) {
       case 'dashboard':
         return { title: 'Operational Dashboard', subtitle: 'Overview of field pipeline & attendance' };
+      case 'daily-plan':
+        return { title: 'AI Daily Sales Plan', subtitle: 'Dynamic route optimization and itinerary execution' };
       case 'leads':
         return { title: 'Lead Management', subtitle: 'Doctors, opportunities & commercial stages' };
       case 'followups':
@@ -166,6 +169,23 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                   <Home className={`w-4 h-4 stroke-[2.2] ${currentTab === 'dashboard' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
                   <span>Dashboard</span>
                 </div>
+              </button>
+
+              <button
+                onClick={() => onTabChange('daily-plan')}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  currentTab === 'daily-plan'
+                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <Route className={`w-4 h-4 stroke-[2.2] ${currentTab === 'daily-plan' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                  <span>AI Daily Sales Plan</span>
+                </div>
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100/80 text-[#6B52B6]">
+                  AI
+                </span>
               </button>
 
               {features.leads && (
@@ -417,6 +437,21 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
 
             {/* Right: Setup Wizard + Search + Direct Mode + Bell + Profile */}
             <div className="flex items-center gap-2 sm:gap-3">
+              {/* Persona Quick Switcher Pill (Manager <-> Field Rep) */}
+              <button
+                onClick={() => togglePersona()}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm border hover:scale-[1.02] bg-gradient-to-r from-purple-50 via-white to-purple-50 text-[#6B52B6] border-purple-200"
+                title="Click to switch between Manager View and Field Representative View"
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>
+                  {user?.role === 'MR' ? '💼 Rep: Rahul' : '👔 Mgr: Alex'}
+                </span>
+                <span className="text-[10px] font-bold text-[#6B52B6] bg-purple-100/80 px-1.5 py-0.5 rounded-full ml-0.5">
+                  Switch
+                </span>
+              </button>
+
               {/* Setup Wizard Button */}
               <button
                 onClick={() => setWizardOpen(true)}

@@ -19,7 +19,7 @@ import { AlertsDashboardPage } from './features/revenue_leakage/pages/AlertsDash
 import { AlertDetailPage } from './features/revenue_leakage/pages/AlertDetailPage';
 import { RulesConfigPage } from './features/revenue_leakage/pages/RulesConfigPage';
 import { ScanRunsPage } from './features/revenue_leakage/pages/ScanRunsPage';
-
+import { DailyPlanPage } from './pages/DailyPlanPage';
 export const App: React.FC = () => {
   const { user, isAuthenticated, loadSession } = useAuthStore();
   const { features, loadFeatures } = useFeatureStore();
@@ -61,6 +61,7 @@ export const App: React.FC = () => {
   return (
     <AppShell currentTab={currentTab} onTabChange={handleTabChange}>
       {currentTab === 'dashboard' && <DashboardPage onNavigate={handleTabChange} />}
+      {currentTab === 'daily-plan' && <DailyPlanPage />}
       {features.leads && currentTab === 'leads' && <LeadsPage />}
       {features.followups && currentTab === 'followups' && <FollowupsPage />}
       {features.expenses && currentTab === 'expenses' && <ExpensesPage />}
@@ -114,8 +115,7 @@ export const App: React.FC = () => {
       {features.field_visits && currentTab === 'visits' && <VisitsPage />}
       {features.attendance && currentTab === 'attendance' && <AttendancePage />}
       {features.leaves && currentTab === 'leaves' && <LeavesPage />}
-      {features.tasks && currentTab === 'tasks' && <TasksPage />}
-    </AppShell>
+      {features.tasks && currentTab === 'tasks' && <TasksPage />}    </AppShell>
   );
 };
 

@@ -16,6 +16,7 @@ import {
   ShieldAlert,
   Sliders,
   Camera,
+  Route,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
@@ -51,6 +52,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
 
   const pipelineItems = [
     { id: 'dashboard', label: 'Home Dashboard', icon: Home, badge: '', enabled: true },
+    { id: 'daily-plan', label: 'AI Daily Sales Plan', icon: Route, badge: 'AI', enabled: true },
     { id: 'leads', label: 'Lead Management', icon: TrendingUp, badge: 'Pipeline', enabled: features.leads },
     { id: 'followups', label: 'Follow-ups', icon: BellRing, badge: 'Actions', enabled: features.followups },
   ].filter((item) => item.enabled);

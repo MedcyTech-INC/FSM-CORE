@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Daily Sales Plan & Route Optimization Engine - Technical Specification</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Mermaid.js -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      fontFamily: 'Inter, sans-serif',
+      themeVariables: {
+        primaryColor: '#e0f2f1',
+        primaryTextColor: '#004d40',
+        primaryBorderColor: '#00897b',
+        lineColor: '#00897b',
+        secondaryColor: '#f1f5f9',
+        tertiaryColor: '#ffffff'
+      }
+    });
+  </script>
+  <style>
+    :root {
+      --primary: #00897B;
+      --primary-dark: #00695C;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --bg-page: #F8FAFC;
+      --border-color: #E2E8F0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.65;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .no-print-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #0F172A;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .no-print-bar button {
+      background: #00897B;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .no-print-bar button:hover {
+      background: #00796B;
+    }
+    .container {
+      max-width: 960px;
+      margin: 30px auto;
+      background: white;
+      padding: 50px 60px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #0F172A;
+      border-bottom: 2px solid #E2E8F0;
+      padding-bottom: 12px;
+      margin-top: 0;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0F172A;
+      margin-top: 36px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #EEF2F6;
+      padding-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E293B;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+    h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    p, li {
+      color: #334155;
+      font-size: 13.5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 12.5px;
+    }
+    th, td {
+      padding: 10px 14px;
+      text-align: left;
+      border: 1px solid #E2E8F0;
+    }
+    th {
+      background-color: #F8FAFC;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    tr:nth-child(even) {
+      background-color: #FAFCFE;
+    }
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background-color: #F1F5F9;
+      color: #0F172A;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid #E2E8F0;
+    }
+    pre {
+      background: #0F172A;
+      color: #F8FAFC;
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      border: none;
+      padding: 0;
+    }
+    .diagram-wrapper {
+      margin: 24px 0;
+      padding: 20px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      overflow-x: auto;
+    }
+    pre.mermaid {
+      background: transparent;
+      color: #0F172A;
+      margin: 0;
+      padding: 0;
+      font-family: inherit;
+      border: none;
+    }
+    .alert {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 20px 0;
+    }
+    .alert-important {
+      background-color: #FEF3C7;
+      border-left: 4px solid #F59E0B;
+      color: #92400E;
+    }
+    .alert-title {
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .alert-content {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .math-box {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      color: #166534;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    @media print {
+      body {
+        background: white;
+        font-size: 10.5pt;
+      }
+      .no-print-bar {
+        display: none !important;
+      }
+      .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+      }
+      .diagram-wrapper {
+        break-inside: avoid;
+        page-break-inside: avoid;
+        border: 1px solid #CBD5E1;
+        margin: 16px 0;
+      }
+      table {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      h1, h2, h3 {
+        break-after: avoid;
+        page-break-after: avoid;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 15mm 15mm 15mm 15mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="no-print-bar">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span style="font-weight:800; font-size:14px; letter-spacing:0.02em;">FSM CORE • AI Daily Sales Plan Feature Documentation</span>
+    </div>
+    <button onclick="window.print()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+      <span>Print / Save as PDF</span>
+    </button>
+  </div>
+
+  <div class="container">
+    <h1>AI Daily Sales Plan &amp; Route Optimization Engine</h1>
+<h2>Technical Specification &amp; Architecture Report</h2>
+<hr />
+<h2>1. Executive Summary</h2>
+<p>The <strong>AI Daily Sales Plan &amp; Route Optimization Engine</strong> is an intelligent field force planning system designed to eliminate manual, ad-hoc scheduling for medical representatives (MRs) and field executives. It deterministically analyzes CRM leads, commercial deal values, urgent doctor follow-ups, and monthly sales quota deficits to automatically synthesize an optimal daily itinerary.</p>
+<p>The system combines:</p>
+<ol>
+<li><strong>Multi-Factor Commercial Lead Scoring</strong> with transparent, explainable <em>&quot;Why Badges&quot;</em>.</li>
+<li><strong>Traveling Salesperson Problem (TSP) Route Optimization</strong> using Open Source Routing Machine (OSRM) road networks and 2-Opt local search.</li>
+<li><strong>Strict Labor Compliance</strong>, automatically locking a mandatory 45-minute lunch break between 13:00 and 14:15.</li>
+<li><strong>Hierarchical Governance</strong>, providing managerial review and Just-In-Time (JIT) auto-approval at 09:00 AM.</li>
+</ol>
+<div class="alert alert-important"><div class="alert-title">IMPORTANT REQUIREMENT</div><div class="alert-content"><br />
+<strong>Functional Scope Boundary:</strong><br />
+This feature's operational boundary is strictly <strong>Plan Generation &amp; Route Recommendation</strong> (from candidate doctor ingestion through AI scoring, routing optimization, lunch break scheduling, manager approval, and itinerary delivery). Field visit execution workflows (clinic check-in, GPS verification, photo proof capture, and check-out) belong to Core FSM and are intentionally excluded from this feature boundary.</div></div>
+<hr />
+<h2>2. High-Level System Architecture</h2>
+<p>The feature is built on a clean separation of concerns across a modern web stack:</p>
+<div class="diagram-wrapper"><pre class="mermaid">
+flowchart TD
+    subgraph Frontend["Frontend Client (React 18 + Vite + Tailwind CSS)"]
+        UI["Daily Plan Page (DailyPlanPage.tsx)"]
+        Modal["Plan Generation Modal (PlanGenerateModal.tsx)"]
+        Store["State Management (Zustand: planStore.ts)"]
+        Client["API Client / Demo Mock Engine (client.ts)"]
+        UI --> Modal
+        Modal --> Store
+        Store --> Client
+    end
+
+    subgraph Backend["Backend Engine (FastAPI + Python 3.14/3.13)"]
+        Router["REST Router (/api/v1/plans/*)"]
+        Service["Plan Generation Service (PlanService)"]
+        Scorer["Multi-Factor Lead Scorer (LeadScorer)"]
+        Optimizer["Deterministic Route Optimizer (RouteOptimizer)"]
+        OSRM["OSRM Routing Engine / Haversine Matrix Client"]
+        Hier["Territory Hierarchy Service (HierarchyService)"]
+
+        Router --> Service
+        Service --> Hier
+        Service --> Scorer
+        Service --> Optimizer
+        Optimizer --> OSRM
+    end
+
+    subgraph Database["Relational Store (PostgreSQL 15+ / PostGIS)"]
+        T1[("fsm_customers")]
+        T2[("fsm_leads")]
+        T3[("fsm_followups")]
+        T4[("fsm_monthly_targets")]
+        T5[("fsm_daily_sales_plans")]
+        T6[("fsm_daily_sales_plan_items")]
+        T7[("fsm_daily_sales_plan_item_obligations")]
+        T8[("fsm_daily_sales_plan_revisions")]
+        T9[("fsm_activity_history")]
+
+        Service --> Database
+    end
+
+    Client -->|HTTP / JSON REST API| Router
+</pre></div>
+<hr />
+<h2>3. End-to-End Execution Flow</h2>
+<p>Generating a daily sales plan follows an 8-step pipeline from the field representative's request to the rendered schedule:</p>
+<div class="diagram-wrapper"><pre class="mermaid">
+sequenceDiagram
+    autonumber
+    actor Rep as Field Representative
+    participant UI as Frontend UI (React)
+    participant Store as Zustand Store
+    participant API as FastAPI Router
+    participant Svc as PlanService
+    participant Scorer as LeadScorer
+    participant Opt as RouteOptimizer
+    participant DB as PostgreSQL (fsm_*)
+
+    Rep->>UI: Clicks [ ✨ Generate Today's Route ]
+    UI->>Rep: Prompts Modal (Date, Max Stops: 3-6, Start GPS)
+    Rep->>UI: Submits Generation Parameters
+    UI->>Store: generatePlan({ startLat, startLon, maxStops, planDate })
+    Store->>API: POST /api/v1/plans/generate
+    
+    API->>Svc: generate_daily_plan(employee_id, date, coords, max_stops)
+    Svc->>DB: Fetch Active Leads, Pending Follow-ups, and Monthly Target
+    DB-->>Svc: Candidate Records Returned
+    
+    Svc->>Scorer: score_and_rank_candidates(leads, followups, monthly_target)
+    Scorer-->>Svc: Top N Ranked Candidates + Why Badges
+    
+    Svc->>Opt: optimize_route(start_gps, candidates, shift_hours=8.5)
+    Opt->>Opt: Query OSRM Distance Matrix (Fallback: Haversine)
+    Opt->>Opt: Solve 2-Opt TSP & Assign Time Windows
+    Opt->>Opt: Lock Mandatory 45-min Lunch Break (13:00 - 13:45)
+    Opt-->>Svc: Sequenced Timeline Elements
+    
+    Svc->>DB: Persist fsm_daily_sales_plans, items & obligations
+    DB-->>Svc: Plan Committed (Status: APPROVED / DRAFT)
+    
+    Svc-->>API: PlanResponse Object
+    API-->>Store: 200 OK + JSON Payload
+    Store->>UI: Render RouteProgressCard & PlanTimeline
+    UI-->>Rep: Displays Sequenced Doctor Itinerary + Reset Option
+</pre></div>
+<hr />
+<h2>4. Algorithmic Breakdown: How the Plan Is Generated</h2>
+<h3>4.1. Multi-Factor Candidate Scoring Engine (<code>LeadScorer</code>)</h3>
+<p>Rather than relying on arbitrary doctor lists, candidate doctors are selected using an objective weighted composite score:</p>
+<div class="math-box"><strong>Final Score</strong> = (w<sub>u</sub> × S<sub>urgency</sub>) + (w<sub>v</sub> × S<sub>value</sub>) + (w<sub>p</sub> × S<sub>pacing</sub>) + (w<sub>pr</sub> × S<sub>priority</sub>) + (w<sub>r</sub> × S<sub>recency</sub>)</div>
+<h4>Default Production Weights (<code>backend/app/config.py</code>):</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Factor</th>
+<th style="text-align:center">Weight (w)</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Urgency</strong> (S<sub>urgency</sub>)</td>
+<td style="text-align:center"><strong>0.30</strong></td>
+<td style="text-align:left">Overdue commitments, chronic backlog ($&gt;7$ days overdue), pending callbacks</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Deal Value</strong> (S<sub>value</sub>)</td>
+<td style="text-align:center"><strong>0.25</strong></td>
+<td style="text-align:left">Log-scaled commercial opportunity value (ln(1 + expected_value))</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Target Pacing</strong> (S<sub>pacing</sub>)</td>
+<td style="text-align:center"><strong>0.20</strong></td>
+<td style="text-align:left">Boost applied when the representative is behind their monthly quota deficit</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Lead Priority</strong> (S<sub>priority</sub>)</td>
+<td style="text-align:center"><strong>0.15</strong></td>
+<td style="text-align:left">CRM priority level (<code>HIGH</code> = 1.0, <code>MEDIUM</code> = 0.6, <code>LOW</code> = 0.2)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Recency Decay</strong> (S<sub>recency</sub>)</td>
+<td style="text-align:center"><strong>0.10</strong></td>
+<td style="text-align:left">Exponential decay prioritizing doctors not visited recently (Δt)</td>
+</tr>
+</tbody>
+</table>
+<h4>Explainable &quot;Why Badges&quot;</h4>
+<p>Every stop generated carries human-readable justification badges presented in the UI:</p>
+<ul>
+<li><code>CONVERSION</code> — <em>&quot;High Conversion Probability&quot;</em> (applied to <code>QUALIFIED</code> stage deals).</li>
+<li><code>VALUE</code> — <em>&quot;High Value Deal (₹X.XL)&quot;</em> (applied to deals $≥ ₹1,50,000$).</li>
+<li><code>URGENCY</code> — <em>&quot;Doctor Follow-up Urgent&quot;</em> (applied to commitments due or overdue).</li>
+<li><code>PACING</code> — <em>&quot;Target Pacing Catchup&quot;</em> (applied to bridge monthly revenue deficit).</li>
+</ul>
+<hr />
+<h3>4.2. Traveling Salesperson Route Optimizer (<code>RouteOptimizer</code>)</h3>
+<p>Once the top K candidate doctors are selected, they are passed to the routing engine to minimize driving distance and transit time:</p>
+<ol>
+<li><strong>Distance &amp; Duration Matrix:</strong>
+<ul>
+<li>Coordinates (origin GPS + doctor clinics) are queried against the local <strong>OSRM Table Service</strong> (<code>http://localhost:5000/table/v1/driving/</code>).</li>
+<li>If OSRM is offline, times out (&gt; 4.0s), or returns HTTP errors, the system automatically falls back to <strong>Haversine Great-Circle Distance</strong> adjusted by an empirical winding factor (1.20) and average city speed (30.0 km/h).</li>
+</ul>
+</li>
+<li><strong>2-Opt Local Search Heuristic:</strong>
+<ul>
+<li>Evaluates tour permutations to eliminate crossed paths and minimize total route transit time.</li>
+</ul>
+</li>
+<li><strong>Time Window Assignment:</strong>
+<ul>
+<li>Morning stops commence at <strong>09:30 AM</strong>.</li>
+<li>Standard commercial visit duration: <strong>45 minutes</strong> on site.</li>
+<li>Transit duration is dynamically added between consecutive stops based on matrix results.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3>4.3. Labor Policy Compliance: Mandatory 45-Minute Lunch Break</h3>
+<p>The optimizer enforces labor welfare regulations by guaranteeing a non-billable repast window:</p>
+<ul>
+<li><strong>Lunch Break Duration:</strong> Exactly <strong>45 minutes</strong>.</li>
+<li><strong>Permissible Window:</strong> Scheduled strictly between <strong>13:00 and 14:15</strong>.</li>
+<li><strong>Timeline Integration:</strong> Stored as an explicit stop record (<code>activity_type = 'LUNCH_BREAK'</code>, <code>stop_type = 'LUNCH_BREAK'</code>).</li>
+<li><strong>UI Representation:</strong> Renders a distinct amber-themed <strong>Midday Repast Card</strong> with an approved labor policy notice.</li>
+</ul>
+<hr />
+<h3>4.4. Governance &amp; Approval Lifecycle</h3>
+<div class="diagram-wrapper"><pre class="mermaid">
+stateDiagram-v2
+    [*] --> DRAFT : Plan Generated
+    DRAFT --> APPROVED : Manager Explicit Approval
+    DRAFT --> APPROVED : JIT Auto-Approval (09:00 AM UTC/IST)
+    APPROVED --> IN_PROGRESS : Field Workday Begins
+    IN_PROGRESS --> COMPLETED : All Stops Executed
+</pre></div>
+<ul>
+<li><strong>Manager Explicit Approval:</strong> Area Sales Managers (RSM, ZSM, GM, ADMIN) can review and approve subordinate draft routes via <code>/approve</code>.</li>
+<li><strong>Just-In-Time (JIT) Auto-Approval:</strong> To prevent field representatives from being blocked if a manager is unavailable, any <code>DRAFT</code> plan for the current date is automatically promoted to <code>APPROVED</code> at 09:00 AM.</li>
+<li><strong>Role Hierarchy Authorization:</strong> Strict downward reporting tree checks ensure Representatives cannot approve their own plans or view peer plans across territories.</li>
+</ul>
+<hr />
+<h2>5. Database Architecture &amp; Schema Specification</h2>
+<p>All 9 feature tables are prefixed with <strong><code>fsm_</code></strong> for clean multi-tenant namespacing.</p>
+<div class="diagram-wrapper"><pre class="mermaid">
+erDiagram
+    fsm_customers ||--o{ fsm_leads : "has"
+    fsm_customers ||--o{ fsm_followups : "has"
+    fsm_leads ||--o{ fsm_followups : "originates"
+    fsm_leads ||--o{ fsm_daily_sales_plan_items : "scheduled as"
+    fsm_monthly_targets }o--|| employees : "assigned to"
+    fsm_daily_sales_plans ||--|{ fsm_daily_sales_plan_items : "contains stops"
+    fsm_daily_sales_plan_items ||--o{ fsm_daily_sales_plan_item_obligations : "has checklist"
+    fsm_daily_sales_plans ||--o{ fsm_daily_sales_plan_revisions : "audit snapshots"
+    fsm_leads ||--o{ fsm_activity_history : "logs activity"
+</pre></div>
+<hr />
+<h3>5.1. <code>fsm_customers</code> (Universal Customer Directory)</h3>
+<p>Stores verified clinic, hospital, and healthcare provider profiles.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique customer identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>name</code></td>
+<td style="text-align:left"><code>VARCHAR(200)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Clinic or Doctor name</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>customer_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'Doctor'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Category (<code>Doctor</code>, <code>Hospital</code>, <code>Clinic</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>contact_person</code></td>
+<td style="text-align:left"><code>VARCHAR(150)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Lead doctor or procurement officer</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>phone</code></td>
+<td style="text-align:left"><code>VARCHAR(20)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Contact telephone number</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>location_city</code></td>
+<td style="text-align:left"><code>VARCHAR(100)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">City location</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>location_area</code></td>
+<td style="text-align:left"><code>VARCHAR(150)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Locality or medical cluster</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>territory</code></td>
+<td style="text-align:left"><code>VARCHAR(150)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Territory code</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>latitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Geocoded latitude coordinate</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>longitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Geocoded longitude coordinate</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>is_active</code></td>
+<td style="text-align:left"><code>BOOLEAN</code></td>
+<td style="text-align:left"><code>DEFAULT TRUE</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Operational status</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>DEFAULT now()</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Creation timestamp</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>updated_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>DEFAULT now()</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Last update timestamp</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.2. <code>fsm_leads</code> (Commercial Deals &amp; Opportunities)</h3>
+<p>Stores commercial opportunities attached to doctors.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique lead identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>employee_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Assigned field representative</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_by_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Creator identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>customer_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; fsm_customers(id)</code></td>
+<td style="text-align:left">Linked healthcare facility</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>customer_name</code></td>
+<td style="text-align:left"><code>VARCHAR(200)</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Denormalized customer name</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>customer_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'Doctor'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Doctor / Hospital / Clinic</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>title</code></td>
+<td style="text-align:left"><code>VARCHAR(300)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Deal opportunity name</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>opportunity_type</code></td>
+<td style="text-align:left"><code>VARCHAR(80)</code></td>
+<td style="text-align:left"><code>DEFAULT 'Hospital service'</code></td>
+<td style="text-align:left">Service / product category</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stage</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>CHECK IN ('NEW','CONTACTED','INTERESTED','QUALIFIED','CONVERTED','LOST')</code></td>
+<td style="text-align:left">Current pipeline stage</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>priority</code></td>
+<td style="text-align:left"><code>VARCHAR(20)</code></td>
+<td style="text-align:left"><code>CHECK IN ('HIGH','MEDIUM','LOW')</code></td>
+<td style="text-align:left">Commercial priority</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>expected_value</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Estimated deal value (₹)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>expected_close_date</code></td>
+<td style="text-align:left"><code>DATE</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Targeted close date</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>latitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Meeting GPS latitude</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>longitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Meeting GPS longitude</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>notes</code></td>
+<td style="text-align:left"><code>TEXT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Discussion / qualification notes</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>DEFAULT now()</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Record creation timestamp</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.3. <code>fsm_followups</code> (Doctor Commitments &amp; Follow-up Meetings)</h3>
+<p>Stores time-sensitive commitments driving urgency scoring.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique follow-up identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>employee_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Assigned representative</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lead_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; fsm_leads(id)</code></td>
+<td style="text-align:left">Associated commercial lead</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>action_type</code></td>
+<td style="text-align:left"><code>VARCHAR(80)</code></td>
+<td style="text-align:left"><code>DEFAULT 'Visit'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Action mode (<code>Visit</code>, <code>Call</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>title</code></td>
+<td style="text-align:left"><code>VARCHAR(300)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Appointment title</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>due_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Due date and time</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>priority</code></td>
+<td style="text-align:left"><code>VARCHAR(20)</code></td>
+<td style="text-align:left"><code>CHECK IN ('HIGH','MEDIUM','LOW')</code></td>
+<td style="text-align:left">Urgency priority</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>status</code></td>
+<td style="text-align:left"><code>VARCHAR(30)</code></td>
+<td style="text-align:left"><code>CHECK IN ('PENDING','COMPLETED','CANCELLED')</code></td>
+<td style="text-align:left">Follow-up status</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>DEFAULT now()</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Creation timestamp</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.4. <code>fsm_monthly_targets</code> (Monthly Sales Quotas)</h3>
+<p>Stores representative monthly revenue and visit quotas for target pacing deficit computation.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique target identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>employee_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Assigned representative</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>target_month</code></td>
+<td style="text-align:left"><code>DATE</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">First date of target month</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>target_revenue</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>DEFAULT 0.0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Monthly revenue quota (₹)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>achieved_revenue</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>DEFAULT 0.0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Month-to-date achieved revenue (₹)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>target_visits</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Monthly visit count target</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>achieved_visits</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Completed visits count</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>status</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'ACTIVE'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Target status</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>uq_emp_month</code></td>
+<td style="text-align:left"><code>UNIQUE</code></td>
+<td style="text-align:left"><code>(employee_id, target_month)</code></td>
+<td style="text-align:left">Exactly one target per rep per month</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.5. <code>fsm_daily_sales_plans</code> (Plan Master Header)</h3>
+<p>Stores the master header of the optimized daily sales itinerary.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique plan identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>employee_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Representative for this plan</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>plan_date</code></td>
+<td style="text-align:left"><code>DATE</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Itinerary date</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>version</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 1</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Plan version (v1, v2)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>revision_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'AI_INITIAL'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Revision category</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>status</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'DRAFT'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left"><code>DRAFT</code>, <code>APPROVED</code>, <code>IN_PROGRESS</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>total_planned_stops</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Total commercial stops count</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>total_planned_distance_meters</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>DEFAULT 0.0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Total travel distance (meters)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>total_planned_duration_seconds</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Total route duration (seconds)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>routing_engine</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'OSRM_2OPT_TSPTW'</code></td>
+<td style="text-align:left">Optimization engine tag</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>idempotency_key</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>UNIQUE</code></td>
+<td style="text-align:left">Prevents duplicate generation</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>approved_by_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Approving manager ID</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>approved_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Approval timestamp</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>uq_plan_version</code></td>
+<td style="text-align:left"><code>UNIQUE</code></td>
+<td style="text-align:left"><code>(employee_id, plan_date, version)</code></td>
+<td style="text-align:left">Ensures strict version isolation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.6. <code>fsm_daily_sales_plan_items</code> (Itinerary Stops &amp; Timeline Blocks)</h3>
+<p>Stores chronologically ordered timeline elements (doctor stops and lunch break).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique stop identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>plan_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; fsm_daily_sales_plans(id) ON DELETE CASCADE</code></td>
+<td style="text-align:left">Parent plan link</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>sequence_order</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Stop sequence position (1, 2, 3...)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>activity_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'PHYSICAL_VISIT'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left"><code>PHYSICAL_VISIT</code> or <code>LUNCH_BREAK</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>stop_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'AI_RECOMMENDED'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left"><code>MANAGER_MANDATORY</code>, <code>AI_RECOMMENDED</code>, <code>LUNCH_BREAK</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>planned_arrival_time</code></td>
+<td style="text-align:left"><code>TIME</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Planned arrival (e.g. <code>09:30:00</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>planned_departure_time</code></td>
+<td style="text-align:left"><code>TIME</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Planned departure (e.g. <code>10:15:00</code>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>estimated_duration_minutes</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 20</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Time at site (default: 45 min for visits)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lead_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; fsm_leads(id)</code></td>
+<td style="text-align:left">Associated commercial lead</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>latitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Stop latitude</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>longitude</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Stop longitude</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>location_address</code></td>
+<td style="text-align:left"><code>TEXT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">Clinic or hospital street address</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>recommendation_score</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>NULLABLE</code></td>
+<td style="text-align:left">AI composite score</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>recommendation_reasons</code></td>
+<td style="text-align:left"><code>JSONB</code></td>
+<td style="text-align:left"><code>DEFAULT '{}'::jsonb</code></td>
+<td style="text-align:left">Contains Why Badges, doctor name, lead title</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>status</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'PENDING'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Stop execution status</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>transit_distance_m</code></td>
+<td style="text-align:left"><code>FLOAT</code></td>
+<td style="text-align:left"><code>DEFAULT 0.0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Travel distance from previous stop</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>transit_duration_s</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>DEFAULT 0</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Travel time from previous stop</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>uq_item_seq</code></td>
+<td style="text-align:left"><code>UNIQUE</code></td>
+<td style="text-align:left"><code>(plan_id, sequence_order)</code></td>
+<td style="text-align:left">Guarantees non-overlapping sequence</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.7. <code>fsm_daily_sales_plan_item_obligations</code> (Checklists &amp; Deliverables per Stop)</h3>
+<p>Stores tasks and contractual deliverables tied to a doctor stop.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique obligation identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>plan_item_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; fsm_daily_sales_plan_items(id) ON DELETE CASCADE</code></td>
+<td style="text-align:left">Parent stop</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>obligation_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left"><code>TASK</code> or <code>FOLLOW_UP</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>obligation_title</code></td>
+<td style="text-align:left"><code>VARCHAR(255)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Deliverable title (e.g. <em>Deliver Clinical Trial Dossier</em>)</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>is_mandatory</code></td>
+<td style="text-align:left"><code>BOOLEAN</code></td>
+<td style="text-align:left"><code>DEFAULT FALSE</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Required deliverable flag</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lead_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; fsm_leads(id)</code></td>
+<td style="text-align:left">Source lead</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>fulfillment_status</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'PENDING'</code>, <code>NOT NULL</code></td>
+<td style="text-align:left"><code>PENDING</code>, <code>FULFILLED</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.8. <code>fsm_daily_sales_plan_revisions</code> (Historical Route Snapshots)</h3>
+<p>Immutable audit snapshots preserving previous routes when revisions or replans occur.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique snapshot identifier</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>plan_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; fsm_daily_sales_plans(id) ON DELETE CASCADE</code></td>
+<td style="text-align:left">Target plan</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>version</code></td>
+<td style="text-align:left"><code>INTEGER</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Snapshot version number</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>revision_type</code></td>
+<td style="text-align:left"><code>VARCHAR(50)</code></td>
+<td style="text-align:left"><code>DEFAULT 'MIDDAY_REPLAN'</code></td>
+<td style="text-align:left">Reason for revision</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>plan_snapshot</code></td>
+<td style="text-align:left"><code>JSONB</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Complete serialized JSON state of plan and items</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_by_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Employee who triggered snapshot</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>created_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>DEFAULT now()</code>, <code>NOT NULL</code></td>
+<td style="text-align:left">Timestamp of snapshot creation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>5.9. <code>fsm_activity_history</code> (Audit Trail)</h3>
+<p>Logs all state changes, field outcomes, and interactions.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Column</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Constraints</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>PRIMARY KEY</code>, <code>gen_random_uuid()</code></td>
+<td style="text-align:left">Unique activity log ID</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>lead_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NULLABLE</code>, <code>FK -&gt; fsm_leads(id)</code></td>
+<td style="text-align:left">Linked lead</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>actor_id</code></td>
+<td style="text-align:left"><code>UUID</code></td>
+<td style="text-align:left"><code>NOT NULL</code>, <code>FK -&gt; employees(id)</code></td>
+<td style="text-align:left">Employee performing change</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>activity_type</code></td>
+<td style="text-align:left"><code>VARCHAR(80)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left"><code>STAGE_CHANGE</code>, <code>PLAN_APPROVED</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>title</code></td>
+<td style="text-align:left"><code>VARCHAR(255)</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Human-readable action description</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>occurred_at</code></td>
+<td style="text-align:left"><code>TIMESTAMPTZ</code></td>
+<td style="text-align:left"><code>NOT NULL</code></td>
+<td style="text-align:left">Event timestamp</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>6. API Interface Specification</h2>
+<h3>6.1. Generate Daily Sales Plan</h3>
+<ul>
+<li><strong>Endpoint:</strong> <code>POST /api/v1/plans/generate</code></li>
+<li><strong>Access:</strong> Representative (for self) or Manager (for subordinates).</li>
+</ul>
+<h4>Request Payload:</h4>
+<pre><code class="language-json">{
+  &quot;employee_id&quot;: &quot;11111111-1111-1111-1111-111111111111&quot;,
+  &quot;plan_date&quot;: &quot;2026-11-02&quot;,
+  &quot;start_latitude&quot;: 12.9716,
+  &quot;start_longitude&quot;: 77.5946,
+  &quot;max_stops&quot;: 5,
+  &quot;idempotency_key&quot;: &quot;9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d&quot;,
+  &quot;force_regenerate&quot;: false
+}
+</code></pre>
+<h4>Successful Response (<code>200 OK</code>):</h4>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;plan-1793598000&quot;,
+  &quot;employee_id&quot;: &quot;11111111-1111-1111-1111-111111111111&quot;,
+  &quot;plan_date&quot;: &quot;2026-11-02&quot;,
+  &quot;version&quot;: 1,
+  &quot;revision_type&quot;: &quot;INITIAL_ROUTING&quot;,
+  &quot;status&quot;: &quot;APPROVED&quot;,
+  &quot;total_planned_stops&quot;: 5,
+  &quot;total_planned_distance_meters&quot;: 18400.0,
+  &quot;total_planned_duration_seconds&quot;: 18900,
+  &quot;routing_engine&quot;: &quot;OSRM_2OPT_TSPTW&quot;,
+  &quot;approved_at&quot;: &quot;2026-11-02T04:00:00Z&quot;,
+  &quot;items&quot;: [
+    {
+      &quot;id&quot;: &quot;item-1-1793598001&quot;,
+      &quot;sequence_order&quot;: 1,
+      &quot;activity_type&quot;: &quot;PHYSICAL_VISIT&quot;,
+      &quot;stop_type&quot;: &quot;MANAGER_MANDATORY&quot;,
+      &quot;planned_arrival_time&quot;: &quot;09:30:00&quot;,
+      &quot;planned_departure_time&quot;: &quot;10:15:00&quot;,
+      &quot;estimated_duration_minutes&quot;: 45,
+      &quot;lead_id&quot;: &quot;lead-001&quot;,
+      &quot;location_address&quot;: &quot;Dr. Jane Smith (Cardiology) • Brigade Road, Bangalore&quot;,
+      &quot;recommendation_reasons&quot;: {
+        &quot;doctor_name&quot;: &quot;Dr. Jane Smith (Cardiology)&quot;,
+        &quot;lead_title&quot;: &quot;Hospital Cardiology Formulary Contract&quot;,
+        &quot;badges&quot;: [
+          { &quot;type&quot;: &quot;CONVERSION&quot;, &quot;text&quot;: &quot;High Conversion Probability&quot; },
+          { &quot;type&quot;: &quot;VALUE&quot;, &quot;text&quot;: &quot;High Value Deal (₹1.5L)&quot; },
+          { &quot;type&quot;: &quot;URGENCY&quot;, &quot;text&quot;: &quot;Doctor Follow-up Urgent&quot; },
+          { &quot;type&quot;: &quot;PACING&quot;, &quot;text&quot;: &quot;Target Pacing Catchup&quot; }
+        ]
+      },
+      &quot;transit_distance_m&quot;: 3500,
+      &quot;transit_duration_s&quot;: 900,
+      &quot;obligations&quot;: [
+        {
+          &quot;id&quot;: &quot;obl-1-1&quot;,
+          &quot;obligation_type&quot;: &quot;TASK&quot;,
+          &quot;obligation_title&quot;: &quot;Deliver Clinical Trial Dossier&quot;,
+          &quot;is_mandatory&quot;: true,
+          &quot;fulfillment_status&quot;: &quot;PENDING&quot;
+        }
+      ]
+    },
+    {
+      &quot;id&quot;: &quot;item-lunch-1793598050&quot;,
+      &quot;sequence_order&quot;: 3,
+      &quot;activity_type&quot;: &quot;LUNCH_BREAK&quot;,
+      &quot;stop_type&quot;: &quot;LUNCH_BREAK&quot;,
+      &quot;planned_arrival_time&quot;: &quot;13:00:00&quot;,
+      &quot;planned_departure_time&quot;: &quot;13:45:00&quot;,
+      &quot;estimated_duration_minutes&quot;: 45,
+      &quot;location_address&quot;: &quot;Midday Repast &amp; Rest Window (45 mins)&quot;,
+      &quot;transit_distance_m&quot;: 0,
+      &quot;transit_duration_s&quot;: 0
+    }
+  ]
+}
+</code></pre>
+<hr />
+<h2>7. Frontend User Experience Flow</h2>
+<ol>
+<li><strong>Initial Boot State (<code>mockPlan = null</code>):</strong>
+<ul>
+<li>Opening <code>http://localhost:5173</code> checks for active routes.</li>
+<li>If no route exists for the selected date, it displays the empty state:<br />
+<strong>&quot;No Sales Route Generated for Today&quot;</strong> with the central action <strong><code>[ ✨ Generate Today's Route ]</code></strong>.</li>
+</ul>
+</li>
+<li><strong>Generation Configuration:</strong>
+<ul>
+<li>Clicking the generation button opens <code>PlanGenerateModal</code>.</li>
+<li>The user inputs the <strong>Plan Date</strong>, selects <strong>Max Stops</strong> (slider from 1 to 6), and verifies starting GPS coordinates (auto-detectable via browser geolocation).</li>
+</ul>
+</li>
+<li><strong>Dynamic Route Rendering:</strong>
+<ul>
+<li>Submitting the modal dynamically generates the itinerary from the dummy doctor database.</li>
+<li>Displays the <strong>Route Progress Card</strong> with key metrics: Total Stops, Distance (km), Transit Time, and Target Deficit pacing.</li>
+<li>Displays the chronological timeline of doctor visits and the 45-minute lunch break.</li>
+</ul>
+</li>
+<li><strong>Interactive Reset (<code>[ ↺ Reset Plan ]</code>):</strong>
+<ul>
+<li>A dedicated <strong><code>[ Reset Plan ]</code></strong> button is placed in the top bar.</li>
+<li>Clicking it resets <code>mockPlan</code> to <code>null</code> and returns the UI to the empty prompt state, allowing the representative to repeatedly test generation with different stop counts and dates.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2>8. Verification &amp; Quality Assurance</h2>
+<p>The backend and frontend have been verified through extensive automated testing:</p>
+<ul>
+<li><strong>Backend Test Suite:</strong>
+<ul>
+<li><strong>76 out of 76 tests passing 100%</strong> (0 errors, 0 failures, 0 skipped).</li>
+<li>Test modules verified:
+<ul>
+<li><code>test_lead_scorer.py</code>: Urgency, value scaling, pacing boosts, and Why Badges.</li>
+<li><code>test_route_optimizer.py</code>: OSRM matrix queries, 2-Opt TSP, Haversine fallback, and 45-min lunch locking.</li>
+<li><code>test_plan_auth_hierarchy.py</code>: Role isolation, cross-territory manager boundaries, and JIT auto-approval.</li>
+<li><code>test_plan_readiness.py</code>: Table schema validation and registry prefix checks (<code>fsm_</code>).</li>
+<li><code>test_plan_service_generation.py</code>: End-to-end plan assembly and persistence.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Frontend Build &amp; Bundle:</strong>
+<ul>
+<li>TypeScript compilation and Vite production build verified (<code>tsc &amp;&amp; vite build</code>): <strong>1,543 modules transformed with 0 errors</strong>.</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</body>
+</html>

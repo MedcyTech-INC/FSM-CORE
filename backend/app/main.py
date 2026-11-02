@@ -191,10 +191,67 @@ def create_app() -> FastAPI:
     if getattr(settings.features, "revenue_leakage", True):
         app.include_router(revenue_leakage_router)
 
+    # Feature: AI Daily Sales Plan & CRM Routers
+    if getattr(settings.features, "daily_sales_plan", True):
+        try:
+            from app.features.daily_sales_plan.routers import plan_router, crm_router
+            from app.features.daily_sales_plan.services.exceptions import (
+                PlanningServiceError,
+                SchemaNotProvisionedError,
+                DuplicatePlanConflictError,
+                PlanGenerationInProgressError,
+                PlanNotFoundError,
+                PlanItemNotFoundError,
+                UnauthorizedPlanActionError,
+                ReassignmentError,
+                EmployeeOnLeaveError,
+                MandatoryConflictError,
+                RouteOptimizationError,
+                InvalidCoordinateError,
+                InvalidTimeWindowError,
+            )
+
+            app.include_router(plan_router, prefix="/api/v1/plans", tags=["Daily Sales Plans"])
+            app.include_router(crm_router, prefix="/api/v1/crm", tags=["CRM Pipeline"])
+
+            # Daily Sales Plan Domain Exception Handler
+            @app.exception_handler(PlanningServiceError)
+            async def planning_service_exception_handler(request: Request, exc: PlanningServiceError):
+                if isinstance(exc, SchemaNotProvisionedError):
+                    err_status = status.HTTP_503_SERVICE_UNAVAILABLE
+                elif isinstance(exc, (DuplicatePlanConflictError, PlanGenerationInProgressError)):
+                    err_status = status.HTTP_409_CONFLICT
+                elif isinstance(exc, (PlanNotFoundError, PlanItemNotFoundError)):
+                    err_status = status.HTTP_404_NOT_FOUND
+                elif isinstance(exc, (UnauthorizedPlanActionError, ReassignmentError)):
+                    err_status = status.HTTP_403_FORBIDDEN
+                elif isinstance(
+                    exc,
+                    (
+                        EmployeeOnLeaveError,
+                        MandatoryConflictError,
+                        RouteOptimizationError,
+                        InvalidCoordinateError,
+                        InvalidTimeWindowError,
+                    ),
+                ):
+                    err_status = status.HTTP_422_UNPROCESSABLE_ENTITY
+                else:
+                    err_status = status.HTTP_400_BAD_REQUEST
+
+                return JSONResponse(
+                    status_code=err_status,
+                    content={
+                        "error": type(exc).__name__,
+                        "detail": str(exc),
+                        "context": getattr(exc, "details", {}) or getattr(exc, "__dict__", {}),
+                    },
+                )
+        except ImportError:
+            pass
+
     from app.core.errors import register_error_handlers
     register_error_handlers(app)
-
-    # Fallback uncaught exception handler
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         return JSONResponse(
