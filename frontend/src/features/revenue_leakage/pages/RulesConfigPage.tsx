@@ -48,7 +48,7 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
         {onNavigateToScans && (
           <button
             onClick={onNavigateToScans}
-            className="px-4 py-2 text-xs font-bold text-[#00897B] bg-[#F0FDF9] border border-teal-200/80 rounded-xl hover:bg-teal-50 transition-colors"
+            className="px-4 py-2 text-xs font-bold text-[#0284C7] bg-[#F0FDF9] border border-sky-200/80 rounded-xl hover:bg-sky-50 transition-colors"
           >
             Scanner Runs & Status
           </button>
@@ -83,7 +83,7 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
       {/* Rules Grid */}
       {loading ? (
         <div className="p-12 text-center bg-white rounded-3xl border border-slate-100">
-          <RefreshCw className="w-8 h-8 text-[#00897B] animate-spin mx-auto mb-3" />
+          <RefreshCw className="w-8 h-8 text-[#0284C7] animate-spin mx-auto mb-3" />
           <p className="text-xs font-bold text-slate-700">Loading warning configurations...</p>
         </div>
       ) : (
@@ -91,12 +91,12 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
           {rules.map((rule) => (
             <div
               key={rule.id}
-              className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:border-teal-200 transition-all space-y-4"
+              className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:border-sky-200 transition-all space-y-4"
             >
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-[#00897B] uppercase tracking-wide">
+                    <span className="text-xs font-bold text-[#0284C7] uppercase tracking-wide">
                       {rule.rule_code}
                     </span>
                     <span className="text-slate-400">·</span>
@@ -116,7 +116,7 @@ export const RulesConfigPage: React.FC<RulesConfigPageProps> = ({
 
                 <button
                   onClick={() => setEditingRule(rule)}
-                  className="px-4 py-2 text-xs font-bold text-[#00897B] bg-[#F0FDF9] border border-teal-200/80 rounded-xl hover:bg-teal-50 transition-colors flex items-center gap-1.5 shrink-0"
+                  className="px-4 py-2 text-xs font-bold text-[#0284C7] bg-[#F0FDF9] border border-sky-200/80 rounded-xl hover:bg-sky-50 transition-colors flex items-center gap-1.5 shrink-0"
                 >
                   <Edit3 className="w-3.5 h-3.5" />
                   <span>Edit Parameters</span>

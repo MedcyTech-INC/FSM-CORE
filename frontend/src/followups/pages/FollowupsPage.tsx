@@ -61,7 +61,7 @@ export const FollowupsPage: React.FC = () => {
 
         <button
           onClick={() => setIsCreatingFollowup(true)}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 w-full sm:w-auto justify-center cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           <span>+ Schedule Next Action</span>
@@ -69,7 +69,7 @@ export const FollowupsPage: React.FC = () => {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-3.5">
         <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-sky-200 transition-all">
           <div>
             <span className="text-[10px] font-extrabold text-[#0284C7] uppercase tracking-widest block">

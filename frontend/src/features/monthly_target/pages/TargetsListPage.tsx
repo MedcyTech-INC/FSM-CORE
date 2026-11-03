@@ -74,9 +74,9 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner Card */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#E6F7F5] text-[#00897B] flex items-center justify-center border border-teal-100 shadow-sm">
+          <div className="w-14 h-14 rounded-2xl bg-[#F0F9FF] text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
             <TargetIcon className="w-7 h-7 stroke-[2.2]" />
           </div>
           <div>
@@ -93,7 +93,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap items-center gap-2.5 self-start xl:self-auto">
+        <div className="flex flex-wrap items-center gap-2.5 w-full xl:w-auto flex justify-between xl:justify-end">
           {onNavigateToMyTargets && (
             <button
               onClick={onNavigateToMyTargets}
@@ -107,13 +107,13 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
             onClick={() => setHolidaysModalOpen(true)}
             className="px-4 py-2.5 rounded-2xl text-xs font-bold text-slate-700 bg-white border border-slate-200 hover:bg-slate-50 transition-colors flex items-center gap-1.5 shadow-sm"
           >
-            <CalendarDays className="w-4 h-4 text-teal-600" />
+            <CalendarDays className="w-4 h-4 text-[#0284C7]" />
             Holiday Calendar
           </button>
 
           <button
             onClick={() => setCreateModalOpen(true)}
-            className="px-5 py-2.5 rounded-2xl text-xs font-black text-white bg-[#00897B] hover:bg-[#00796B] transition-all shadow-sm shadow-teal-700/20 flex items-center gap-2"
+            className="px-5 py-2.5 rounded-2xl text-xs font-black text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-sm shadow-[#0284C7]/20 flex items-center gap-2"
           >
             <Plus className="w-4 h-4" />
             Set New Target
@@ -125,7 +125,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
             className="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
             title="Refresh"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#00897B]' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#0284C7]' : ''}`} />
           </button>
         </div>
       </div>
@@ -197,14 +197,14 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
           <p className="text-xs text-slate-500 max-w-sm mx-auto">{error}</p>
           <button
             onClick={loadTargets}
-            className="px-4 py-2 bg-[#00897B] text-white rounded-2xl text-xs font-bold hover:bg-[#00796B]"
+            className="px-4 py-2 bg-[#0284C7] text-white rounded-2xl text-xs font-bold hover:bg-[#0369A1]"
           >
             Try Again
           </button>
         </div>
       ) : filteredTargets.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 border border-[#EEF2F6] text-center space-y-3">
-          <div className="w-14 h-14 rounded-2xl bg-teal-50 text-[#00897B] mx-auto flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-sky-50 text-[#0284C7] mx-auto flex items-center justify-center">
             <TargetIcon className="w-7 h-7" />
           </div>
           <h4 className="font-black text-slate-900 text-base">No targets found</h4>
@@ -230,7 +230,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
                     <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">
                       v{t.version}
                     </span>
-                    <span className="text-[10px] font-bold text-[#00897B] uppercase tracking-wider">
+                    <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider">
                       {getMetricLabel(t.metric_type)}
                     </span>
                     {isArchived ? (
@@ -252,7 +252,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
                     )}
                   </div>
 
-                  <h3 className="text-base md:text-lg font-black text-slate-900 hover:text-[#00897B] transition-colors">
+                  <h3 className="text-base md:text-lg font-black text-slate-900 hover:text-[#0284C7] transition-colors">
                     {t.title}
                   </h3>
 
@@ -300,7 +300,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
                           e.stopPropagation();
                           setEditingTarget(t);
                         }}
-                        className="p-2 text-slate-500 hover:text-[#00897B] hover:bg-slate-100 rounded-xl transition-colors"
+                        className="p-2 text-slate-500 hover:text-[#0284C7] hover:bg-slate-100 rounded-xl transition-colors"
                         title="Edit Target"
                       >
                         <Edit2 className="w-4 h-4" />
@@ -320,7 +320,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
 
                   <button
                     onClick={() => onSelectTarget(t.id)}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-[#E6F7F5] text-slate-700 hover:text-[#00897B] text-xs font-bold transition-colors"
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-[#F0F9FF] text-slate-700 hover:text-[#0284C7] text-xs font-bold transition-colors"
                   >
                     Details
                     <ChevronRight className="w-3.5 h-3.5" />

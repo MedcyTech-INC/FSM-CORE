@@ -143,7 +143,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
         <div className="flex items-start justify-between pb-4 border-b border-slate-100">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-7 h-7 rounded-lg bg-teal-50 text-[#00897B] flex items-center justify-center font-bold text-xs">
+              <span className="w-7 h-7 rounded-lg bg-sky-50 text-[#0284C7] flex items-center justify-center font-bold text-xs">
                 #{stop.sequence_order}
               </span>
               <h3 className="font-extrabold text-slate-900 text-lg">
@@ -174,7 +174,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
           <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#00897B]" />
+                <MapPin className="w-4 h-4 text-[#0284C7]" />
                 <span className="text-xs font-bold text-slate-800">
                   GPS Verification & Geofence
                 </span>
@@ -183,7 +183,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
                 type="button"
                 onClick={acquireGPS}
                 disabled={isGpsLoading}
-                className="text-[11px] font-bold text-[#00897B] hover:underline inline-flex items-center gap-1"
+                className="text-[11px] font-bold text-[#0284C7] hover:underline inline-flex items-center gap-1"
               >
                 <RefreshCw className={`w-3 h-3 ${isGpsLoading ? 'animate-spin' : ''}`} />
                 <span>Refresh GPS</span>
@@ -192,7 +192,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
 
             {isGpsLoading ? (
               <div className="flex items-center gap-2 text-xs text-slate-500 py-2">
-                <RefreshCw className="w-4 h-4 text-[#00897B] animate-spin" />
+                <RefreshCw className="w-4 h-4 text-[#0284C7] animate-spin" />
                 <span>Acquiring high-accuracy satellite coordinates...</span>
               </div>
             ) : gpsError ? (
@@ -218,7 +218,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
           {/* Section 2: Photo Proof Camera Capture */}
           <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-4 space-y-3">
             <div className="flex items-center gap-2">
-              <Camera className="w-4 h-4 text-[#00897B]" />
+              <Camera className="w-4 h-4 text-[#0284C7]" />
               <span className="text-xs font-bold text-slate-800">
                 On-Site Photo Proof (Optional / Company Policy)
               </span>
@@ -226,7 +226,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
 
             <div className="space-y-2">
               <label className="flex flex-col items-center justify-center p-4 border-2 border-dashed border-slate-300 hover:border-teal-400 rounded-2xl cursor-pointer bg-white transition-colors group">
-                <Upload className="w-6 h-6 text-slate-400 group-hover:text-[#00897B] transition-colors" />
+                <Upload className="w-6 h-6 text-slate-400 group-hover:text-[#0284C7] transition-colors" />
                 <span className="text-xs font-bold text-slate-700 mt-2">
                   Take Photo or Upload Proof
                 </span>
@@ -276,7 +276,7 @@ export const StopCheckinModal: React.FC<StopCheckinModalProps> = ({
             <button
               type="submit"
               disabled={isLoading || latitude == null || longitude == null}
-              className="px-6 py-2.5 rounded-xl bg-[#00897B] hover:bg-teal-700 text-white text-xs font-bold shadow-md shadow-teal-700/20 transition-all disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold shadow-md shadow-[#0284C7]/20 transition-all disabled:opacity-50"
             >
               {isLoading ? 'Verifying...' : 'Confirm Arrival & Check In'}
             </button>

@@ -94,7 +94,7 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
         <div className="flex items-start justify-between pb-3 border-b border-slate-100">
           <div>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#00897B] to-[#26A69A] text-white flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-xs">
                 <Sparkles className="w-4 h-4" />
               </div>
               <h3 className="font-extrabold text-slate-900 text-lg">
@@ -121,9 +121,9 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
         )}
 
         {/* Algorithm Highlights */}
-        <div className="p-3.5 rounded-2xl bg-[#F0FDF9] border border-teal-100/90 text-xs text-teal-900 space-y-1">
+        <div className="p-3.5 rounded-2xl bg-[#F0FDF9] border border-sky-100/90 text-xs text-slate-900 space-y-1">
           <div className="flex items-center gap-1.5 font-bold">
-            <Zap className="w-3.5 h-3.5 text-[#00897B]" />
+            <Zap className="w-3.5 h-3.5 text-[#0284C7]" />
             <span>AI Planning Features:</span>
           </div>
           <ul className="list-disc list-inside text-[11px] text-teal-800/90 space-y-0.5">
@@ -145,7 +145,7 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
                 type="date"
                 value={planDate}
                 onChange={(e) => setPlanDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-[#00897B]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-[#0284C7]"
                 required
               />
             </div>
@@ -162,7 +162,7 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
               max="12"
               value={maxStops}
               onChange={(e) => setMaxStops(parseInt(e.target.value) || 6)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:outline-none focus:border-[#0284C7]"
               required
             />
           </div>
@@ -171,14 +171,14 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
           <div className="rounded-2xl bg-slate-50 border border-slate-200 p-3.5 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-slate-700">
               <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#00897B]" />
+                <MapPin className="w-3.5 h-3.5 text-[#0284C7]" />
                 Daily Origin GPS (Shift Departure)
               </span>
               <button
                 type="button"
                 onClick={fetchGps}
                 disabled={isGpsLoading}
-                className="text-[11px] text-[#00897B] hover:underline flex items-center gap-1"
+                className="text-[11px] text-[#0284C7] hover:underline flex items-center gap-1"
               >
                 <RefreshCw className={`w-3 h-3 ${isGpsLoading ? 'animate-spin' : ''}`} />
                 <span>Get Device Location</span>
@@ -221,7 +221,7 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
                 type="checkbox"
                 checked={forceRegenerate}
                 onChange={(e) => setForceRegenerate(e.target.checked)}
-                className="rounded text-[#00897B] focus:ring-[#00897B]"
+                className="rounded text-[#0284C7] focus:ring-[#0284C7]"
               />
               <span className="text-xs font-medium text-slate-700">
                 Force regenerate existing draft plan if already created
@@ -242,7 +242,7 @@ export const PlanGenerateModal: React.FC<PlanGenerateModalProps> = ({
             <button
               type="submit"
               disabled={isLoading}
-              className="px-6 py-2.5 rounded-xl bg-[#00897B] hover:bg-teal-700 text-white text-xs font-bold shadow-md shadow-teal-700/20 transition-all disabled:opacity-50 inline-flex items-center gap-2"
+              className="px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold shadow-md shadow-[#0284C7]/20 transition-all disabled:opacity-50 inline-flex items-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
               <span>{isLoading ? 'Optimizing Route...' : 'Generate Plan'}</span>

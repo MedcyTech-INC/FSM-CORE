@@ -93,7 +93,7 @@ const getStateBadge = (state: TargetState) => {
       return {
         label: 'Active',
         icon: TrendingUp,
-        className: 'bg-[#00897B] text-white shadow-sm shadow-teal-700/20',
+        className: 'bg-[#0284C7] text-white shadow-sm shadow-[#0284C7]/20',
       };
     case 'upcoming':
       return {
@@ -162,7 +162,7 @@ export const TargetCard: React.FC<TargetCardProps> = ({ item, onClickDetail }) =
             <h3 className="text-lg md:text-xl font-black text-slate-900 tracking-tight leading-snug">
               {item.title}
             </h3>
-            <span className="text-xs font-bold text-[#00897B] uppercase tracking-wider block mt-0.5">
+            <span className="text-xs font-bold text-[#0284C7] uppercase tracking-wider block mt-0.5">
               {getMetricLabel(item.metric_type)}
             </span>
           </div>
@@ -190,7 +190,7 @@ export const TargetCard: React.FC<TargetCardProps> = ({ item, onClickDetail }) =
           </div>
           <span
             className={`text-sm md:text-base font-black ${
-              isOverAchieved ? 'text-emerald-600' : 'text-[#00897B]'
+              isOverAchieved ? 'text-emerald-600' : 'text-[#0284C7]'
             }`}
           >
             {item.percent_complete !== null ? `${item.percent_complete}%` : '—'}
@@ -202,8 +202,8 @@ export const TargetCard: React.FC<TargetCardProps> = ({ item, onClickDetail }) =
           <div
             className={`h-full rounded-full transition-all duration-500 ${
               isOverAchieved
-                ? 'bg-gradient-to-r from-[#00897B] to-emerald-500'
-                : 'bg-gradient-to-r from-[#00897B] to-[#26A69A]'
+                ? 'bg-gradient-to-r from-[#0284C7] to-emerald-500'
+                : 'bg-gradient-to-r from-[#0284C7] to-[#38BDF8]'
             }`}
             style={{ width: `${barWidth}%` }}
           />
@@ -224,8 +224,8 @@ export const TargetCard: React.FC<TargetCardProps> = ({ item, onClickDetail }) =
 
         {/* Own Contribution (on team/territory/branch targets) */}
         {isGroupTarget ? (
-          <div className="p-3 rounded-2xl bg-teal-50/60 border border-teal-100/80">
-            <span className="text-[10px] font-bold text-[#00897B] uppercase tracking-wider block">
+          <div className="p-3 rounded-2xl bg-sky-50/60 border border-sky-100/80">
+            <span className="text-[10px] font-bold text-[#0284C7] uppercase tracking-wider block">
               My Own Share
             </span>
             <span className="text-sm font-black text-slate-900 block mt-1">

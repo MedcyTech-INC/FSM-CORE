@@ -47,7 +47,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
   if (loading) {
     return (
       <div className="p-12 text-center bg-white rounded-3xl border border-slate-100 shadow-sm animate-pulse">
-        <Clock className="w-8 h-8 text-[#00897B] animate-spin mx-auto mb-3" />
+        <Clock className="w-8 h-8 text-[#0284C7] animate-spin mx-auto mb-3" />
         <p className="text-xs font-bold text-slate-700">Loading revenue leakage details...</p>
       </div>
     );
@@ -60,7 +60,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
         <h3 className="text-sm font-bold text-slate-900">Warning Record Not Found</h3>
         <button
           onClick={onBack}
-          className="mt-4 px-4 py-2 text-xs font-bold text-[#00897B] bg-[#F0FDF9] rounded-xl"
+          className="mt-4 px-4 py-2 text-xs font-bold text-[#0284C7] bg-[#F0FDF9] rounded-xl"
         >
           Return to Dashboard
         </button>
@@ -108,7 +108,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
         {alert.status === 'active' && (
           <button
             onClick={() => setShowActionModal(true)}
-            className="px-4 py-2 text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] rounded-xl shadow-md shadow-teal-700/20 transition-all flex items-center gap-1.5"
+            className="px-4 py-2 text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-xl shadow-md shadow-[#0284C7]/20 transition-all flex items-center gap-1.5"
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Record Action</span>
@@ -121,7 +121,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-slate-100">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-lg bg-teal-50 text-[#00897B] font-extrabold text-[11px] border border-teal-100 uppercase tracking-wide">
+              <span className="px-2.5 py-0.5 rounded-lg bg-sky-50 text-[#0284C7] font-extrabold text-[11px] border border-sky-100 uppercase tracking-wide">
                 {alert.rule_name}
               </span>
               <span className="text-xs text-slate-400">·</span>
@@ -144,7 +144,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
         {/* Reason Banner */}
         <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
           <div className="flex items-start gap-2.5">
-            <Info className="w-4 h-4 text-[#00897B] shrink-0 mt-0.5" />
+            <Info className="w-4 h-4 text-[#0284C7] shrink-0 mt-0.5" />
             <div>
               <h4 className="text-xs font-bold text-slate-800 mb-0.5">Observation Summary</h4>
               <p className="text-xs text-slate-600 font-medium leading-relaxed">
@@ -203,8 +203,8 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
 
         {/* Suggested Operational Check */}
         {alert.observation?.suggested_check && (
-          <div className="p-4 rounded-2xl bg-teal-50/50 border border-teal-100 text-xs">
-            <span className="font-extrabold text-[#00897B] uppercase tracking-wider block mb-1">
+          <div className="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 text-xs">
+            <span className="font-extrabold text-[#0284C7] uppercase tracking-wider block mb-1">
               Suggested Supervisory Action
             </span>
             <p className="text-slate-700 font-medium">
@@ -218,7 +218,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
       {alert.occurrences && alert.occurrences.length > 0 && (
         <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-            <Layers className="w-4 h-4 text-[#00897B]" />
+            <Layers className="w-4 h-4 text-[#0284C7]" />
             <h3 className="text-sm font-bold text-slate-900">Historical Warning Chain</h3>
           </div>
           <div className="space-y-2">
@@ -227,7 +227,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
                 key={occ.id}
                 onClick={() => onSelectOccurrence && onSelectOccurrence(occ.id)}
                 className={`flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs ${
-                  onSelectOccurrence ? 'cursor-pointer hover:border-teal-200' : ''
+                  onSelectOccurrence ? 'cursor-pointer hover:border-sky-200' : ''
                 }`}
               >
                 <div>
@@ -249,7 +249,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
       {/* Supervisory Actions & Observations Log */}
       <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
         <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
-          <History className="w-4 h-4 text-[#00897B]" />
+          <History className="w-4 h-4 text-[#0284C7]" />
           <h3 className="text-sm font-bold text-slate-900">Recorded Actions & State Changes</h3>
         </div>
 
@@ -270,7 +270,7 @@ export const AlertDetailPage: React.FC<AlertDetailPageProps> = ({
                 </div>
                 <p className="text-slate-700 font-medium">{act.action_taken}</p>
                 {act.outcome && (
-                  <div className="text-[11px] text-[#00897B] font-bold">
+                  <div className="text-[11px] text-[#0284C7] font-bold">
                     Outcome: {act.outcome.replace('_', ' ')}
                   </div>
                 )}

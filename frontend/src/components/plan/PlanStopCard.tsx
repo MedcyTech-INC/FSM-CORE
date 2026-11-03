@@ -42,7 +42,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
 
   return (
     <div
-      className={`relative rounded-3xl border transition-all duration-200 overflow-hidden shadow-xs hover:shadow-md ${
+      className={`relative rounded-2xl border transition-all duration-200 overflow-hidden shadow-xs hover:shadow-md ${
         isCompleted
           ? 'bg-white border-slate-200/90'
           : isSkipped
@@ -64,7 +64,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-[#00897B] hover:text-teal-700 font-bold hover:underline"
+              className="inline-flex items-center gap-1 text-[#0284C7] hover:text-[#0284C7] font-bold hover:underline"
             >
               <Navigation className="w-3 h-3" />
               <span>Navigate</span>
@@ -74,7 +74,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
       )}
 
       {/* Main Card Body */}
-      <div className="p-5 md:p-6 space-y-4">
+      <div className="p-4 sm:p-5 md:p-6 space-y-3 sm:space-y-4">
         {/* Header: Sequence, Time, Stop Type & Status */}
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2.5">
@@ -82,7 +82,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
               className={`w-8 h-8 rounded-xl flex items-center justify-center font-extrabold text-xs shadow-xs ${
                 isCompleted
                   ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-slate-900 text-white'
+                  : 'bg-sky-50 text-[#0284C7] border border-sky-200/80'
               }`}
             >
               #{item.sequence_order}
@@ -110,8 +110,8 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
               </span>
             )}
             {item.stop_type === 'AI_RECOMMENDED' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-teal-800 border border-teal-200 uppercase tracking-wider">
-                <Sparkles className="w-3 h-3 text-[#00897B]" />
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 text-[#0284C7] border border-sky-200 uppercase tracking-wider">
+                <Sparkles className="w-3 h-3 text-[#0284C7]" />
                 AI Pick
               </span>
             )}
@@ -149,7 +149,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
               {item.recommendation_reasons?.doctor_name || item.location_address || 'Scheduled Commercial Stop'}
             </h3>
             {item.recommendation_reasons?.lead_title && (
-              <span className="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-200/80 px-2 py-0.5 rounded-lg">
+              <span className="text-[11px] font-bold text-[#0284C7] bg-sky-50 border border-sky-200/80 px-2 py-0.5 rounded-lg">
                 {item.recommendation_reasons.lead_title}
               </span>
             )}
@@ -165,7 +165,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
           <div className="rounded-2xl bg-slate-50 border border-slate-200/80 p-3 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-slate-700">
               <span className="flex items-center gap-1.5">
-                <CheckSquare className="w-3.5 h-3.5 text-[#00897B]" />
+                <CheckSquare className="w-3.5 h-3.5 text-[#0284C7]" />
                 Key Obligations ({item.obligations.length})
               </span>
             </div>
@@ -232,7 +232,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
                 className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold inline-flex items-center gap-1.5 transition-colors"
                 title="Preview stop location in Google Maps"
               >
-                <Navigation className="w-3.5 h-3.5 text-[#00897B]" />
+                <Navigation className="w-3.5 h-3.5 text-[#0284C7]" />
                 <span>Directions</span>
               </a>
             ) : (
@@ -244,7 +244,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
           </div>
 
           <div className="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
             <span>Planned Itinerary Stop • Proof & Check-in via Visit Log</span>
           </div>
         </div>

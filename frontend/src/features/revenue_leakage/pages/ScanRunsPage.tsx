@@ -80,7 +80,7 @@ export const ScanRunsPage: React.FC<ScanRunsPageProps> = ({ onBack }) => {
 
       <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
         <div className="flex items-center gap-2 mb-1">
-          <span className="px-2.5 py-0.5 rounded-lg bg-teal-50 text-[#00897B] font-bold text-xs border border-teal-100">
+          <span className="px-2.5 py-0.5 rounded-lg bg-sky-50 text-[#0284C7] font-bold text-xs border border-sky-100">
             Engine Health & Audit
           </span>
         </div>
@@ -95,7 +95,7 @@ export const ScanRunsPage: React.FC<ScanRunsPageProps> = ({ onBack }) => {
       {/* Runs Table */}
       {loading ? (
         <div className="p-12 text-center bg-white rounded-3xl border border-slate-100">
-          <RefreshCw className="w-8 h-8 text-[#00897B] animate-spin mx-auto mb-3" />
+          <RefreshCw className="w-8 h-8 text-[#0284C7] animate-spin mx-auto mb-3" />
           <p className="text-xs font-bold text-slate-700">Loading scanner logs...</p>
         </div>
       ) : (
@@ -126,7 +126,7 @@ export const ScanRunsPage: React.FC<ScanRunsPageProps> = ({ onBack }) => {
                     <td className="py-3.5 px-4 text-slate-600 font-medium">
                       <span className="text-emerald-700 font-bold">+{run.alerts_created}</span> created ·{' '}
                       <span className="text-blue-700 font-bold">{run.alerts_updated}</span> updated ·{' '}
-                      <span className="text-teal-700 font-bold">{run.alerts_cleared}</span> cleared
+                      <span className="text-[#0284C7] font-bold">{run.alerts_cleared}</span> cleared
                     </td>
                     <td className="py-3.5 px-4 text-slate-400">
                       {new Date(run.started_at).toLocaleString('en-IN')}

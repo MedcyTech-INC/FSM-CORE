@@ -62,7 +62,7 @@ export const DailyPlanPage: React.FC = () => {
     user?.role && ['ADMIN', 'GM', 'ZSM', 'RSM', 'MANAGER'].includes(user.role);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 md:px-6 py-6 md:py-8 space-y-6">
+    <div className="max-w-5xl mx-auto space-y-4 sm:space-y-5">
       {/* Manager Supervisory Bar (Visible when user has Manager/Admin Authority) */}
       {canApprove && (
         <ManagerSupervisoryBar
@@ -72,61 +72,61 @@ export const DailyPlanPage: React.FC = () => {
         />
       )}
 
-      {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* Top Header Card */}
+      <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#00897B] to-[#26A69A] flex items-center justify-center text-white shadow-md shadow-teal-700/20">
-              <Route className="w-5 h-5" />
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] flex items-center justify-center text-white shadow-xs shrink-0">
+              <Route className="w-5 h-5 stroke-[2.2]" />
             </div>
-            <div>
-              <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight">
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight truncate">
                 AI Daily Route & Plan
               </h1>
-              <p className="text-xs text-slate-500 font-medium">
-                Deterministic route optimization • Lead-centric CRM execution
+              <p className="text-xs text-slate-500 font-medium truncate">
+                Deterministic route optimization • Lead-centric execution
               </p>
             </div>
           </div>
         </div>
 
         {/* Date Selector & Primary Action */}
-        <div className="flex items-center gap-2.5 flex-wrap">
-          <div className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-2 rounded-2xl shadow-xs">
-            <Calendar className="w-4 h-4 text-slate-400" />
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 w-full md:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200/90 px-3 py-2 rounded-xl flex-1 sm:flex-initial">
+            <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
             <input
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="text-xs font-bold text-slate-700 bg-transparent focus:outline-none"
+              className="text-xs font-bold text-slate-700 bg-transparent focus:outline-none w-full cursor-pointer"
             />
           </div>
 
           <button
             onClick={() => fetchTodayPlan(selectedDate, selectedEmployeeId)}
             disabled={isLoading}
-            className="p-2.5 rounded-2xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50 shadow-xs transition-colors"
+            className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-slate-600 hover:text-slate-900 hover:bg-slate-100 shadow-2xs transition-colors cursor-pointer shrink-0"
             title="Refresh Route"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#0284C7]' : ''}`} />
           </button>
 
           {activePlan && (
             <button
               onClick={resetPlan}
-              className="px-3.5 py-2.5 rounded-2xl bg-white border border-slate-200 text-slate-700 hover:text-rose-600 hover:bg-rose-50 text-xs font-bold inline-flex items-center gap-1.5 shadow-xs transition-colors"
+              className="px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200/90 text-slate-700 hover:text-rose-600 hover:bg-rose-50 text-xs font-bold inline-flex items-center gap-1.5 shadow-2xs transition-colors cursor-pointer shrink-0"
               title="Reset current plan back to empty state to test generation again"
             >
-              <RotateCcw className="w-4 h-4 text-slate-400 group-hover:text-rose-600" />
-              <span>Reset Plan</span>
+              <RotateCcw className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-600" />
+              <span>Reset</span>
             </button>
           )}
 
           <button
             onClick={openGenerateModal}
-            className="px-4 py-2.5 rounded-2xl bg-[#00897B] hover:bg-teal-700 text-white text-xs font-bold inline-flex items-center gap-2 shadow-sm shadow-teal-700/20 transition-all hover:scale-[1.02]"
+            className="px-4 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-extrabold inline-flex items-center justify-center gap-2 shadow-sm shadow-[#0284C7]/20 transition-all hover:scale-[1.01] w-full sm:w-auto cursor-pointer shrink-0"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Generate Itinerary</span>
           </button>
         </div>
@@ -134,7 +134,7 @@ export const DailyPlanPage: React.FC = () => {
 
       {/* Error Alert */}
       {error && (
-        <div className="p-4 rounded-3xl bg-rose-50 border border-rose-200 flex items-start justify-between gap-3 text-xs text-rose-800">
+        <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-start justify-between gap-3 text-xs text-rose-800">
           <div className="flex items-start gap-2.5">
             <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
             <span className="font-medium">{error}</span>
@@ -150,13 +150,13 @@ export const DailyPlanPage: React.FC = () => {
 
       {/* Main Content Area */}
       {isLoading ? (
-        <div className="rounded-3xl bg-white border border-[#EEF2F6] p-12 text-center space-y-4">
-          <RefreshCw className="w-8 h-8 text-[#00897B] animate-spin mx-auto" />
+        <div className="rounded-2xl bg-white border border-slate-200/80 p-8 sm:p-12 text-center space-y-3 shadow-xs">
+          <RefreshCw className="w-8 h-8 text-[#0284C7] animate-spin mx-auto" />
           <p className="text-sm font-bold text-slate-700">Loading daily itinerary...</p>
           <p className="text-xs text-slate-400">Verifying live plan and CRM targets</p>
         </div>
       ) : activePlan ? (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-5">
           {/* Rejection Alert Banner (Visible when plan is rejected by Manager) */}
           {activePlan.status === 'REJECTED' && (
             <PlanRejectionBanner
@@ -181,11 +181,11 @@ export const DailyPlanPage: React.FC = () => {
           {/* Chronological Itinerary Section */}
           <div className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <h2 className="text-sm font-extrabold text-slate-900 tracking-tight uppercase">
+              <h2 className="text-xs font-extrabold text-slate-900 tracking-tight uppercase">
                 Planned Stops & Milestones
               </h2>
               <span className="text-xs text-slate-500 font-medium">
-                {activePlan.items.length} Timeline Elements
+                {activePlan.items.length} Elements
               </span>
             </div>
 
@@ -194,27 +194,34 @@ export const DailyPlanPage: React.FC = () => {
         </div>
       ) : (
         /* Empty State: No Plan Generated Yet */
-        <div className="rounded-3xl bg-white border border-[#EEF2F6] p-10 md:p-16 text-center space-y-5 shadow-xs">
-          <div className="w-16 h-16 rounded-3xl bg-teal-50 text-[#00897B] flex items-center justify-center mx-auto shadow-inner">
-            <Navigation className="w-8 h-8" />
+        <div className="rounded-2xl bg-white border border-slate-200/80 p-6 sm:p-10 md:p-14 text-center space-y-4 shadow-xs">
+          <div className="w-14 h-14 rounded-2xl bg-sky-50 text-[#0284C7] flex items-center justify-center mx-auto shadow-inner">
+            <Navigation className="w-7 h-7 stroke-[2]" />
           </div>
           <div className="max-w-md mx-auto space-y-2">
-            <h2 className="text-lg md:text-xl font-extrabold text-slate-900">
-              No Sales Route Generated for {selectedDate}
+            <h2 className="text-base sm:text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-snug">
+              No Sales Route Generated
             </h2>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <div>
+              <span className="text-xs font-bold text-[#0284C7] bg-sky-50 px-3 py-1 rounded-lg border border-sky-100 inline-block font-mono">
+                {selectedDate}
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed pt-1">
               Generate an intelligent daily itinerary optimized with candidate-sensitive target
-              pacing, OSRM 2-Opt traveling salesperson sequencing, and an approved 45-minute lunch break.
+              pacing, 2-Opt traveling salesperson sequencing, and an approved 45-minute lunch break.
             </p>
           </div>
 
-          <button
-            onClick={openGenerateModal}
-            className="px-6 py-3 rounded-2xl bg-[#00897B] hover:bg-teal-700 text-white text-xs font-bold inline-flex items-center gap-2 shadow-md shadow-teal-700/20 transition-all hover:scale-[1.02]"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>Generate Today's Route</span>
-          </button>
+          <div className="pt-2">
+            <button
+              onClick={openGenerateModal}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-extrabold inline-flex items-center justify-center gap-2 shadow-sm shadow-[#0284C7]/20 transition-all hover:scale-[1.01] cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Generate Today's Route</span>
+            </button>
+          </div>
         </div>
       )}
 

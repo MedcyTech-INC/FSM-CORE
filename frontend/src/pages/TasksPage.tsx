@@ -36,7 +36,7 @@ export const TasksPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner Card matching localhost_9590_tasks.png */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-[#F0F9FF] text-[#0284C7] flex items-center justify-center border border-sky-100">
             <CheckSquare className="w-7 h-7 stroke-[2.2]" />
@@ -124,7 +124,7 @@ export const TasksPage: React.FC = () => {
       {/* 4 Status KPI Cards matching localhost_9590_tasks.png */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Today's Total */}
-        <div className="bg-white p-6 rounded-3xl border border-[#EEF2F6] shadow-sm">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EEF2F6] shadow-sm">
           <span className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider block mb-2">
             Today's Total
           </span>
@@ -132,15 +132,15 @@ export const TasksPage: React.FC = () => {
         </div>
 
         {/* In Progress */}
-        <div className="bg-white p-6 rounded-3xl border border-[#EEF2F6] shadow-sm">
-          <span className="text-[11px] font-extrabold text-[#2563EB] uppercase tracking-wider block mb-2">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EEF2F6] shadow-sm">
+          <span className="text-[11px] font-extrabold text-[#0284C7] uppercase tracking-wider block mb-2">
             In Progress
           </span>
-          <span className="text-3xl font-black text-[#2563EB]">{inProgressCount}</span>
+          <span className="text-3xl font-black text-[#0284C7]">{inProgressCount}</span>
         </div>
 
         {/* Completed */}
-        <div className="bg-white p-6 rounded-3xl border border-[#EEF2F6] shadow-sm">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EEF2F6] shadow-sm">
           <span className="text-[11px] font-extrabold text-[#10B981] uppercase tracking-wider block mb-2">
             Completed
           </span>
@@ -148,7 +148,7 @@ export const TasksPage: React.FC = () => {
         </div>
 
         {/* In-Complete */}
-        <div className="bg-white p-6 rounded-3xl border border-[#EEF2F6] shadow-sm">
+        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-[#EEF2F6] shadow-sm">
           <span className="text-[11px] font-extrabold text-[#E11D48] uppercase tracking-wider block mb-2">
             In-Complete
           </span>
@@ -181,7 +181,7 @@ export const TasksPage: React.FC = () => {
       </div>
 
       {/* Task List / Empty State Container */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         {tasks.length === 0 ? (
           <div className="py-20 flex flex-col items-center justify-center text-center">
             <div className="w-16 h-16 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-300 mb-3 border border-slate-100">

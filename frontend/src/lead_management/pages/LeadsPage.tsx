@@ -121,7 +121,7 @@ export const LeadsPage: React.FC = () => {
 
         <button
           onClick={() => setIsCreatingLead(true)}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 w-full sm:w-auto justify-center cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           <span>+ Add Opportunity</span>
@@ -129,7 +129,7 @@ export const LeadsPage: React.FC = () => {
       </div>
 
       {/* KPI Summary Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-3.5">
         {/* Total Leads */}
         <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-slate-300 transition-all">
           <div>
@@ -231,7 +231,7 @@ export const LeadsPage: React.FC = () => {
           </form>
 
           {/* Scope Segmented Control (All Team Leads vs My Leads) */}
-          <div className="flex items-center bg-slate-100/90 p-1 rounded-xl self-end sm:self-auto border border-slate-200/60">
+          <div className="flex items-center bg-slate-100/90 p-1 rounded-xl w-full sm:w-auto flex justify-center border border-slate-200/60">
             <button
               onClick={() => setScope('all')}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition-all ${

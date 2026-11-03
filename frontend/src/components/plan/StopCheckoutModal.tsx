@@ -200,7 +200,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
             <select
               value={outcome}
               onChange={(e) => setOutcome(e.target.value as VisitOutcome)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#00897B] focus:ring-1 focus:ring-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
             >
               <option value="SUCCESSFUL_MEETING">Successful Meeting & Detailing</option>
               <option value="DOCTOR_UNAVAILABLE">Doctor / Contact Unavailable</option>
@@ -219,7 +219,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Record feedback, product samples detailed, customer response..."
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-[#00897B] focus:ring-1 focus:ring-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-800 focus:outline-none focus:border-[#0284C7] focus:ring-1 focus:ring-[#0284C7]"
               required
             />
           </div>
@@ -237,7 +237,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
                     className="flex items-center justify-between gap-2 p-2 bg-white rounded-xl border border-slate-200 text-xs"
                   >
                     <div className="flex items-center gap-2 truncate">
-                      <FileCheck className="w-4 h-4 text-[#00897B] shrink-0" />
+                      <FileCheck className="w-4 h-4 text-[#0284C7] shrink-0" />
                       <span className="truncate font-medium text-slate-800">
                         {obl.obligation_title}
                       </span>
@@ -270,7 +270,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
             <select
               value={leadStage}
               onChange={(e) => setLeadStage(e.target.value as any)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#0284C7]"
             >
               <option value="">-- Leave Unchanged --</option>
               <option value="NEW">NEW</option>
@@ -307,7 +307,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
                 value={convertedValue}
                 onChange={(e) => setConvertedValue(e.target.value)}
                 placeholder="e.g. 150000"
-                className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs text-slate-800 font-mono focus:outline-none focus:border-[#00897B]"
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs text-slate-800 font-mono focus:outline-none focus:border-[#0284C7]"
               />
             </div>
           </div>
@@ -319,7 +319,7 @@ export const StopCheckoutModal: React.FC<StopCheckoutModalProps> = ({
                 type="checkbox"
                 checked={scheduleFollowUp}
                 onChange={(e) => setScheduleFollowUp(e.target.checked)}
-                className="rounded text-[#00897B] focus:ring-[#00897B]"
+                className="rounded text-[#0284C7] focus:ring-[#0284C7]"
               />
               <span className="text-xs font-bold text-slate-700">Schedule Next Follow-Up</span>
             </label>

@@ -119,7 +119,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
                     onClick={() => setActionType(opt.type as ActionType)}
                     className={`flex items-center gap-2 p-3 rounded-xl border text-xs font-semibold transition-all ${
                       isSelected
-                        ? 'border-[#00897B] bg-[#F0FDF9] text-[#00897B] shadow-sm'
+                        ? 'border-[#0284C7] bg-[#F0FDF9] text-[#0284C7] shadow-sm'
                         : 'border-slate-200 hover:border-slate-300 text-slate-700 bg-white'
                     }`}
                   >
@@ -140,7 +140,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
               <select
                 value={outcome}
                 onChange={(e) => setOutcome(e.target.value as ActionOutcome)}
-                className="w-full text-xs font-medium bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                className="w-full text-xs font-medium bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
               >
                 <option value="normal_variation">Normal Seasonal/Market Variation (7-day cool-down)</option>
                 <option value="investigation_needed">Investigation Underway</option>
@@ -167,7 +167,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
                 placeholder="e.g. Verified Order PO-4921 or Signed Agreement Ref"
                 value={evidenceRef}
                 onChange={(e) => setEvidenceRef(e.target.value)}
-                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
                 required
               />
             </div>
@@ -183,7 +183,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
               placeholder="e.g. Contacted client purchasing head regarding delivery timeline"
               value={actionTaken}
               onChange={(e) => setActionTaken(e.target.value)}
-              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
               required
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">Minimum 5 characters.</span>
@@ -199,7 +199,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
               placeholder="Add additional managerial notes or instructions for the field representative..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
             />
           </div>
 
@@ -216,7 +216,7 @@ export const AlertActionModal: React.FC<AlertActionModalProps> = ({
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2 text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] rounded-xl shadow-md shadow-teal-700/20 disabled:opacity-50 transition-all flex items-center gap-1.5"
+              className="px-5 py-2 text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-xl shadow-md shadow-[#0284C7]/20 disabled:opacity-50 transition-all flex items-center gap-1.5"
             >
               {submitting ? 'Recording...' : 'Submit Action'}
             </button>

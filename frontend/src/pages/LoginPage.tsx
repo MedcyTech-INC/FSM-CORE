@@ -47,26 +47,28 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col lg:flex-row bg-white font-sans text-slate-800">
+    <div className="min-h-screen lg:h-screen w-full flex flex-col lg:flex-row bg-white font-sans text-slate-800 lg:overflow-hidden">
       {/* ===================================================================== */}
-      {/* LEFT COLUMN: Clean White Login Form                                  */}
+      {/* LEFT COLUMN: Clean White Login Form (Full width on mobile)           */}
       {/* ===================================================================== */}
-      <div className="w-full lg:w-1/2 min-h-screen flex flex-col justify-between p-8 sm:p-12 lg:p-16 xl:p-20 bg-white">
-        {/* Top spacer / header note */}
-        <div className="flex items-center justify-between">
-          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-            {branding.companyName}
+      <div className="w-full lg:w-1/2 min-h-screen lg:h-full flex flex-col justify-between p-5 sm:p-8 lg:p-6 xl:p-8 bg-white relative z-10 overflow-y-auto lg:overflow-hidden">
+        {/* Top bar / header note */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              {branding.companyName}
+            </span>
           </div>
           {/* Quick Demo Switcher for fast testing */}
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200">
-            <span className="text-[11px] font-medium text-slate-500 px-1.5">Demo:</span>
+          <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-xl border border-slate-200/80 shadow-xs self-start sm:self-auto max-w-full overflow-x-auto scrollbar-none">
+            <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 px-1 shrink-0">Demo:</span>
             <button
               type="button"
               onClick={() => handleSelectRole('admin')}
-              className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
+              className={`text-xs px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                 selectedRole === 'admin'
                   ? 'bg-[#0284C7] text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
             >
               <span className="flex items-center gap-1">
@@ -77,10 +79,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
             <button
               type="button"
               onClick={() => handleSelectRole('field')}
-              className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
+              className={`text-xs px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                 selectedRole === 'field'
                   ? 'bg-[#0284C7] text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
             >
               <span className="flex items-center gap-1">
@@ -91,15 +93,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
             <button
               type="button"
               onClick={() => handleSelectRole('super')}
-              className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
+              className={`text-xs px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                 selectedRole === 'super'
-                  ? 'bg-indigo-700 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#0369A1] text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
               }`}
               title="Platform Super-Admin: Onboard and govern corporate client organizations"
             >
               <span className="flex items-center gap-1">
-                <Shield className="w-3 h-3 text-amber-300" />
+                <Shield className="w-3 h-3 text-sky-200" />
                 Super Admin
               </span>
             </button>
@@ -107,46 +109,48 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
         </div>
 
         {/* Center Auth Form */}
-        <div className="w-full max-w-sm mx-auto my-auto py-8">
+        <div className="w-full max-w-sm mx-auto my-auto py-4 sm:py-6 lg:py-2 xl:py-4">
           {/* Diamond Dot Icon */}
-          <div className="flex justify-center mb-6">
-            <svg
-              className="w-12 h-12 text-[#0284C7]"
-              viewBox="0 0 40 40"
-              fill="currentColor"
-            >
-              <circle cx="20" cy="8" r="2.8" />
-              <circle cx="14" cy="14" r="2.8" />
-              <circle cx="26" cy="14" r="2.8" />
-              <circle cx="8" cy="20" r="2.8" />
-              <circle cx="20" cy="20" r="2.8" />
-              <circle cx="32" cy="20" r="2.8" />
-              <circle cx="14" cy="26" r="2.8" />
-              <circle cx="26" cy="26" r="2.8" />
-              <circle cx="20" cy="32" r="2.8" />
-            </svg>
+          <div className="flex justify-center mb-3 xl:mb-4">
+            <div className="w-11 h-11 rounded-2xl bg-sky-50 border border-sky-100/80 flex items-center justify-center shadow-xs">
+              <svg
+                className="w-7 h-7 text-[#0284C7]"
+                viewBox="0 0 40 40"
+                fill="currentColor"
+              >
+                <circle cx="20" cy="8" r="2.8" />
+                <circle cx="14" cy="14" r="2.8" />
+                <circle cx="26" cy="14" r="2.8" />
+                <circle cx="8" cy="20" r="2.8" />
+                <circle cx="20" cy="20" r="2.8" />
+                <circle cx="32" cy="20" r="2.8" />
+                <circle cx="14" cy="26" r="2.8" />
+                <circle cx="26" cy="26" r="2.8" />
+                <circle cx="20" cy="32" r="2.8" />
+              </svg>
+            </div>
           </div>
 
           {/* Heading */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-[#0284C7] tracking-tight">
+          <div className="text-center mb-5 xl:mb-6">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0284C7] tracking-tight">
               Welcome to {branding.companyName}
             </h1>
-            <p className="text-xs text-slate-400 mt-3 leading-relaxed max-w-xs mx-auto">
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed max-w-xs mx-auto">
               Field sales operations, doctor visit tracking, and follow-up commitments made effortless.
             </p>
           </div>
 
           {/* Error Alert */}
           {error && (
-            <div className="mb-5 p-3 rounded-lg bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-red-600 font-medium">
+            <div className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 flex items-center gap-2 text-xs text-red-600 font-medium">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Field */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1.5">
@@ -158,7 +162,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/20 transition-all bg-white"
+                className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl border border-slate-200/90 text-slate-800 text-base sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-4 focus:ring-[#0284C7]/10 transition-all bg-slate-50/50 focus:bg-white"
               />
             </div>
 
@@ -183,24 +187,24 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••••••"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/20 transition-all bg-white pr-10"
+                  className="w-full px-3.5 py-3 sm:py-2.5 rounded-xl border border-slate-200/90 text-slate-800 text-base sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-4 focus:ring-[#0284C7]/10 transition-all bg-slate-50/50 focus:bg-white pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer p-1"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Submit Button (Right-aligned as in screenshot) */}
-            <div className="flex justify-end pt-2">
+            {/* Submit Button */}
+            <div className="flex justify-end pt-1">
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-8 py-2.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] active:scale-[0.98] text-white text-sm font-semibold shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[110px]"
+                className="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl bg-gradient-to-r from-[#0284C7] to-[#0369A1] hover:from-[#0369A1] hover:to-[#075985] active:scale-[0.98] text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-sky-600/25 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[120px]"
               >
                 {isLoading ? (
                   <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -212,48 +216,49 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
           </form>
 
           {/* Bottom Sign-Up Link */}
-          <div className="text-center mt-10 text-xs text-slate-500 font-medium">
+          <div className="text-center mt-4 text-xs text-slate-500 font-medium">
             Don't have an account?{' '}
-            <span className="text-[#00AEEF] hover:underline cursor-pointer font-semibold">
+            <span className="text-[#0284C7] hover:underline cursor-pointer font-semibold">
               Sign Up
             </span>
           </div>
 
           {/* Quick Direct Link to Platform Super Admin Portal */}
           {onOpenSuperAdmin && (
-            <div className="mt-6 pt-5 border-t border-slate-100 text-center">
+            <div className="mt-4 pt-3.5 border-t border-slate-100 text-center">
               <button
                 type="button"
                 onClick={onOpenSuperAdmin}
-                className="w-full py-2 px-3 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6B52B6] border border-purple-200/80 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer group"
+                className="w-full py-2.5 px-3 rounded-xl bg-sky-50/80 hover:bg-sky-100 text-[#0284C7] border border-sky-200/80 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-xs cursor-pointer group"
               >
-                <Shield className="w-3.5 h-3.5 text-[#6B52B6] group-hover:scale-110 transition-transform" />
-                <span>🏢 SaaS Super-Admin: Manage & Onboard Organizations &rarr;</span>
+                <Shield className="w-3.5 h-3.5 text-[#0284C7] shrink-0 group-hover:scale-110 transition-transform" />
+                <span className="truncate sm:whitespace-normal">🏢 SaaS Super-Admin: Onboard Organizations &rarr;</span>
               </button>
             </div>
           )}
         </div>
 
         {/* Left Footer */}
-        <div className="text-center text-[11px] text-slate-400">
+        <div className="text-center text-[11px] text-slate-400 pt-2">
           {branding.footerText}
         </div>
       </div>
 
       {/* ===================================================================== */}
-      {/* RIGHT COLUMN: Ice Blue Gradient with Floating UI Cards                  */}
+      {/* RIGHT COLUMN: Ice Blue Hero Graphics (Hidden on mobile, flex on desktop) */}
       {/* ===================================================================== */}
-      <div className="w-full lg:w-1/2 min-h-screen bg-gradient-to-br from-[#0369A1] via-[#0284C7] to-[#075985] flex flex-col justify-between items-center p-8 sm:p-12 lg:p-16 relative overflow-hidden select-none">
-        {/* Subtle decorative glow */}
-        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="hidden lg:flex lg:w-1/2 h-full bg-gradient-to-br from-[#0284C7] via-[#0369A1] to-[#075985] flex-col justify-between items-center p-6 sm:p-8 lg:p-8 xl:p-10 relative overflow-hidden select-none">
+        {/* Subtle decorative glows */}
+        <div className="absolute top-1/4 -right-20 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-10 -left-10 w-80 h-80 bg-sky-300/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full" />
 
         {/* Floating Cards Container */}
-        <div className="w-full max-w-md mx-auto relative flex flex-col items-center justify-center my-auto py-10">
+        <div className="w-full max-w-md mx-auto relative flex flex-col items-center justify-center my-auto py-2 xl:py-4">
           {/* TOP CARD: Total Revenues / Pipeline (Offset Top-Right) */}
           <div className="w-full flex justify-end z-20 -mb-5 sm:-mr-4">
-            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl shadow-sky-950/40 border border-slate-100 flex items-center justify-between gap-6 w-72 sm:w-80 transition-transform hover:-translate-y-1 duration-200">
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-2xl shadow-sky-950/30 border border-white/60 flex items-center justify-between gap-6 w-72 sm:w-80 transition-transform hover:-translate-y-1 duration-200">
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
                   <div className="w-5 h-5 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-black">
@@ -263,7 +268,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
                 </div>
 
                 <div className="text-xl sm:text-2xl font-black text-slate-900 mt-2 tracking-tight">
-                  ₹4.105<span className="text-xs sm:text-sm font-semibold text-slate-400">/4.123</span>
+                  ₹4,105<span className="text-xs sm:text-sm font-semibold text-slate-400">/4,123</span>
                 </div>
 
                 <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-1 font-medium">
@@ -298,28 +303,28 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
           </div>
 
           {/* MAIN CARD: Calendar Widget (Centered / Shifted Left) */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-2xl shadow-sky-950/40 border border-slate-100 w-72 sm:w-84 z-10 -ml-4 sm:-ml-8 transition-transform hover:-translate-y-1 duration-200">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 shadow-2xl shadow-sky-950/30 border border-white/60 w-72 sm:w-84 z-10 -ml-4 sm:-ml-8 transition-transform hover:-translate-y-1 duration-200">
             {/* Month Header */}
-            <div className="flex items-center justify-center gap-3 text-sm font-bold text-slate-800 mb-5">
+            <div className="flex items-center justify-center gap-3 text-sm font-bold text-slate-800 mb-4">
               <button
                 type="button"
-                className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+                className="text-slate-400 hover:text-slate-600 transition-colors p-1 cursor-pointer"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <span className="tracking-tight text-slate-700 font-extrabold">March</span>
               <button
                 type="button"
-                className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+                className="text-slate-400 hover:text-slate-600 transition-colors p-1 cursor-pointer"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
             {/* Weekdays */}
-            <div className="grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400 mb-3">
+            <div className="grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400 mb-2.5">
               <span>Mon</span>
-              <span>Tus</span>
+              <span>Tue</span>
               <span>Wed</span>
               <span>Thu</span>
               <span>Fri</span>
@@ -363,9 +368,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
               <span>13</span>
               <span>14</span>
               <span>15</span>
-              {/* Day 16 Active Selection (Blue solid pill) */}
+              {/* Day 16 Active Selection (Ice Blue solid pill) */}
               <span className="flex items-center justify-center">
-                <span className="w-7 h-7 rounded-full bg-[#2563EB] text-white flex items-center justify-center font-bold shadow-md shadow-blue-500/30">
+                <span className="w-7 h-7 rounded-full bg-[#0284C7] text-white flex items-center justify-center font-bold shadow-md shadow-sky-600/40">
                   16
                 </span>
               </span>
@@ -393,11 +398,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
         </div>
 
         {/* Bottom Text */}
-        <div className="text-center max-w-sm mx-auto z-10 pt-4">
+        <div className="text-center max-w-sm mx-auto z-10 pt-2 pb-1">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Easy to Understand
           </h2>
-          <p className="text-xs text-white/80 mt-3 leading-relaxed">
+          <p className="text-xs text-sky-100/90 mt-2 leading-relaxed">
             Real-time visibility over field visits, doctor commitments, and team follow-ups in one unified place.
           </p>
         </div>

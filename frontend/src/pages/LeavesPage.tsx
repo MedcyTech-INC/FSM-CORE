@@ -32,7 +32,7 @@ export const LeavesPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner Card matching localhost_9590_leave.png */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Leave Requests</h2>
           <p className="text-xs font-medium text-slate-500 mt-1">
@@ -75,7 +75,7 @@ export const LeavesPage: React.FC = () => {
       )}
 
       {/* Apply for Leave Card matching localhost_9590_leave.png */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="flex items-center gap-2.5 mb-6">
           <span className="w-2.5 h-2.5 rounded-full bg-[#0284C7]" />
           <h3 className="text-xl font-bold text-slate-900 tracking-tight">Apply for Leave</h3>

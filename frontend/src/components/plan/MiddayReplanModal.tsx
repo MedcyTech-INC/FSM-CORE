@@ -89,7 +89,7 @@ export const MiddayReplanModal: React.FC<MiddayReplanModalProps> = ({
         <div className="flex items-start justify-between pb-3 border-b border-slate-100">
           <div>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-teal-50 text-[#00897B] flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center shadow-xs">
                 <RefreshCw className="w-4 h-4" />
               </div>
               <h3 className="font-extrabold text-slate-900 text-lg">
@@ -116,9 +116,9 @@ export const MiddayReplanModal: React.FC<MiddayReplanModalProps> = ({
         )}
 
         {/* Algorithm Safeguards Notice */}
-        <div className="p-3.5 rounded-2xl bg-[#F0FDF9] border border-teal-100/90 text-xs text-teal-900 space-y-1">
+        <div className="p-3.5 rounded-2xl bg-[#F0FDF9] border border-sky-100/90 text-xs text-slate-900 space-y-1">
           <div className="flex items-center gap-1.5 font-bold">
-            <Sparkles className="w-3.5 h-3.5 text-[#00897B]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#0284C7]" />
             <span>Deterministic Route Continuity Safeguards:</span>
           </div>
           <ul className="list-disc list-inside text-[11px] text-teal-800/90 space-y-0.5">
@@ -134,14 +134,14 @@ export const MiddayReplanModal: React.FC<MiddayReplanModalProps> = ({
           <div className="rounded-2xl bg-slate-50 border border-slate-200 p-3.5 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold text-slate-700">
               <span className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#00897B]" />
+                <MapPin className="w-3.5 h-3.5 text-[#0284C7]" />
                 Starting GPS Origin
               </span>
               <button
                 type="button"
                 onClick={fetchGps}
                 disabled={isGpsLoading}
-                className="text-[11px] text-[#00897B] hover:underline flex items-center gap-1"
+                className="text-[11px] text-[#0284C7] hover:underline flex items-center gap-1"
               >
                 <RefreshCw className={`w-3 h-3 ${isGpsLoading ? 'animate-spin' : ''}`} />
                 <span>Update GPS</span>
@@ -161,7 +161,7 @@ export const MiddayReplanModal: React.FC<MiddayReplanModalProps> = ({
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#0284C7]"
             >
               <option value="Traffic delay / road congestion">Traffic delay / road congestion</option>
               <option value="Doctor emergency / appointment delayed">Doctor emergency / appointment delayed</option>
@@ -200,7 +200,7 @@ export const MiddayReplanModal: React.FC<MiddayReplanModalProps> = ({
             <button
               type="submit"
               disabled={isLoading}
-              className="px-6 py-2.5 rounded-xl bg-[#00897B] hover:bg-teal-700 text-white text-xs font-bold shadow-md shadow-teal-700/20 transition-all disabled:opacity-50 inline-flex items-center gap-2"
+              className="px-6 py-2.5 rounded-xl bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold shadow-md shadow-[#0284C7]/20 transition-all disabled:opacity-50 inline-flex items-center gap-2"
             >
               <Navigation className="w-4 h-4" />
               <span>{isLoading ? 'Re-optimizing...' : 'Calculate New Route'}</span>

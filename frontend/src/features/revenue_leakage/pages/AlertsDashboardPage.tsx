@@ -81,13 +81,13 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
   const getEntityIcon = (type: string) => {
     if (type === 'lead') return <UserCheck className="w-3.5 h-3.5 text-blue-600" />;
     if (type === 'territory') return <MapPin className="w-3.5 h-3.5 text-emerald-600" />;
-    return <Building2 className="w-3.5 h-3.5 text-teal-600" />;
+    return <Building2 className="w-3.5 h-3.5 text-[#0284C7]" />;
   };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200 pb-16">
       {/* Top Banner */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-lg bg-rose-50 text-rose-700 font-bold text-xs border border-rose-200">
@@ -114,7 +114,7 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
           {canConfigureRules && onNavigateToRules && (
             <button
               onClick={onNavigateToRules}
-              className="px-4 py-2 text-xs font-bold text-[#00897B] bg-[#F0FDF9] border border-teal-200/80 rounded-xl hover:bg-teal-50 transition-colors"
+              className="px-4 py-2 text-xs font-bold text-[#0284C7] bg-sky-50 border border-sky-200/80 rounded-xl hover:bg-sky-50 transition-colors"
             >
               Configure Rules
             </button>
@@ -169,7 +169,7 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
       {/* Alerts List */}
       {loading ? (
         <div className="p-12 text-center bg-white rounded-3xl border border-slate-100">
-          <RefreshCw className="w-8 h-8 text-[#00897B] animate-spin mx-auto mb-3" />
+          <RefreshCw className="w-8 h-8 text-[#0284C7] animate-spin mx-auto mb-3" />
           <p className="text-xs font-bold text-slate-700">Loading operational warnings...</p>
         </div>
       ) : alerts.length === 0 ? (
@@ -185,14 +185,14 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
           {alerts.map((alert) => (
             <div
               key={alert.id}
-              className="p-5 bg-white rounded-2xl border border-slate-100 hover:border-teal-200 shadow-sm transition-all hover:shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer"
+              className="p-5 bg-white rounded-2xl border border-slate-100 hover:border-sky-200 shadow-sm transition-all hover:shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer"
               onClick={() => onSelectAlert(alert.id)}
             >
               <div className="space-y-2 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   {getPriorityBadge(alert.attention_priority)}
                   <span className="text-xs font-bold text-slate-400">·</span>
-                  <span className="text-xs font-bold text-[#00897B] uppercase tracking-wide">
+                  <span className="text-xs font-bold text-[#0284C7] uppercase tracking-wide">
                     {alert.rule_name}
                   </span>
                   {alert.occurrence_no > 1 && (
@@ -239,7 +239,7 @@ export const AlertsDashboardPage: React.FC<AlertsDashboardPageProps> = ({
                 {alert.status === 'active' && (
                   <button
                     onClick={() => setSelectedAlertForAction(alert)}
-                    className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] rounded-xl shadow-sm transition-all"
+                    className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-xl shadow-sm transition-all"
                   >
                     Take Action
                   </button>

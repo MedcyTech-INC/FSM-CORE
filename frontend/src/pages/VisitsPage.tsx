@@ -90,7 +90,7 @@ export const VisitsPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner Card matching localhost_9590_call-capture.png */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl bg-[#0284C7] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/20">
             <Camera className="w-7 h-7" />
@@ -105,7 +105,7 @@ export const VisitsPage: React.FC = () => {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="px-6 py-3.5 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#0284C7]/20 transition-all flex items-center gap-2 self-start sm:self-auto"
+          className="px-6 py-3.5 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#0284C7]/20 transition-all flex items-center justify-center gap-2 w-full sm:w-auto cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Field Visit
         </button>
@@ -118,7 +118,7 @@ export const VisitsPage: React.FC = () => {
       )}
 
       {/* Today's Assigned Visits Card matching screenshot */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="mb-6">
           <div className="flex items-center gap-2 text-[#0284C7] mb-1">
             <Phone className="w-5 h-5 stroke-[2.2]" />
@@ -174,11 +174,11 @@ export const VisitsPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 self-start md:self-auto">
+                <div className="flex items-center gap-2 w-full sm:w-auto pt-2 sm:pt-0">
                   {v.status === 'SCHEDULED' && (
                     <button
                       onClick={() => handleStartArrival(v.id)}
-                      className="px-4 py-2 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                      className="px-4 py-2 bg-[#0284C7] w-full sm:w-auto justify-center hover:bg-[#0369A1] text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                     >
                       <MapPin className="w-3.5 h-3.5" /> Check In Arrival
                     </button>
@@ -186,7 +186,7 @@ export const VisitsPage: React.FC = () => {
                   {v.status === 'IN_PROGRESS' && (
                     <button
                       onClick={() => setActiveVisitId(v.id)}
-                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                      className="px-4 py-2 bg-emerald-600 w-full sm:w-auto justify-center hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                     >
                       <CheckCircle className="w-3.5 h-3.5" /> Complete Call
                     </button>

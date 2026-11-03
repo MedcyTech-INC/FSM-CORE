@@ -3,7 +3,7 @@ import { Branch, Tenant, TenantBranding } from '../types/api';
 
 export const defaultBranding: TenantBranding = {
   brand_name: 'Medcy FSM Platform',
-  primary_color: '#00897B',
+  primary_color: '#0284C7',
   logo_url: null,
   terminology_mapping: {
     target: 'Doctor',

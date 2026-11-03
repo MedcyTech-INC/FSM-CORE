@@ -118,7 +118,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
   return (
     <div className="w-full mx-auto space-y-6 font-sans">
       {/* Modal Top Bar */}
-      <div className="flex items-center justify-between p-6 pb-0 border-b border-slate-100 pb-5">
+      <div className="flex items-center justify-between p-4 sm:p-6 pb-4 sm:pb-5 border-b border-slate-100">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#0EA5E9] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/20 shrink-0">
             <Sparkles className="w-5 h-5 stroke-[2.2]" />
@@ -142,7 +142,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
         </button>
       </div>
 
-      <div className="px-6 pb-6 space-y-6">
+      <div className="px-4 sm:px-6 pb-6 space-y-4 sm:space-y-6">
         {error && (
           <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-2xl font-bold flex items-center gap-2">
             <span>⚠️</span>
