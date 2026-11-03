@@ -17,11 +17,14 @@ import {
   Wand2,
   Target,
   ShieldAlert,
+  Shield,
   Camera,
   Route,
+  Building2,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { useFeatureStore } from '../store/featureStore';
+import { useTenantStore } from '../store/tenantStore';
 import { branding } from '../config/branding';
 import { NavigationDrawer } from './NavigationDrawer';
 import { SetupWizardModal } from './SetupWizardModal';
@@ -35,6 +38,7 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, children }) => {
   const { user, logout, togglePersona } = useAuthStore();
   const { features } = useFeatureStore();
+  const { branding: tenantBranding, branches, activeBranchId, setActiveBranch, t } = useTenantStore();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [wizardOpen, setWizardOpen] = useState(false);
 
@@ -52,21 +56,21 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
       case 'daily-plan':
         return { title: 'AI Daily Sales Plan', subtitle: 'Dynamic route optimization and itinerary execution' };
       case 'leads':
-        return { title: 'Lead Management', subtitle: 'Doctors, opportunities & commercial stages' };
+        return { title: 'Lead Management', subtitle: `${t('target_plural', 'Doctors')}, opportunities & commercial stages` };
       case 'followups':
-        return { title: 'Follow-ups & Commitments', subtitle: 'Scheduled doctor calls, visits & SLA tracking' };
+        return { title: 'Follow-ups & Commitments', subtitle: `Scheduled ${t('target', 'doctor')} calls, visits & SLA tracking` };
       case 'targets':
-        return { title: 'Monthly Targets & Pacing', subtitle: 'Personal doctor visit quotas & daily run-rates' };
+        return { title: 'Monthly Targets & Pacing', subtitle: `Personal ${t('visit', 'doctor visit')} quotas & daily run-rates` };
       case 'team-targets':
         return { title: 'Team Target Allocations', subtitle: 'Territory targets & performance tracking' };
       case 'revenue-leakage':
-        return { title: 'Revenue Leakage Detection', subtitle: 'Automated warnings for neglected doctors & stalled pipeline' };
+        return { title: 'Revenue Leakage Detection', subtitle: `Automated warnings for neglected ${t('target_plural', 'doctors').toLowerCase()} & stalled pipeline` };
       case 'leakage-rules':
         return { title: 'Leakage Detection Rules', subtitle: 'Configure risk thresholds & scan parameters' };
       case 'leakage-scans':
         return { title: 'Scanner Audit Runs', subtitle: 'Log of automatic detector runs and outcomes' };
       case 'visits':
-        return { title: 'Visit Log', subtitle: 'Doctor visits, field check-ins & GPS verification' };
+        return { title: 'Visit Log', subtitle: `${t('visit_plural', 'Doctor visits')}, field check-ins & GPS verification` };
       case 'expenses':
         return { title: 'Expense Management', subtitle: 'Travel mileage, meal allowances & manager approvals' };
       case 'analytics':
@@ -76,9 +80,9 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
       case 'leaves':
         return { title: 'Leave Requests', subtitle: 'Leave balances, requests & approvals' };
       case 'tasks':
-        return { title: 'Work Assignment', subtitle: 'Daily doctor beat & territory tasks' };
+        return { title: 'Work Assignment', subtitle: `Daily ${t('target', 'doctor')} beat & territory tasks` };
       default:
-        return { title: branding.companyName, subtitle: branding.portalSubtitle };
+        return { title: tenantBranding.brand_name || branding.companyName, subtitle: branding.portalSubtitle };
     }
   };
 
@@ -112,13 +116,16 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
             className="flex items-center gap-3 cursor-pointer group select-none"
             onClick={() => onTabChange('dashboard')}
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] flex items-center justify-center text-white font-extrabold text-base shadow-md shadow-[#6B52B6]/25 group-hover:scale-105 transition-transform">
-              {branding.logoInitials}
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-extrabold text-base shadow-md group-hover:scale-105 transition-transform"
+              style={{ backgroundColor: tenantBranding.primary_color || '#6B52B6' }}
+            >
+              {tenantBranding.brand_name ? tenantBranding.brand_name.substring(0, 2).toUpperCase() : branding.logoInitials}
             </div>
             <div>
               <div className="flex items-center gap-1.5 leading-none">
                 <span className="font-extrabold text-slate-900 tracking-tight text-sm uppercase group-hover:text-[#6B52B6] transition-colors">
-                  {branding.companyName}
+                  {tenantBranding.brand_name || branding.companyName}
                 </span>
                 <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md bg-purple-50 text-[#6B52B6] border border-purple-200/70 tracking-wider">
                   PRO
@@ -391,6 +398,33 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               )}
             </nav>
           </div>
+
+          {/* SECTION: Platform SaaS Governance */}
+          {(user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN' || user?.is_tenant_root_admin) && (
+            <div>
+              <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+                SaaS Control Plane
+              </span>
+              <nav className="space-y-1">
+                <button
+                  onClick={() => onTabChange('platform-admin')}
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    currentTab === 'platform-admin'
+                      ? 'bg-purple-900 text-white font-extrabold shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Shield className="w-4 h-4 text-purple-600" />
+                    <span>Organizations & HQ</span>
+                  </div>
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-purple-700">
+                    SaaS
+                  </span>
+                </button>
+              </nav>
+            </div>
+          )}
         </div>
 
         {/* Sidebar Bottom: Sign Out */}
@@ -472,8 +506,28 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 />
               </div>
 
+              {/* Tenant & Branch Context Badge */}
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 shadow-sm">
+                <Building2 className="w-3.5 h-3.5 text-slate-500" />
+                <span className="font-extrabold text-slate-900">{tenantBranding.brand_name || 'Corporate HQ'}</span>
+                {branches.length > 0 && (
+                  <select
+                    value={activeBranchId || branches[0].id}
+                    onChange={(e) => setActiveBranch(e.target.value)}
+                    className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-700 ml-1 border-none cursor-pointer outline-none"
+                    title="Active Branch"
+                  >
+                    {branches.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+
               {/* Direct Mode Pill */}
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-600 shadow-sm">
+              <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-xs font-semibold text-slate-600 shadow-sm">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />

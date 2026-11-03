@@ -7,6 +7,8 @@ from app.routers.field_visits import router as field_visits_router
 from app.routers.leaves import router as leaves_router
 from app.routers.tasks import router as tasks_router
 from app.routers.holidays import router as holidays_router
+from app.routers.platform_admin import router as platform_admin_router
+from app.routers.tenant_portal import router as tenant_portal_router
 
 __all__ = [
     "auth_router",
@@ -18,4 +20,6 @@ __all__ = [
     "leaves_router",
     "tasks_router",
     "holidays_router",
+    "platform_admin_router",
+    "tenant_portal_router",
 ]

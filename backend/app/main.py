@@ -22,7 +22,10 @@ from app.routers import (
     leaves_router,
     tasks_router,
     holidays_router,
+    platform_admin_router,
+    tenant_portal_router,
 )
+from app.core.tenant_middleware import MultiTenantSessionMiddleware
 from app.lead_management import router as lead_management_router
 from app.followups import router as followups_router
 from app.features.monthly_target.router import router as monthly_targets_router
@@ -68,6 +71,9 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # Multi-Tenant Context & Session Leasing Middleware
+    app.add_middleware(MultiTenantSessionMiddleware)
 
     # Health Check Endpoint
     @app.get("/health", tags=["System"])
@@ -145,6 +151,8 @@ def create_app() -> FastAPI:
         }
 
     # Core Foundation Routers (Always Mounted)
+    app.include_router(platform_admin_router)
+    app.include_router(tenant_portal_router)
     app.include_router(auth_router)
     app.include_router(employees_router)
     app.include_router(attendance_router)

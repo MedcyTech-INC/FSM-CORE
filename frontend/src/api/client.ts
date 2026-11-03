@@ -10,6 +10,9 @@ import {
   TaskItem,
   ExpenseClaim,
   ExpenseUploadReceiptResult,
+  Tenant,
+  TenantBranding,
+  Branch,
 } from '../types/api';
 import {
   PlanResponse,
@@ -587,10 +590,90 @@ function createDynamicMockPlan(
   };
 }
 
+let mockTenants: Tenant[] = [
+  {
+    id: 't-zydus-001',
+    slug: 'zydus',
+    legal_name: 'Zydus Healthcare Private Limited',
+    trade_name: 'Zydus Health',
+    subscription_tier: 'enterprise',
+    is_active: true,
+    created_at: '2026-01-15T08:00:00Z',
+  },
+  {
+    id: 't-cipla-002',
+    slug: 'cipla',
+    legal_name: 'Cipla Therapeutics Ltd',
+    trade_name: 'Cipla',
+    subscription_tier: 'enterprise',
+    is_active: true,
+    created_at: '2026-02-10T09:30:00Z',
+  },
+  {
+    id: 't-apollo-003',
+    slug: 'apollo',
+    legal_name: 'Apollo Pharmacy & Diagnostics',
+    trade_name: 'Apollo',
+    subscription_tier: 'growth',
+    is_active: true,
+    created_at: '2026-03-01T11:15:00Z',
+  },
+];
+
+let mockBranchesMap: Record<string, Branch[]> = {
+  't-zydus-001': [
+    {
+      id: 'b-zyd-hq',
+      tenant_id: 't-zydus-001',
+      name: 'Corporate HQ - Mumbai',
+      branch_code: 'HQ-ZYDUS',
+      city: 'Mumbai',
+      is_head_office: true,
+      is_active: true,
+    },
+    {
+      id: 'b-zyd-west',
+      tenant_id: 't-zydus-001',
+      name: 'Pune Regional Division',
+      branch_code: 'BR-PUN-01',
+      city: 'Pune',
+      is_head_office: false,
+      is_active: true,
+    },
+  ],
+  't-cipla-002': [
+    {
+      id: 'b-cip-hq',
+      tenant_id: 't-cipla-002',
+      name: 'Cipla Global HQ',
+      branch_code: 'HQ-CIPLA',
+      city: 'Mumbai',
+      is_head_office: true,
+      is_active: true,
+    },
+  ],
+  't-apollo-003': [
+    {
+      id: 'b-apo-hq',
+      tenant_id: 't-apollo-003',
+      name: 'Hyderabad Central HQ',
+      branch_code: 'HQ-APOLLO',
+      city: 'Hyderabad',
+      is_head_office: true,
+      is_active: true,
+    },
+  ],
+};
+
 class ApiClient {
   private getAuthHeader(): HeadersInit {
     const token = localStorage.getItem('access_token');
     return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  private getTenantHeader(): HeadersInit {
+    const slug = localStorage.getItem('tenant_slug') || 'default';
+    return { 'X-Tenant-Slug': slug };
   }
 
   private isDevDemo(): boolean {
@@ -602,6 +685,7 @@ class ApiClient {
     const headers = {
       'Content-Type': 'application/json',
       ...this.getAuthHeader(),
+      ...this.getTenantHeader(),
       ...options.headers,
     };
 
@@ -1378,6 +1462,95 @@ class ApiClient {
       return [];
     }
     return this.request<CustomerResponse[]>('/api/v1/crm/customers');
+  }
+
+  // Multi-Tenant Platform & Portal Endpoints
+  async getTenantBranding(): Promise<TenantBranding> {
+    return this.request<TenantBranding>('/api/tenant/branding');
+  }
+
+  async getTenantBranches(): Promise<Branch[]> {
+    if (this.isDevDemo()) {
+      const activeTenant = mockTenants[0];
+      return mockBranchesMap[activeTenant.id] || [];
+    }
+    return this.request<Branch[]>('/api/tenant/branches');
+  }
+
+  async getTenantProfile(): Promise<Tenant> {
+    if (this.isDevDemo()) {
+      return mockTenants[0];
+    }
+    return this.request<Tenant>('/api/tenant/profile');
+  }
+
+  async getPlatformTenants(): Promise<Tenant[]> {
+    if (this.isDevDemo()) {
+      return [...mockTenants];
+    }
+    return this.request<Tenant[]>('/admin/platform/tenants');
+  }
+
+  async provisionPlatformTenant(payload: any): Promise<any> {
+    if (this.isDevDemo()) {
+      const newTenantId = 't-' + payload.slug + '-' + Date.now();
+      const newTenant: Tenant = {
+        id: newTenantId,
+        slug: payload.slug,
+        legal_name: payload.legal_name,
+        trade_name: payload.trade_name || payload.legal_name,
+        subscription_tier: payload.subscription_tier || 'standard',
+        is_active: true,
+        created_at: new Date().toISOString(),
+      };
+      mockTenants.unshift(newTenant);
+
+      const hqBranch: Branch = {
+        id: 'b-' + payload.slug + '-hq',
+        tenant_id: newTenantId,
+        name: payload.primary_branch_name || 'Primary Corporate HQ',
+        branch_code: `HQ-${payload.slug.toUpperCase()}`,
+        city: payload.primary_branch_city || 'Headquarters',
+        is_head_office: true,
+        is_active: true,
+      };
+      mockBranchesMap[newTenantId] = [hqBranch];
+
+      return {
+        ...newTenant,
+        primary_branch: hqBranch,
+        root_admin_email: payload.admin_email,
+      };
+    }
+    return this.request<any>('/admin/platform/tenants', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  }
+
+  async createTenantBranch(tenantId: string, payload: any): Promise<Branch> {
+    if (this.isDevDemo()) {
+      const newBranch: Branch = {
+        id: 'b-' + Date.now(),
+        tenant_id: tenantId,
+        name: payload.name,
+        branch_code: payload.branch_code,
+        city: payload.city,
+        state: payload.state,
+        country: payload.country || 'India',
+        is_head_office: payload.is_head_office || false,
+        is_active: true,
+      };
+      if (!mockBranchesMap[tenantId]) {
+        mockBranchesMap[tenantId] = [];
+      }
+      mockBranchesMap[tenantId].push(newBranch);
+      return newBranch;
+    }
+    return this.request<Branch>(`/admin/platform/tenants/${tenantId}/branches`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
   }
 }
 

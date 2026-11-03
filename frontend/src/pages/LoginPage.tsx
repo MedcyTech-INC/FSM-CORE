@@ -7,21 +7,29 @@ import {
   AlertCircle,
   Building2,
   Users,
+  Shield,
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { branding } from '../config/branding';
 
-export const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  onOpenSuperAdmin?: () => void;
+}
+
+export const LoginPage: React.FC<LoginPageProps> = ({ onOpenSuperAdmin }) => {
   const [email, setEmail] = useState('admin@fsm.com');
   const [password, setPassword] = useState('demo123');
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<'admin' | 'field'>('admin');
+  const [selectedRole, setSelectedRole] = useState<'admin' | 'field' | 'super'>('admin');
   const { login, isLoading, error } = useAuthStore();
 
-  const handleSelectRole = (role: 'admin' | 'field') => {
+  const handleSelectRole = (role: 'admin' | 'field' | 'super') => {
     setSelectedRole(role);
     if (role === 'admin') {
       setEmail('admin@fsm.com');
+      setPassword('demo123');
+    } else if (role === 'super') {
+      setEmail('superadmin@fsm.com');
       setPassword('demo123');
     } else {
       setEmail('rep@fsm.com');
@@ -78,6 +86,21 @@ export const LoginPage: React.FC = () => {
               <span className="flex items-center gap-1">
                 <Users className="w-3 h-3" />
                 Field Rep
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleSelectRole('super')}
+              className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
+                selectedRole === 'super'
+                  ? 'bg-indigo-700 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+              title="Platform Super-Admin: Onboard and govern corporate client organizations"
+            >
+              <span className="flex items-center gap-1">
+                <Shield className="w-3 h-3 text-amber-300" />
+                Super Admin
               </span>
             </button>
           </div>
@@ -189,12 +212,26 @@ export const LoginPage: React.FC = () => {
           </form>
 
           {/* Bottom Sign-Up Link */}
-          <div className="text-center mt-12 text-xs text-slate-500 font-medium">
+          <div className="text-center mt-10 text-xs text-slate-500 font-medium">
             Don't have an account?{' '}
             <span className="text-[#00AEEF] hover:underline cursor-pointer font-semibold">
               Sign Up
             </span>
           </div>
+
+          {/* Quick Direct Link to Platform Super Admin Portal */}
+          {onOpenSuperAdmin && (
+            <div className="mt-6 pt-5 border-t border-slate-100 text-center">
+              <button
+                type="button"
+                onClick={onOpenSuperAdmin}
+                className="w-full py-2 px-3 rounded-xl bg-purple-50 hover:bg-purple-100 text-[#6B52B6] border border-purple-200/80 text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer group"
+              >
+                <Shield className="w-3.5 h-3.5 text-[#6B52B6] group-hover:scale-110 transition-transform" />
+                <span>🏢 SaaS Super-Admin: Manage & Onboard Organizations &rarr;</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Left Footer */}

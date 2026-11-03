@@ -8,12 +8,45 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
-  role: 'ADMIN' | 'GM' | 'ZSM' | 'RSM' | 'MR' | 'FINANCE';
+  role: 'ADMIN' | 'GM' | 'ZSM' | 'RSM' | 'MR' | 'FINANCE' | 'SUPER_ADMIN';
   rank?: string;
   territory?: string;
   is_active: boolean;
   reporting_to_id?: string;
+  tenant_id?: string;
+  branch_id?: string;
+  is_tenant_root_admin?: boolean;
   metadata_json?: Record<string, any>;
+}
+
+export interface Tenant {
+  id: string;
+  slug: string;
+  legal_name: string;
+  trade_name?: string;
+  subscription_tier: string;
+  is_active: boolean;
+  created_at?: string;
+}
+
+export interface TenantBranding {
+  brand_name: string;
+  logo_url?: string | null;
+  primary_color: string;
+  terminology_mapping: Record<string, string>;
+}
+
+export interface Branch {
+  id: string;
+  tenant_id: string;
+  name: string;
+  branch_code: string;
+  city: string;
+  state?: string;
+  country?: string;
+  is_head_office: boolean;
+  is_active: boolean;
+  created_at?: string;
 }
 
 export interface AuthTokens {

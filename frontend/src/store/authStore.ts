@@ -26,6 +26,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     // Instant Demo Mode fallback for direct evaluation (strictly limited to local development)
     if (import.meta.env.DEV && (email === 'admin@fsm.com' || email === 'field@fsm.com' || email.endsWith('@fsm.com'))) {
+      const isSuperAdmin = email.startsWith('super') || email === 'superadmin@fsm.com';
       const isField = email.startsWith('field');
       const isFinance = email.startsWith('finance');
       const isZsm = email.startsWith('zsm');
@@ -38,7 +39,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       let territory = 'All Territories (HQ)';
       let userId = '11111111-1111-1111-1111-111111111111';
 
-      if (isFinance) {
+      if (isSuperAdmin) {
+        role = 'SUPER_ADMIN';
+        firstName = 'Platform';
+        lastName = 'SuperAdmin';
+        rank = 'SaaS Platform Operations';
+        territory = 'Global Multi-Tenant Control Plane';
+        userId = '00000000-0000-0000-0000-000000000000';
+      } else if (isFinance) {
         role = 'FINANCE';
         firstName = 'Pooja';
         lastName = 'Mehta';
