@@ -136,8 +136,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               onClick={handlePunchToggle}
               disabled={gpsLoading}
               className={`px-8 py-3.5 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${isPunchedIn
-                  ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20'
-                  : 'bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-[#6B52B6]/25'
+                ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20'
+                : 'bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-[#6B52B6]/25'
                 }`}
             >
               {gpsLoading ? (
@@ -165,88 +165,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* REVENUE & TARGETS COMMAND CENTER */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Revenue Leakage Card */}
-        <div
-          onClick={() => onNavigate?.('revenue-leakage')}
-          className="p-6 rounded-3xl bg-gradient-to-br from-white to-rose-50/40 border border-rose-100 shadow-sm hover:shadow-md transition-all cursor-pointer group"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200/80 text-rose-600 flex items-center justify-center shadow-sm">
-                <ShieldAlert className="w-6 h-6 stroke-[2.2]" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-black text-slate-900 group-hover:text-rose-700 transition-colors">
-                    Revenue Leakage
-                  </h3>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-rose-100 text-rose-700 uppercase tracking-wider flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                    Live Oversight
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Dormant accounts, unvisited high-value clients & stalled leads
-                </p>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-rose-100 group-hover:text-rose-700 text-slate-400 flex items-center justify-center transition-all">
-              <ChevronRight className="w-4 h-4" />
-            </div>
+      {/* AI Daily Sales Plan Quick Hero Card */}
+      <div className="bg-gradient-to-r from-teal-900 via-slate-900 to-[#1E293B] rounded-3xl p-6 md:p-8 text-white shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-bold uppercase tracking-wider">
+            <span className="w-2 h-2 rounded-full bg-teal-400 animate-ping" />
+            <span>AI Route Optimization</span>
           </div>
-
-          <div className="flex items-center justify-between pt-3 border-t border-rose-100/70 text-xs">
-            <span className="font-semibold text-slate-600 flex items-center gap-1.5">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
-              Automated Nightly Scanner Active
-            </span>
-            <span className="font-bold text-rose-600 group-hover:underline">
-              View Alerts & Rules →
-            </span>
-          </div>
+          <h2 className="text-xl md:text-2xl font-extrabold tracking-tight">
+            Today's AI Sales Plan & Route
+          </h2>
+          <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
+            MCDA candidate prioritization with target pacing boost, 2-Opt TSPTW dynamic travel minimization, and automated 45-minute lunch break scheduling.
+          </p>
         </div>
 
-        {/* Monthly Targets Card */}
-        <div
-          onClick={() => onNavigate?.('targets')}
-          className="p-6 rounded-3xl bg-gradient-to-br from-white to-teal-50/40 border border-teal-100 shadow-sm hover:shadow-md transition-all cursor-pointer group"
+        <button
+          onClick={() => onNavigate?.('daily-plan')}
+          className="px-6 py-3.5 rounded-2xl bg-[#00897B] hover:bg-teal-600 text-white font-extrabold text-xs shadow-md shadow-teal-900/40 transition-all hover:scale-[1.03] inline-flex items-center justify-center gap-2 self-start md:self-auto shrink-0"
         >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-200/80 text-[#00897B] flex items-center justify-center shadow-sm">
-                <Target className="w-6 h-6 stroke-[2.2]" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-black text-slate-900 group-hover:text-teal-700 transition-colors">
-                    Monthly Targets
-                  </h3>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-teal-100 text-[#00897B] uppercase tracking-wider">
-                    Performance
-                  </span>
-                </div>
-                <p className="text-xs text-slate-500 mt-0.5">
-                  Quota achievements, required daily run-rates & pacing
-                </p>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-full bg-slate-50 group-hover:bg-teal-100 group-hover:text-teal-700 text-slate-400 flex items-center justify-center transition-all">
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between pt-3 border-t border-teal-100/70 text-xs">
-            <span className="font-semibold text-slate-600 flex items-center gap-1.5">
-              <TrendingUp className="w-3.5 h-3.5 text-[#00897B]" />
-              Working Day Run-Rate Engine
-            </span>
-            <span className="font-bold text-[#00897B] group-hover:underline">
-              View My Targets →
-            </span>
-          </div>
-        </div>
+          <span>Open Sales Route</span>
+        </button>
       </div>
 
       {/* Attendance Summary Section */}

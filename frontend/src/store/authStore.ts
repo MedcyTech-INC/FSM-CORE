@@ -11,9 +11,10 @@ interface AuthState {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loadSession: () => Promise<void>;
+  togglePersona: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   token: localStorage.getItem('access_token'),
   isAuthenticated: !!localStorage.getItem('access_token'),
@@ -150,5 +151,33 @@ export const useAuthStore = create<AuthState>((set) => ({
       localStorage.removeItem('refresh_token');
       set({ user: null, token: null, isAuthenticated: false, isLoading: false });
     }
+  },
+  togglePersona: () => {
+    const currentUser = get().user;
+    const isManager = currentUser?.role !== 'MR';
+    const nextUser: User = isManager
+      ? {
+          id: '22222222-2222-2222-2222-222222222222',
+          email: 'field@fsm.com',
+          first_name: 'Rahul',
+          last_name: 'Sharma',
+          role: 'MR',
+          rank: 'Senior Field Executive',
+          territory: 'South Mumbai Zone',
+          is_active: true,
+        }
+      : {
+          id: '11111111-1111-1111-1111-111111111111',
+          email: 'admin@fsm.com',
+          first_name: 'Alex',
+          last_name: 'Vance',
+          role: 'ADMIN',
+          rank: 'General Director',
+          territory: 'All Territories (HQ)',
+          is_active: true,
+        };
+
+    localStorage.setItem('demo_user', JSON.stringify(nextUser));
+    set({ user: nextUser });
   },
 }));

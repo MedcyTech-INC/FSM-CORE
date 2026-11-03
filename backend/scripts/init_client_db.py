@@ -26,6 +26,8 @@ from app.config import get_settings
 from app.database.base import Base
 # Import all models so that Base.metadata contains all entity tables
 import app.models  # noqa: F401
+import app.features.daily_sales_plan.models.crm  # noqa: F401
+import app.features.daily_sales_plan.models.plan  # noqa: F401
 from app.models.employee import Employee, EmployeeRole
 from app.models.office_location import OfficeLocation
 from app.models.leave_balance import LeaveBalance
