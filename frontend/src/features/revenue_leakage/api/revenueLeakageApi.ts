@@ -247,6 +247,18 @@ let mockScanRuns: ScanRunDTO[] = [
   },
 ];
 
+const getAuthHeaders = (idempotencyKey?: string): HeadersInit => {
+  const token = localStorage.getItem('access_token');
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  if (idempotencyKey) headers['Idempotency-Key'] = idempotencyKey;
+  return headers;
+};
+
+const isDevDemo = (): boolean => {
+  return localStorage.getItem('access_token')?.startsWith('demo-jwt') ?? false;
+};
+
 export const revenueLeakageApi = {
   async fetchAlerts(params?: {
     rule_code?: string;
@@ -256,23 +268,25 @@ export const revenueLeakageApi = {
     page?: number;
     page_size?: number;
   }): Promise<PaginatedAlertsDTO> {
-    try {
-      const q = new URLSearchParams();
-      if (params?.rule_code) q.append('rule_code', params.rule_code);
-      if (params?.status) q.append('status', params.status);
-      if (params?.attention_priority) q.append('attention_priority', params.attention_priority);
-      if (params?.entity_type) q.append('entity_type', params.entity_type);
-      if (params?.page) q.append('page', String(params.page));
-      if (params?.page_size) q.append('page_size', String(params.page_size));
+    if (!isDevDemo()) {
+      try {
+        const q = new URLSearchParams();
+        if (params?.rule_code) q.append('rule_code', params.rule_code);
+        if (params?.status) q.append('status', params.status);
+        if (params?.attention_priority) q.append('attention_priority', params.attention_priority);
+        if (params?.entity_type) q.append('entity_type', params.entity_type);
+        if (params?.page) q.append('page', String(params.page));
+        if (params?.page_size) q.append('page_size', String(params.page_size));
 
-      const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/alerts?${q.toString()}`, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (res.ok) {
-        return await res.json();
+        const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/alerts?${q.toString()}`, {
+          headers: getAuthHeaders(),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch {
+        // Fallback to mock
       }
-    } catch {
-      // Fallback to mock
     }
 
     let filtered = [...mockAlerts];
@@ -294,13 +308,17 @@ export const revenueLeakageApi = {
   },
 
   async fetchAlertDetail(alertId: string): Promise<AlertDetailDTO> {
-    try {
-      const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/alerts/${alertId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDevDemo()) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/alerts/${alertId}`, {
+          headers: getAuthHeaders(),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch {
+        // Fallback to mock
       }
-    } catch {
-      // Fallback to mock
     }
 
     const alert = mockAlerts.find((a) => a.id === alertId) || mockAlerts[0];
@@ -399,29 +417,35 @@ export const revenueLeakageApi = {
   },
 
   async fetchRules(): Promise<RuleDTO[]> {
-    try {
-      const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/rules`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDevDemo()) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/rules`, {
+          headers: getAuthHeaders(),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch {
+        // Fallback
       }
-    } catch {
-      // Fallback
     }
     return mockRules;
   },
 
   async patchRule(ruleId: string, payload: RulePatchPayload): Promise<RuleDTO> {
-    try {
-      const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/rules/${ruleId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) {
-        return await res.json();
+    if (!isDevDemo()) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/rules/${ruleId}`, {
+          method: 'PATCH',
+          headers: getAuthHeaders(),
+          body: JSON.stringify(payload),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch {
+        // Fallback
       }
-    } catch {
-      // Fallback
     }
 
     const idx = mockRules.findIndex((r) => r.id === ruleId);
@@ -437,13 +461,17 @@ export const revenueLeakageApi = {
   },
 
   async fetchScanRuns(): Promise<ScanRunDTO[]> {
-    try {
-      const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/scan-runs`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDevDemo()) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/v1/revenue-leakage/scan-runs`, {
+          headers: getAuthHeaders(),
+        });
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch {
+        // Fallback
       }
-    } catch {
-      // Fallback
     }
     return mockScanRuns;
   },
