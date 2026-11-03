@@ -9,6 +9,9 @@ export interface ClientFeatures {
   followups: boolean;
   expenses: boolean;
   analytics: boolean;
+  monthly_targets: boolean;
+  revenue_leakage: boolean;
+  daily_sales_plan: boolean;
 }
 
 interface FeatureState {
@@ -29,6 +32,9 @@ const defaultFeatures: ClientFeatures = {
   followups: true,
   expenses: true,
   analytics: true,
+  monthly_targets: true,
+  revenue_leakage: true,
+  daily_sales_plan: true,
 };
 
 export const useFeatureStore = create<FeatureState>((set) => ({

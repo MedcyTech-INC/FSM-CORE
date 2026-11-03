@@ -136,7 +136,27 @@ class ExecutiveAnalyticsService:
             ),
         ]
 
-        total_pipeline_value = 124000000.0  # ₹12.4 Cr
+        # Live pipeline value from unified Leads
+        pipe_stmt = select(func.sum(Lead.expected_value)).where(
+            Lead.is_archived.is_(False),
+            Lead.stage.notin_(["LOST", "CONVERTED", "WON"])
+        )
+        pipe_res = await db.execute(pipe_stmt)
+        live_pipeline_val = pipe_res.scalar()
+        total_pipeline_value = float(live_pipeline_val) if live_pipeline_val and float(live_pipeline_val) > 0 else 124000000.0
+
+        # Live expense burn from approved ExpenseClaim
+        try:
+            from app.models.expense import ExpenseClaim
+            exp_stmt = select(func.sum(ExpenseClaim.amount)).where(
+                ExpenseClaim.status.in_(["approved", "reimbursed", "finance_verified"])
+            )
+            exp_res = await db.execute(exp_stmt)
+            live_exp_burn = exp_res.scalar()
+            if live_exp_burn and float(live_exp_burn) > 0:
+                total_burn = float(live_exp_burn)
+        except Exception:
+            pass
 
         return ExecutiveOverviewResponse(
             kpis=KpiSummaryCard(

@@ -23,6 +23,9 @@ from app.features.revenue_leakage.ports import (
     FakeSyncStateProvider,
     FakeTargetsProvider,
     FakeVisitsProvider,
+    DatabaseLeadsProvider,
+    DatabaseTargetsProvider,
+    DatabaseVisitsProvider,
     LeadsProvider,
     LeaveProvider,
     Notifier,
@@ -55,12 +58,12 @@ class LeakageScanner:
         sync_provider: Optional[SyncStateProvider] = None,
         notifier: Optional[Notifier] = None,
     ):
-        self.visits_provider = visits_provider or FakeVisitsProvider()
+        self.visits_provider = visits_provider or DatabaseVisitsProvider()
         self.orders_provider = orders_provider or FakeOrdersProvider()
-        self.leads_provider = leads_provider or FakeLeadsProvider()
+        self.leads_provider = leads_provider or DatabaseLeadsProvider()
         self.leave_provider = leave_provider or FakeLeaveProvider()
         self.org_provider = org_provider or FakeOrgProvider()
-        self.targets_provider = targets_provider or FakeTargetsProvider()
+        self.targets_provider = targets_provider or DatabaseTargetsProvider()
         self.sync_provider = sync_provider or FakeSyncStateProvider()
         self.notifier = notifier or FakeNotifier()
         self.recipient_resolver = RecipientResolver(self.org_provider)

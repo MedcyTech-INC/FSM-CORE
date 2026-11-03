@@ -13,6 +13,8 @@ import {
   RefreshCw,
   TrendingUp,
   BellRing,
+  Target,
+  ShieldAlert,
 } from 'lucide-react';
 import { useFeatureStore, ClientFeatures } from '../store/featureStore';
 
@@ -48,6 +50,9 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
         followups: true,
         expenses: false,
         analytics: false,
+        monthly_targets: true,
+        revenue_leakage: false,
+        daily_sales_plan: true,
       });
     } else if (preset === 'executive') {
       setLocalFeatures({
@@ -59,6 +64,9 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
         followups: false,
         expenses: true,
         analytics: true,
+        monthly_targets: true,
+        revenue_leakage: true,
+        daily_sales_plan: false,
       });
     } else if (preset === 'full') {
       setLocalFeatures({
@@ -70,6 +78,9 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
         followups: true,
         expenses: true,
         analytics: true,
+        monthly_targets: true,
+        revenue_leakage: true,
+        daily_sales_plan: true,
       });
     } else if (preset === 'minimal') {
       setLocalFeatures({
@@ -81,6 +92,9 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
         followups: false,
         expenses: false,
         analytics: false,
+        monthly_targets: false,
+        revenue_leakage: false,
+        daily_sales_plan: false,
       });
     }
   };
@@ -160,6 +174,30 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
       icon: CheckSquare,
       locked: false,
       tag: 'Modular Feature',
+    },
+    {
+      key: 'monthly_targets' as const,
+      name: 'Monthly Targets & Quotas',
+      desc: 'Managerial revenue targets, visit quotas, and pacing metrics.',
+      icon: Target,
+      locked: false,
+      tag: 'Performance',
+    },
+    {
+      key: 'daily_sales_plan' as const,
+      name: 'AI Daily Sales Plan',
+      desc: 'Smart itinerary routing, stop sequencing, and closed-loop visits.',
+      icon: Wand2,
+      locked: false,
+      tag: 'AI Optimization',
+    },
+    {
+      key: 'revenue_leakage' as const,
+      name: 'Revenue Leakage Detection',
+      desc: 'Automated scanners for abandoned leads, dormant accounts & missed targets.',
+      icon: ShieldAlert,
+      locked: false,
+      tag: 'Risk Management',
     },
   ];
 

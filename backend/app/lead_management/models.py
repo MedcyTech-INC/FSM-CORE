@@ -66,6 +66,14 @@ class Lead(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     def __tablename__(cls) -> str:
         return get_settings().tables.leads
 
+    # Multi-Tenant Scoping
+    tenant_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("fsm_system.tenants.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True
+    )
+
     # Owner & Creator scoping
     employee_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -103,6 +111,8 @@ class Lead(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     location_city: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     contact_person: Mapped[Optional[str]] = mapped_column(String(150), nullable=True)
     contact_phone: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    latitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
+    longitude: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     notes: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     last_interaction_date: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
 
@@ -137,7 +147,24 @@ class Lead(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     __table_args__ = (
         Index("ix_leads_emp_stage", "employee_id", "stage"),
         Index("ix_leads_stage_priority", "stage", "priority"),
+        Index("ix_leads_tenant_stage", "tenant_id", "stage"),
     )
+
+    @property
+    def opportunity_type(self) -> str:
+        return self.lead_type
+
+    @opportunity_type.setter
+    def opportunity_type(self, val: str) -> None:
+        self.lead_type = val
+
+    @property
+    def customer_id(self) -> Optional[uuid.UUID]:
+        return self.lead_customer_id
+
+    @customer_id.setter
+    def customer_id(self, val: Optional[uuid.UUID]) -> None:
+        self.lead_customer_id = val
 
 
 class LeadHistory(Base, UUIDPrimaryKeyMixin):

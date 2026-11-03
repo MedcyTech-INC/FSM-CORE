@@ -848,15 +848,17 @@ class PlanService:
                 employee_id=requesting_employee.id,
                 created_by_id=requesting_employee.id,
                 lead_id=item.lead_id,
-                customer_id=item.customer_id,
+                lead_customer_id=item.customer_id,
                 customer_name=item.location_address,
                 action_type=n_fu.action_type or "Visit",
                 title=n_fu.title,
                 due_at=due_dt,
-                priority="URGENT" if n_fu.urgency == "HIGH" else "MEDIUM",
+                priority="HIGH" if n_fu.urgency in ("HIGH", "URGENT") else "MEDIUM",
                 notes=payload.notes,
                 status="PENDING",
             )
+            if hasattr(requesting_employee, "tenant_id") and requesting_employee.tenant_id:
+                created_fu.tenant_id = requesting_employee.tenant_id
             db.add(created_fu)
             await db.flush()
 
@@ -884,6 +886,39 @@ class PlanService:
             occurred_at=now,
         )
         db.add(act_visit)
+
+        # Log real FieldVisit for attendance audit
+        from app.models.field_visit import FieldVisit, VisitStatus
+        f_visit = FieldVisit(
+            employee_id=requesting_employee.id,
+            target_type="DOCTOR",
+            target_name=item.location_address or "Client Stop",
+            target_identifier=str(item.customer_id or item.lead_id or item.id)[:8],
+            visit_date=plan.plan_date,
+            status=VisitStatus.COMPLETED,
+            notes=payload.notes,
+            check_in_time=now,
+            check_in_lat=payload.actual_latitude,
+            check_in_lng=payload.actual_longitude,
+        )
+        if hasattr(requesting_employee, "tenant_id") and requesting_employee.tenant_id:
+            f_visit.tenant_id = requesting_employee.tenant_id
+        db.add(f_visit)
+        await db.flush()
+        item.field_visit_id = f_visit.id
+
+        # Update MonthlyTarget progress
+        first_of_month = date(plan.plan_date.year, plan.plan_date.month, 1)
+        stmt_target = select(MonthlyTarget).where(
+            MonthlyTarget.employee_id == requesting_employee.id,
+            MonthlyTarget.target_month == first_of_month,
+        )
+        mt_res = await db.execute(stmt_target)
+        cur_target = mt_res.scalar_one_or_none()
+        if cur_target:
+            cur_target.achieved_visits = (cur_target.achieved_visits or 0) + 1
+            if payload.actual_converted_value:
+                cur_target.achieved_revenue = (cur_target.achieved_revenue or 0.0) + float(payload.actual_converted_value)
 
         all_items_stmt = select(DailySalesPlanItem).where(DailySalesPlanItem.plan_id == plan.id)
         all_items_res = await db.execute(all_items_stmt)

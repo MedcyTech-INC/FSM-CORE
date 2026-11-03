@@ -1,5 +1,4 @@
 from app.lead_management.models import Lead, LeadCustomer, LeadHistory, LeadStage, LeadPriority
-from app.lead_management.router import router
 from app.lead_management.service import LeadService
 
 __all__ = [
@@ -9,5 +8,4 @@ __all__ = [
     "LeadStage",
     "LeadPriority",
     "LeadService",
-    "router",
 ]

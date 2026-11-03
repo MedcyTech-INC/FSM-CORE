@@ -26,8 +26,8 @@ from app.routers import (
     tenant_portal_router,
 )
 from app.core.tenant_middleware import MultiTenantSessionMiddleware
-from app.lead_management import router as lead_management_router
-from app.followups import router as followups_router
+from app.lead_management.router import router as lead_management_router
+from app.followups.router import router as followups_router
 from app.features.monthly_target.router import router as monthly_targets_router
 from app.features.revenue_leakage.router import router as revenue_leakage_router
 

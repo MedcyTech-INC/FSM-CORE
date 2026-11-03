@@ -33,9 +33,9 @@ class TableRegistry(BaseSettings):
     system_config: str = Field(default="system_config", alias="TABLE_SYSTEM_CONFIG")
 
     # Feature: Pipeline & Daily Sales Plan Tables
-    customers: str = Field(default="fsm_customers", alias="TABLE_CUSTOMERS")
-    fsm_leads: str = Field(default="fsm_leads", alias="TABLE_FSM_LEADS")
-    fsm_followups: str = Field(default="fsm_followups", alias="TABLE_FSM_FOLLOWUPS")
+    customers: str = Field(default="customers", alias="TABLE_CUSTOMERS")
+    fsm_leads: str = Field(default="leads", alias="TABLE_FSM_LEADS")
+    fsm_followups: str = Field(default="followups", alias="TABLE_FSM_FOLLOWUPS")
     activity_history: str = Field(default="fsm_activity_history", alias="TABLE_ACTIVITY_HISTORY")
     monthly_targets: str = Field(default="fsm_monthly_targets", alias="TABLE_MONTHLY_TARGETS")
     daily_sales_plans: str = Field(default="fsm_daily_sales_plans", alias="TABLE_DAILY_SALES_PLANS")

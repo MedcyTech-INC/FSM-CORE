@@ -42,6 +42,14 @@ class Followup(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     def __tablename__(cls) -> str:
         return get_settings().tables.followups
 
+    # Multi-Tenant Scoping
+    tenant_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("fsm_system.tenants.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True
+    )
+
     # Scoping
     employee_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
@@ -111,7 +119,16 @@ class Followup(Base, UUIDPrimaryKeyMixin, TimestampMixin):
             name="chk_followup_has_context"
         ),
         Index("ix_followups_emp_status_due", "employee_id", "status", "due_at"),
+        Index("ix_followups_tenant_status", "tenant_id", "status"),
     )
+
+    @property
+    def customer_id(self) -> Optional[uuid.UUID]:
+        return self.lead_customer_id
+
+    @customer_id.setter
+    def customer_id(self, val: Optional[uuid.UUID]) -> None:
+        self.lead_customer_id = val
 
     @property
     def is_overdue(self) -> bool:

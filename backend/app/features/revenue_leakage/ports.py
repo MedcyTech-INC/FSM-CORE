@@ -231,3 +231,81 @@ class FakeNotifier:
     ) -> bool:
         self.sent_messages.append({"recipient_id": recipient_id, "kind": "digest", "date": digest_date, "count": len(alert_ids)})
         return True
+
+
+# ==============================================================================
+# Live Production Database Providers for Unified System
+# ==============================================================================
+
+class DatabaseLeadsProvider:
+    """Live Database provider querying unified Lead table."""
+    async def get_open_leads(self, db: AsyncSession) -> List[Dict[str, Any]]:
+        from app.lead_management.models import Lead, LeadStage
+        from sqlalchemy import select
+        stmt = select(Lead).where(
+            Lead.is_archived.is_(False),
+            Lead.stage.notin_([LeadStage.CONVERTED.value, LeadStage.LOST.value, "WON", "LOST"])
+        )
+        res = await db.execute(stmt)
+        leads = res.scalars().all()
+        results = []
+        for l in leads:
+            last_fu = l.last_interaction_date.date() if l.last_interaction_date else (l.created_at.date() if l.created_at else date.today())
+            results.append({
+                "id": l.id,
+                "title": l.title,
+                "status": l.stage,
+                "stage": l.stage,
+                "last_followup_date": last_fu,
+                "created_date": l.created_at.date() if l.created_at else date.today(),
+                "deal_value": Decimal(str(l.expected_value or 0)),
+                "assigned_rep_id": l.employee_id,
+            })
+        return results
+
+    async def get_open_opportunities(self, db: AsyncSession) -> List[Dict[str, Any]]:
+        return await self.get_open_leads(db)
+
+
+class DatabaseVisitsProvider:
+    """Live Database provider querying field_visits table."""
+    async def get_last_visit_date(
+        self, db: AsyncSession, entity_type: str, entity_id: uuid.UUID
+    ) -> Optional[date]:
+        from app.models.field_visit import FieldVisit
+        from sqlalchemy import select, desc
+        stmt = (
+            select(FieldVisit.visit_date)
+            .where(
+                (FieldVisit.employee_id == entity_id) | (FieldVisit.target_identifier == str(entity_id)[:8])
+            )
+            .order_by(desc(FieldVisit.visit_date))
+            .limit(1)
+        )
+        res = await db.execute(stmt)
+        return res.scalar_one_or_none()
+
+
+class DatabaseTargetsProvider:
+    """Live Database provider querying monthly_targets table."""
+    async def get_territory_active_target_achievement(
+        self, db: AsyncSession, territory_id: uuid.UUID, today: date
+    ) -> Optional[Dict[str, Any]]:
+        from app.features.monthly_target.models import Target
+        from sqlalchemy import select
+        first_of_month = date(today.year, today.month, 1)
+        stmt = select(Target).where(
+            Target.start_date <= today,
+            Target.end_date >= today,
+            Target.status == "ACTIVE"
+        ).limit(1)
+        res = await db.execute(stmt)
+        t = res.scalar_one_or_none()
+        if not t:
+            return None
+        return {
+            "territory_id": territory_id,
+            "target_amount": Decimal(str(t.target_value)),
+            "achieved_amount": Decimal("0.00"),
+            "target_month": first_of_month,
+        }

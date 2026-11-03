@@ -371,6 +371,71 @@ class LeadService:
             my_leads_count=my_count
         )
 
+
+    @classmethod
+    async def attach_followup_context(
+        cls,
+        db: AsyncSession,
+        lead_responses: List[LeadResponse]
+    ) -> List[LeadResponse]:
+        """Enriches lead responses with their latest follow-up schedule and outcome."""
+        if not lead_responses:
+            return lead_responses
+
+        lead_ids = [lr.id for lr in lead_responses]
+
+        from app.followups.models import Followup, FollowupStatus
+        # Pending follow-ups
+        stmt_pending = (
+            select(Followup)
+            .where(
+                Followup.lead_id.in_(lead_ids),
+                Followup.status == FollowupStatus.PENDING.value,
+                Followup.is_archived.is_(False),
+            )
+            .order_by(Followup.due_at.asc())
+        )
+        res_pending = await db.execute(stmt_pending)
+        pending_list = res_pending.scalars().all()
+
+        # Completed follow-ups
+        stmt_completed = (
+            select(Followup)
+            .where(
+                Followup.lead_id.in_(lead_ids),
+                Followup.status == FollowupStatus.COMPLETED.value,
+                Followup.is_archived.is_(False),
+            )
+            .order_by(Followup.completed_at.desc())
+        )
+        res_completed = await db.execute(stmt_completed)
+        completed_list = res_completed.scalars().all()
+
+        pending_map = {}
+        counts_map = {}
+        for fu in pending_list:
+            if fu.lead_id not in pending_map:
+                pending_map[fu.lead_id] = fu
+            counts_map[fu.lead_id] = counts_map.get(fu.lead_id, 0) + 1
+
+        completed_map = {}
+        for fu in completed_list:
+            if fu.lead_id not in completed_map:
+                completed_map[fu.lead_id] = fu
+
+        for lr in lead_responses:
+            if lr.id in pending_map:
+                fu = pending_map[lr.id]
+                lr.next_follow_up_due = fu.due_at
+                lr.next_follow_up_title = fu.title
+            lr.pending_followups_count = counts_map.get(lr.id, 0)
+            if lr.id in completed_map:
+                cf = completed_map[lr.id]
+                if not lr.customer_response and (cf.outcome or cf.notes):
+                    lr.customer_response = cf.outcome or cf.notes
+
+        return lead_responses
+
     @classmethod
     async def get_history(
         cls,

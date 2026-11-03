@@ -131,6 +131,7 @@ async def list_leads(
         resp.employee_name = lead.employee.full_name if lead.employee else None
         responses.append(resp)
 
+    responses = await LeadService.attach_followup_context(db, responses)
     return responses
 
 
@@ -158,7 +159,8 @@ async def get_lead(
     lead = await LeadService.get_lead_by_id(db, lead_id, current_employee)
     resp = LeadResponse.model_validate(lead)
     resp.employee_name = lead.employee.full_name if lead.employee else None
-    return resp
+    enriched = await LeadService.attach_followup_context(db, [resp])
+    return enriched[0]
 
 
 @router.patch("/api/leads/{lead_id}", response_model=LeadResponse)
