@@ -123,7 +123,7 @@ export const ManageHolidaysModal: React.FC<ManageHolidaysModalProps> = ({
         {/* Header */}
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-700">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-[#0284C7]">
               <CalendarDays className="w-5 h-5" />
             </div>
             <div>
@@ -159,10 +159,10 @@ export const ManageHolidaysModal: React.FC<ManageHolidaysModalProps> = ({
 
           {/* Quick Add Form (for Admin/Managers) */}
           {canEdit && (
-            <div className="bg-teal-50/40 border border-teal-100/80 rounded-xl p-4">
+            <div className="bg-sky-50/40 border border-sky-100/80 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Plus className="w-4 h-4 text-teal-700" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                <Plus className="w-4 h-4 text-[#0284C7]" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">
                   Add / Append Holiday to Calendar
                 </h3>
               </div>
@@ -174,7 +174,7 @@ export const ManageHolidaysModal: React.FC<ManageHolidaysModalProps> = ({
                     value={newDate}
                     onChange={(e) => setNewDate(e.target.value)}
                     required
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
                   />
                 </div>
                 <div className="sm:col-span-4">
@@ -185,7 +185,7 @@ export const ManageHolidaysModal: React.FC<ManageHolidaysModalProps> = ({
                     value={newName}
                     onChange={(e) => setNewName(e.target.value)}
                     required
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
                   />
                 </div>
                 <div className="sm:col-span-3">
@@ -195,14 +195,14 @@ export const ManageHolidaysModal: React.FC<ManageHolidaysModalProps> = ({
                     placeholder="National / State"
                     value={newRegion}
                     onChange={(e) => setNewRegion(e.target.value)}
-                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
                   />
                 </div>
                 <div className="sm:col-span-2 flex flex-col justify-end">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-3 py-1.5 text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
+                    className="w-full px-3 py-1.5 text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     {isSubmitting ? 'Saving...' : 'Add'}

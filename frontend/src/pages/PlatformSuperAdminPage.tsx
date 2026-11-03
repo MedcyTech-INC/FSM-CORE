@@ -40,7 +40,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
   const [adminPassword, setAdminPassword] = useState('Admin@12345');
   const [primaryBranchName, setPrimaryBranchName] = useState('');
   const [primaryBranchCity, setPrimaryBranchCity] = useState('');
-  const [primaryColor, setPrimaryColor] = useState('#00897B');
+  const [primaryColor, setPrimaryColor] = useState('#0284C7');
   const [industryPreset, setIndustryPreset] = useState<'pharma' | 'agri' | 'fmcg'>('pharma');
   const [submitting, setSubmitting] = useState(false);
 
@@ -193,12 +193,12 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
   );
 
   return (
-    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-[#6B52B6] selection:text-white">
+    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-[#0284C7] selection:text-white">
       {/* Top Banner */}
-      <div className="bg-gradient-to-r from-purple-950 via-slate-900 to-indigo-950 border-b border-purple-800/30 px-6 py-4">
+      <div className="bg-gradient-to-r from-sky-950 via-slate-900 to-slate-950 border-b border-sky-800/30 px-6 py-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white shadow-lg shadow-purple-600/30">
+            <div className="w-10 h-10 rounded-xl bg-[#0284C7] flex items-center justify-center text-white shadow-lg shadow-sky-600/30">
               <Shield className="w-5 h-5 stroke-[2.2]" />
             </div>
             <div>
@@ -206,7 +206,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                 <h1 className="text-lg font-extrabold tracking-tight text-white uppercase">
                   Platform Super-Admin Control Plane
                 </h1>
-                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
                   Level 1 Operations
                 </span>
               </div>
@@ -219,6 +219,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
           <div className="flex items-center gap-2 sm:gap-3">
             {onBackToApp && (
               <button
+                type="button"
                 onClick={onBackToApp}
                 className="px-3.5 py-1.5 rounded-xl text-xs font-bold text-slate-300 bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all cursor-pointer"
               >
@@ -227,7 +228,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
             )}
             <button
               onClick={() => setShowProvisionModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#6B52B6] to-[#8C74DC] text-white hover:opacity-95 rounded-xl text-xs font-extrabold shadow-lg shadow-purple-900/40 transition-all cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#0284C7] to-sky-500 text-white hover:opacity-95 rounded-xl text-xs font-extrabold shadow-lg shadow-sky-900/40 transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>Onboard Organization</span>
@@ -261,7 +262,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
             </span>
             <div className="flex items-baseline justify-between">
               <span className="text-2xl font-black text-white">{tenants.length}</span>
-              <span className="text-xs text-purple-400 font-semibold">fsm_system.tenants</span>
+              <span className="text-xs text-sky-400 font-semibold">fsm_system.tenants</span>
             </div>
           </div>
 
@@ -305,7 +306,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
               placeholder="Filter by organization or slug..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500/50"
             />
           </div>
           <div className="text-xs text-slate-400 font-semibold">
@@ -331,7 +332,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                   <tr>
                     <td colSpan={5} className="px-6 py-12 text-center text-slate-400">
                       <div className="flex items-center justify-center gap-2">
-                        <div className="w-4 h-4 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
+                        <div className="w-4 h-4 border-2 border-sky-400 border-t-transparent rounded-full animate-spin" />
                         <span>Loading platform organizations...</span>
                       </div>
                     </td>
@@ -347,7 +348,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                   <tr key={t.id} className="hover:bg-slate-800/40 transition-colors">
                     <td className="px-6 py-4 font-semibold text-white">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-xs shadow-sm">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0284C7] to-cyan-600 flex items-center justify-center font-bold text-white text-xs shadow-sm">
                           {(t.trade_name || t.legal_name).substring(0, 2).toUpperCase()}
                         </div>
                         <div>
@@ -357,7 +358,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-mono text-purple-300 bg-purple-950/60 border border-purple-800/40 px-2 py-1 rounded-md text-[11px]">
+                      <span className="font-mono text-sky-300 bg-sky-950/60 border border-sky-800/40 px-2 py-1 rounded-md text-[11px]">
                         {t.slug}.fsm.com
                       </span>
                     </td>
@@ -375,6 +376,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
+                type="button"
                           onClick={() => setShowBranchModal(t)}
                           className="px-2.5 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs font-semibold transition-all cursor-pointer flex items-center gap-1"
                           title="Attach regional branch"
@@ -383,8 +385,9 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                           <span>+ Branch</span>
                         </button>
                         <button
+                type="button"
                           onClick={() => handleLaunchTenantPortal(t.slug)}
-                          className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-md shadow-purple-900/30"
+                          className="px-3 py-1.5 rounded-lg bg-[#0284C7] hover:bg-sky-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-md shadow-sky-900/30"
                         >
                           <span>Open Portal</span>
                           <ExternalLink className="w-3 h-3" />
@@ -413,7 +416,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
             </button>
 
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center text-white">
+              <div className="w-10 h-10 rounded-xl bg-[#0284C7] flex items-center justify-center text-white">
                 <Building2 className="w-5 h-5" />
               </div>
               <div>
@@ -427,7 +430,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
             <form onSubmit={handleProvisionSubmit} className="space-y-6">
               {/* Section 1: Legal & Subdomain */}
               <div className="space-y-3">
-                <span className="text-[10px] font-extrabold text-purple-400 uppercase tracking-widest block">
+                <span className="text-[10px] font-extrabold text-sky-400 uppercase tracking-widest block">
                   1. Corporate Identity & Routing
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -441,7 +444,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Zydus Healthcare Ltd"
                       value={legalName}
                       onChange={(e) => handleLegalNameChange(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                   <div>
@@ -453,7 +456,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Zydus"
                       value={tradeName}
                       onChange={(e) => setTradeName(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                 </div>
@@ -463,7 +466,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                     <label className="text-[11px] font-bold text-slate-300 block mb-1">
                       Tenant Subdomain Slug *
                     </label>
-                    <div className="flex items-center bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-purple-500">
+                    <div className="flex items-center bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 focus-within:ring-2 focus-within:ring-sky-500">
                       <input
                         type="text"
                         required
@@ -482,7 +485,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                     <select
                       value={subscriptionTier}
                       onChange={(e) => setSubscriptionTier(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="enterprise">Enterprise (Unlimited Branches & RLS)</option>
                       <option value="growth">Growth (Regional Multi-Branch)</option>
@@ -508,7 +511,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Mumbai Corporate HQ"
                       value={primaryBranchName}
                       onChange={(e) => setPrimaryBranchName(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                   <div>
@@ -521,7 +524,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Mumbai"
                       value={primaryBranchCity}
                       onChange={(e) => setPrimaryBranchCity(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                 </div>
@@ -543,7 +546,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Rajesh"
                       value={adminFirstName}
                       onChange={(e) => setAdminFirstName(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                   <div>
@@ -556,7 +559,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="e.g. Sharma"
                       value={adminLastName}
                       onChange={(e) => setAdminLastName(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                 </div>
@@ -572,7 +575,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       placeholder="admin@zydus.com"
                       value={adminEmail}
                       onChange={(e) => setAdminEmail(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                   <div>
@@ -584,7 +587,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                       required
                       value={adminPassword}
                       onChange={(e) => setAdminPassword(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
                 </div>
@@ -603,7 +606,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                     <select
                       value={industryPreset}
                       onChange={(e) => setIndustryPreset(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-sky-500"
                     >
                       <option value="pharma">Pharmaceutical (Doctor, DCR Call, Clinic)</option>
                       <option value="agri">Agrochemical (Farmer, Farm Inspection, Grower)</option>
@@ -644,7 +647,7 @@ export const PlatformSuperAdminPage: React.FC<PlatformSuperAdminPageProps> = ({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-6 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:opacity-95 shadow-lg shadow-purple-900/50 transition-all cursor-pointer disabled:opacity-50"
+                  className="px-6 py-2 rounded-xl text-xs font-extrabold bg-gradient-to-r from-[#0284C7] to-sky-600 text-white hover:opacity-95 shadow-lg shadow-sky-900/50 transition-all cursor-pointer disabled:opacity-50"
                 >
                   {submitting ? 'Provisioning Tenant & HQ...' : 'Complete Organization Onboarding'}
                 </button>

@@ -680,7 +680,10 @@ class ApiClient {
     return !!(import.meta.env.DEV && localStorage.getItem('access_token')?.startsWith('demo-jwt'));
   }
 
-  private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+  public async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+    if (this.isDevDemo()) {
+      throw new Error('DEMO_MODE_ACTIVE');
+    }
     const url = `${BASE_URL}${endpoint}`;
     const headers = {
       'Content-Type': 'application/json',
@@ -691,7 +694,7 @@ class ApiClient {
 
     const response = await fetch(url, { ...options, headers });
 
-    if (response.status === 401 && !endpoint.includes('/api/auth/login')) {
+    if (response.status === 401 && !endpoint.includes('/api/auth/login') && !this.isDevDemo()) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       window.dispatchEvent(new Event('auth:unauthorized'));
@@ -717,7 +720,7 @@ class ApiClient {
     return this.request<void>('/api/auth/logout', {
       method: 'POST',
       body: JSON.stringify({ refresh_token: refreshToken }),
-    }).catch(() => {});
+    }).catch(() => { });
   }
 
   // Employee Endpoints

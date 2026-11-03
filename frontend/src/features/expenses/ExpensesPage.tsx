@@ -31,7 +31,7 @@ const CATEGORIES = [
   { id: 'fuel', label: 'Fuel / Mileage', icon: Fuel, color: 'text-amber-600 bg-amber-50 border-amber-200' },
   { id: 'food_allowance', label: 'Food Allowance', icon: Utensils, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
   { id: 'travel_ticket', label: 'Travel Ticket', icon: Ticket, color: 'text-blue-600 bg-blue-50 border-blue-200' },
-  { id: 'accommodation', label: 'Accommodation', icon: Building, color: 'text-purple-600 bg-purple-50 border-purple-200' },
+  { id: 'accommodation', label: 'Accommodation', icon: Building, color: 'text-sky-600 bg-sky-50 border-sky-200' },
   { id: 'toll_parking', label: 'Toll & Parking', icon: Car, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
   { id: 'client_entertainment', label: 'Client Entertainment', icon: DollarSign, color: 'text-rose-600 bg-rose-50 border-rose-200' },
   { id: 'miscellaneous', label: 'Miscellaneous', icon: Tag, color: 'text-slate-600 bg-slate-50 border-slate-200' },
@@ -309,7 +309,7 @@ export const ExpensesPage: React.FC = () => {
         );
       case 'pending_zsm_approval':
         return (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-purple-100 text-purple-800 border border-purple-200">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-sky-100 text-sky-800 border border-sky-200">
             Pending ZSM Approval (&gt;₹5,000)
           </span>
         );
@@ -353,7 +353,7 @@ export const ExpensesPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/70 pb-5">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-teal-700 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#0284C7] uppercase tracking-widest">
             <Receipt className="w-4 h-4" />
             Field Reimbursements & Claims
           </div>
@@ -390,7 +390,7 @@ export const ExpensesPage: React.FC = () => {
               onClick={() => setActiveView('new')}
               className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 activeView === 'new'
-                  ? 'bg-[#00897B] text-white shadow-sm'
+                  ? 'bg-[#0284C7] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -465,7 +465,7 @@ export const ExpensesPage: React.FC = () => {
                 ₹{totalApproved.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
               </span>
             </div>
-            <div className="w-12 h-12 rounded-2xl bg-teal-50 text-[#00897B] flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-sky-50 text-[#0284C7] flex items-center justify-center">
               <CheckCircle2 className="w-6 h-6" />
             </div>
           </div>
@@ -532,7 +532,7 @@ export const ExpensesPage: React.FC = () => {
                     onClick={() => setCategory(cat.id)}
                     className={`p-3.5 rounded-2xl border text-left transition-all flex flex-col justify-between gap-3 ${
                       isSelected
-                        ? 'border-[#00897B] bg-teal-50/50 shadow-sm ring-2 ring-teal-600/20'
+                        ? 'border-[#0284C7] bg-sky-50/50 shadow-sm ring-2 ring-teal-600/20'
                         : 'border-slate-200 hover:border-slate-300 bg-white'
                     }`}
                   >
@@ -565,7 +565,7 @@ export const ExpensesPage: React.FC = () => {
                   placeholder="0.00"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full pl-8 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:border-[#00897B] focus:bg-white transition-all"
+                  className="w-full pl-8 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-900 focus:outline-none focus:border-[#0284C7] focus:bg-white transition-all"
                 />
               </div>
             </div>
@@ -579,7 +579,7 @@ export const ExpensesPage: React.FC = () => {
                 required
                 value={claimDate}
                 onChange={(e) => setClaimDate(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-[#00897B] focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-[#0284C7] focus:bg-white transition-all"
               />
             </div>
           </div>
@@ -602,9 +602,9 @@ export const ExpensesPage: React.FC = () => {
             {!receiptResult ? (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-slate-200 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-teal-500 hover:bg-teal-50/20 transition-all text-center"
+                className="border-2 border-dashed border-slate-200 rounded-3xl p-6 flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-sky-500 hover:bg-sky-50/20 transition-all text-center"
               >
-                <div className="w-12 h-12 rounded-2xl bg-teal-50 text-[#00897B] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-sky-50 text-[#0284C7] flex items-center justify-center">
                   {receiptUploading ? <RefreshCw className="w-6 h-6 animate-spin" /> : <Camera className="w-6 h-6" />}
                 </div>
                 <div>
@@ -661,7 +661,7 @@ export const ExpensesPage: React.FC = () => {
               placeholder="e.g., Clinic visit to Dr. Mehta, Chemist survey in Dadar"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-[#00897B] focus:bg-white transition-all"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold text-slate-900 focus:outline-none focus:border-[#0284C7] focus:bg-white transition-all"
             />
           </div>
 
@@ -669,7 +669,7 @@ export const ExpensesPage: React.FC = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-3 rounded-2xl bg-[#00897B] text-white font-bold text-sm hover:bg-[#00796B] transition-all shadow-md shadow-teal-700/20 disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-3 rounded-2xl bg-[#0284C7] text-white font-bold text-sm hover:bg-[#0369A1] transition-all shadow-md shadow-[#0284C7]/20 disabled:opacity-50 flex items-center gap-2"
             >
               {submitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
               Submit Claim for Review
@@ -816,7 +816,7 @@ export const ExpensesPage: React.FC = () => {
                       {renderStatusBadge(claim.status)}
 
                       {claim.amount > 5000 && claim.status === 'submitted' && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
                           High Value (&gt; ₹5,000)
                         </span>
                       )}
@@ -966,7 +966,7 @@ export const ExpensesPage: React.FC = () => {
                           href={claim.receipt_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-[11px] font-bold text-teal-700 hover:underline inline-flex items-center gap-1"
+                          className="text-[11px] font-bold text-[#0284C7] hover:underline inline-flex items-center gap-1"
                         >
                           <FileText className="w-3 h-3" /> View Bill
                         </a>
@@ -1014,7 +1014,7 @@ export const ExpensesPage: React.FC = () => {
               <p><strong>Category:</strong> {selectedClaim.category}</p>
               <p><strong>Amount:</strong> ₹{selectedClaim.amount.toFixed(2)}</p>
               {selectedClaim.amount > 5000 && (
-                <p className="text-purple-700 font-bold">
+                <p className="text-sky-700 font-bold">
                   * Amount exceeds ₹5,000 threshold and will be routed to ZSM for clearance.
                 </p>
               )}
@@ -1036,7 +1036,7 @@ export const ExpensesPage: React.FC = () => {
                 }
                 value={reviewNote}
                 onChange={(e) => setReviewNote(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#00897B]"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#0284C7]"
               />
             </div>
 
@@ -1094,7 +1094,7 @@ export const ExpensesPage: React.FC = () => {
                   step="0.01"
                   value={resubmitAmount}
                   onChange={(e) => setResubmitAmount(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#00897B]"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#0284C7]"
                 />
               </div>
 
@@ -1106,7 +1106,7 @@ export const ExpensesPage: React.FC = () => {
                   type="text"
                   value={resubmitDescription}
                   onChange={(e) => setResubmitDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#00897B]"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:border-[#0284C7]"
                 />
               </div>
 
@@ -1125,7 +1125,7 @@ export const ExpensesPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => resubmitFileInputRef.current?.click()}
-                  className="w-full py-2.5 px-3 rounded-xl border border-dashed border-slate-300 text-xs font-bold text-slate-600 hover:border-teal-500 hover:text-teal-700 flex items-center justify-center gap-2"
+                  className="w-full py-2.5 px-3 rounded-xl border border-dashed border-slate-300 text-xs font-bold text-slate-600 hover:border-sky-500 hover:text-[#0284C7] flex items-center justify-center gap-2"
                 >
                   {resubmitUploading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Camera className="w-4 h-4" />}
                   {resubmitReceipt ? 'Receipt Re-attached' : 'Snap New Live Receipt'}
@@ -1142,7 +1142,7 @@ export const ExpensesPage: React.FC = () => {
               </button>
               <button
                 onClick={handleResubmitClaim}
-                className="px-5 py-2 rounded-xl text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] shadow-sm flex items-center gap-1.5"
+                className="px-5 py-2 rounded-xl text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] shadow-sm flex items-center gap-1.5"
               >
                 <Send className="w-3.5 h-3.5" /> Resubmit for Approval
               </button>

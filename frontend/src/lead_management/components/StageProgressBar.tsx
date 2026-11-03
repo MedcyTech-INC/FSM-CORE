@@ -31,7 +31,7 @@ export const StageProgressBar: React.FC<StageProgressBarProps> = ({ currentStage
             <span>Opportunity Lost</span>
           </span>
         ) : (
-          <span className="text-xs font-bold text-[#6B52B6]">
+          <span className="text-xs font-bold text-[#0284C7]">
             Stage {currentIndex + 1} of {STAGES.length}
           </span>
         )}
@@ -42,7 +42,7 @@ export const StageProgressBar: React.FC<StageProgressBarProps> = ({ currentStage
         <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 h-1 bg-slate-100 rounded-full z-0 hidden sm:block">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
-              isLost ? 'bg-rose-400' : 'bg-[#6B52B6]'
+              isLost ? 'bg-rose-400' : 'bg-[#0284C7]'
             }`}
             style={{
               width: isLost
@@ -71,12 +71,12 @@ export const StageProgressBar: React.FC<StageProgressBarProps> = ({ currentStage
                 <div
                   className={`w-9 h-9 rounded-full flex items-center justify-center font-black text-xs transition-all shadow-sm ${
                     isCompleted
-                      ? 'bg-[#6B52B6] text-white shadow-[#6B52B6]/20'
+                      ? 'bg-[#0284C7] text-white shadow-[#0284C7]/20'
                       : isCurrent
-                      ? 'bg-purple-100 text-[#6B52B6] ring-4 ring-purple-100/80 border-2 border-[#6B52B6]'
+                      ? 'bg-sky-100 text-[#0284C7] ring-4 ring-sky-100/80 border-2 border-[#0284C7]'
                       : isLost
                       ? 'bg-slate-100 text-slate-400 border border-slate-200'
-                      : 'bg-white text-slate-500 border-2 border-slate-200 group-hover:border-purple-300'
+                      : 'bg-white text-slate-500 border-2 border-slate-200 group-hover:border-sky-300'
                   }`}
                 >
                   {isCompleted ? (
@@ -89,7 +89,7 @@ export const StageProgressBar: React.FC<StageProgressBarProps> = ({ currentStage
                 <span
                   className={`text-xs mt-2 font-bold tracking-tight block ${
                     isCurrent
-                      ? 'text-[#6B52B6] font-extrabold'
+                      ? 'text-[#0284C7] font-extrabold'
                       : isCompleted
                       ? 'text-slate-800'
                       : 'text-slate-400'

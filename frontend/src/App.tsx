@@ -23,12 +23,13 @@ import { ScanRunsPage } from './features/revenue_leakage/pages/ScanRunsPage';
 import { DailyPlanPage } from './pages/DailyPlanPage';
 import { PlatformSuperAdminPage } from './pages/PlatformSuperAdminPage';
 export const App: React.FC = () => {
-  const { user, isAuthenticated, loadSession } = useAuthStore();
+  const { user, isAuthenticated, loadSession, login } = useAuthStore();
   const { features, loadFeatures } = useFeatureStore();
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
   const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
   const [showSuperAdmin, setShowSuperAdmin] = useState<boolean>(false);
+  const [superAdminExited, setSuperAdminExited] = useState<boolean>(false);
 
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
   const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
@@ -60,20 +61,57 @@ export const App: React.FC = () => {
     setCurrentTab(tab);
   };
 
-  if (showSuperAdmin || user?.role === 'SUPER_ADMIN') {
+  const isSuperAdminView = showSuperAdmin || (user?.role === 'SUPER_ADMIN' && !superAdminExited);
+
+  const handleExitSuperAdmin = async () => {
+    setShowSuperAdmin(false);
+    setSuperAdminExited(true);
+    setCurrentTab('dashboard');
+    if (!isAuthenticated || user?.role === 'SUPER_ADMIN') {
+      try {
+        await login('admin@fsm.com', 'demo123');
+      } catch (err) {
+        console.error('Failed to auto-authenticate demo workspace:', err);
+      }
+    }
+  };
+
+  const handleSelectTenant = async (slug: string) => {
+    try {
+      await loadTenantContext(slug);
+    } catch (err) {
+      console.error('Failed to load tenant context:', err);
+    }
+    setShowSuperAdmin(false);
+    setSuperAdminExited(true);
+    setCurrentTab('dashboard');
+    if (!isAuthenticated || user?.role === 'SUPER_ADMIN') {
+      try {
+        await login('admin@fsm.com', 'demo123');
+      } catch (err) {
+        console.error('Failed to auto-authenticate demo workspace:', err);
+      }
+    }
+  };
+
+  if (isSuperAdminView) {
     return (
       <PlatformSuperAdminPage
-        onBackToApp={() => setShowSuperAdmin(false)}
-        onSelectTenant={(_slug) => {
-          setShowSuperAdmin(false);
-          setCurrentTab('dashboard');
-        }}
+        onBackToApp={handleExitSuperAdmin}
+        onSelectTenant={handleSelectTenant}
       />
     );
   }
 
   if (!isAuthenticated) {
-    return <LoginPage onOpenSuperAdmin={() => setShowSuperAdmin(true)} />;
+    return (
+      <LoginPage
+        onOpenSuperAdmin={() => {
+          setShowSuperAdmin(true);
+          setSuperAdminExited(false);
+        }}
+      />
+    );
   }
 
   return (
@@ -137,7 +175,10 @@ export const App: React.FC = () => {
 
       {/* Platform Super-Admin Control Plane */}
       {currentTab === 'platform-admin' && (
-        <PlatformSuperAdminPage onBackToApp={() => handleTabChange('dashboard')} />
+        <PlatformSuperAdminPage
+          onBackToApp={() => handleTabChange('dashboard')}
+          onSelectTenant={handleSelectTenant}
+        />
       )}
     </AppShell>
   );

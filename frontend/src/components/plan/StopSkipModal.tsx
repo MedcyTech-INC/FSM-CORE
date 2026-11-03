@@ -90,7 +90,7 @@ export const StopSkipModal: React.FC<StopSkipModalProps> = ({
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#00897B]"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-800 focus:outline-none focus:border-[#0284C7]"
             >
               <option value="Doctor absent / clinic closed">Doctor absent / clinic closed</option>
               <option value="Emergency meeting cancelled by customer">Emergency meeting cancelled by customer</option>
@@ -110,7 +110,7 @@ export const StopSkipModal: React.FC<StopSkipModalProps> = ({
                 value={customReason}
                 onChange={(e) => setCustomReason(e.target.value)}
                 placeholder="State reason clearly..."
-                className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#00897B]"
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:outline-none focus:border-[#0284C7]"
                 required
               />
             </div>

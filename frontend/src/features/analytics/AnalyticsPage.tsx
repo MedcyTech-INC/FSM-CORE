@@ -111,7 +111,7 @@ export const AnalyticsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-200/70 pb-5">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-teal-700 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#0284C7] uppercase tracking-widest">
             <Sparkles className="w-4 h-4 text-amber-500" />
             Executive Decision Intelligence
           </div>
@@ -130,7 +130,7 @@ export const AnalyticsPage: React.FC = () => {
         <div className="flex items-center gap-2.5 flex-wrap">
           {/* Zone Selector */}
           <div className="flex items-center gap-1.5 bg-white px-3 py-1.5 rounded-2xl border border-slate-200 shadow-sm text-xs font-semibold text-slate-700">
-            <MapPin className="w-3.5 h-3.5 text-teal-600" />
+            <MapPin className="w-3.5 h-3.5 text-[#0284C7]" />
             <select
               value={selectedZone}
               onChange={(e) => setSelectedZone(e.target.value)}
@@ -166,7 +166,7 @@ export const AnalyticsPage: React.FC = () => {
             className="p-2 bg-white hover:bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 shadow-sm transition-colors"
             title="Refresh dashboard"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-teal-600' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-[#0284C7]' : ''}`} />
           </button>
         </div>
       </div>
@@ -186,7 +186,7 @@ export const AnalyticsPage: React.FC = () => {
               <TrendingUp className="w-3 h-3" /> 98.4% On-duty today
             </span>
           </div>
-          <div className="w-13 h-13 rounded-2xl bg-teal-50 text-[#00897B] flex items-center justify-center p-3.5">
+          <div className="w-13 h-13 rounded-2xl bg-sky-50 text-[#0284C7] flex items-center justify-center p-3.5">
             <Users className="w-6 h-6" />
           </div>
         </div>
@@ -200,7 +200,7 @@ export const AnalyticsPage: React.FC = () => {
             <span className="text-3xl font-black text-slate-900 mt-1 block">
               {overview.kpis.strike_rate}%
             </span>
-            <span className="text-[11px] font-semibold text-teal-600 flex items-center gap-1 mt-1">
+            <span className="text-[11px] font-semibold text-[#0284C7] flex items-center gap-1 mt-1">
               <Target className="w-3 h-3" /> vs 70% Target Benchmark
             </span>
           </div>
@@ -218,11 +218,11 @@ export const AnalyticsPage: React.FC = () => {
             <span className="text-3xl font-black text-slate-900 mt-1 block">
               ₹{(overview.kpis.pipeline_value / 10000000).toFixed(1)} Cr
             </span>
-            <span className="text-[11px] font-semibold text-purple-600 flex items-center gap-1 mt-1">
+            <span className="text-[11px] font-semibold text-sky-600 flex items-center gap-1 mt-1">
               Across 5 Funnel Stages
             </span>
           </div>
-          <div className="w-13 h-13 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center p-3.5">
+          <div className="w-13 h-13 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center p-3.5">
             <BarChart3 className="w-6 h-6" />
           </div>
         </div>
@@ -255,7 +255,7 @@ export const AnalyticsPage: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-teal-600" />
+                  <BarChart3 className="w-5 h-5 text-[#0284C7]" />
                   Completed Calls vs Expense Burn across Zones
                 </h2>
                 <p className="text-xs text-slate-500">
@@ -266,7 +266,7 @@ export const AnalyticsPage: React.FC = () => {
               {/* Legend */}
               <div className="flex items-center gap-4 text-xs font-semibold">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3.5 h-3.5 bg-teal-500 rounded-md" />
+                  <div className="w-3.5 h-3.5 bg-sky-500 rounded-md" />
                   <span className="text-slate-600">Completed Calls</span>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -294,7 +294,7 @@ export const AnalyticsPage: React.FC = () => {
                       {/* Floating Tooltip */}
                       {isHovered && (
                         <div className="absolute -top-16 z-20 bg-slate-900 text-white p-2.5 rounded-xl text-[11px] shadow-xl whitespace-nowrap animate-in fade-in zoom-in-95">
-                          <p className="font-bold text-teal-300">{item.zone}</p>
+                          <p className="font-bold text-sky-300">{item.zone}</p>
                           <p>Calls: <span className="font-semibold">{item.completed_calls.toLocaleString()}</span> / {item.target_calls}</p>
                           <p>Burn: <span className="font-semibold">₹{item.expense_burn.toLocaleString()}</span></p>
                         </div>
@@ -339,14 +339,14 @@ export const AnalyticsPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-purple-600" />
+                  <Target className="w-5 h-5 text-sky-600" />
                   Commercial Lead Conversion Funnel
                 </h2>
                 <p className="text-xs text-slate-500">
                   Stage-by-stage progression from prospect identification to active prescriber.
                 </p>
               </div>
-              <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200 font-mono">
+              <span className="text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-full border border-sky-200 font-mono">
                 Total Pipeline: ₹12.4 Cr
               </span>
             </div>
@@ -355,10 +355,10 @@ export const AnalyticsPage: React.FC = () => {
             <div className="space-y-3 pt-2">
               {overview.funnel.map((stage, idx) => {
                 const colors = [
-                  'bg-teal-500',
+                  'bg-sky-500',
                   'bg-blue-500',
                   'bg-indigo-500',
-                  'bg-purple-500',
+                  'bg-sky-500',
                   'bg-rose-500',
                 ];
                 const barColor = colors[idx % colors.length];
@@ -451,7 +451,7 @@ export const AnalyticsPage: React.FC = () => {
                         entry.status === 'EXCEEDING'
                           ? 'bg-emerald-500'
                           : entry.status === 'ON_TRACK'
-                          ? 'bg-teal-500'
+                          ? 'bg-sky-500'
                           : 'bg-amber-500'
                       }`}
                     />
@@ -464,7 +464,7 @@ export const AnalyticsPage: React.FC = () => {
           {/* Operational Metrics & Nightly Rollup Box */}
           <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white p-6 rounded-3xl shadow-xl space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
                 <Clock className="w-4 h-4" /> Nightly Rollup Engine
               </span>
               <span className="text-[10px] bg-slate-700/60 px-2 py-0.5 rounded-md text-slate-300 font-mono">
@@ -485,7 +485,7 @@ export const AnalyticsPage: React.FC = () => {
             <button
               onClick={triggerRollup}
               disabled={rollupTriggering}
-              className="w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
+              className="w-full py-2.5 px-4 bg-teal-600 hover:bg-sky-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {rollupTriggering ? <RefreshCw className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
               Recompute / Backfill Rollup

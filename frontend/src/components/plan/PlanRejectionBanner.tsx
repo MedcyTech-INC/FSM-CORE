@@ -65,7 +65,7 @@ export const PlanRejectionBanner: React.FC<PlanRejectionBannerProps> = ({
         <button
           onClick={onRegenerate}
           disabled={isActionLoading}
-          className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#00897B] to-[#26A69A] hover:from-teal-700 hover:to-teal-800 text-white text-xs font-black inline-flex items-center gap-2 shadow-md shadow-teal-700/25 transition-all hover:scale-[1.02] shrink-0 self-start sm:self-auto"
+          className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-[#0284C7] to-[#38BDF8] hover:from-teal-700 hover:to-teal-800 text-white text-xs font-black inline-flex items-center gap-2 shadow-md shadow-teal-700/25 transition-all hover:scale-[1.02] shrink-0 self-start sm:self-auto"
         >
           <Sparkles className="w-4 h-4 text-teal-200" />
           <span>Re-generate Route with Feedback</span>
@@ -83,7 +83,7 @@ export const PlanRejectionBanner: React.FC<PlanRejectionBannerProps> = ({
           "{feedback.notes}"
         </p>
         <p className="text-[11px] text-slate-500 pl-5.5 pt-1">
-          💡 Clicking <strong className="text-teal-700">Re-generate Route with Feedback</strong> will automatically exclude flagged issues, re-balance candidate doctor pacing, and submit a compliant Plan v2.
+          💡 Clicking <strong className="text-[#0284C7]">Re-generate Route with Feedback</strong> will automatically exclude flagged issues, re-balance candidate doctor pacing, and submit a compliant Plan v2.
         </p>
       </div>
     </div>

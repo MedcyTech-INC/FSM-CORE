@@ -113,7 +113,7 @@ export const TargetDetailPage: React.FC<TargetDetailPageProps> = ({ targetId, on
             <span className="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 text-slate-800">
               Version {target.version}
             </span>
-            <span className="text-xs font-bold text-[#00897B] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#0284C7] uppercase tracking-wider">
               {getMetricLabel(target.metric_type)}
             </span>
             {target.adjusted_at && (
@@ -186,7 +186,7 @@ export const TargetDetailPage: React.FC<TargetDetailPageProps> = ({ targetId, on
       {/* Assignees Progress Table */}
       <div className="bg-white rounded-3xl p-6 border border-[#EEF2F6] shadow-sm">
         <div className="flex items-center gap-2 mb-4">
-          <Users className="w-5 h-5 text-[#00897B]" />
+          <Users className="w-5 h-5 text-[#0284C7]" />
           <h3 className="text-lg font-black text-slate-900 tracking-tight">Assignees & Progress</h3>
         </div>
 
@@ -217,7 +217,7 @@ export const TargetDetailPage: React.FC<TargetDetailPageProps> = ({ targetId, on
                     <span className="text-base font-black text-slate-900 block">
                       {formatMetricValue(current, target.metric_type)}
                     </span>
-                    <span className="text-xs font-bold text-[#00897B] block">{pct}% goal</span>
+                    <span className="text-xs font-bold text-[#0284C7] block">{pct}% goal</span>
                   </div>
                 </div>
               </div>

@@ -145,9 +145,9 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
       {/* Modal Dialog */}
       <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden z-10 flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-teal-50/60 to-white">
+        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-sky-50/60 to-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#00897B] text-white flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-2xl bg-[#0284C7] text-white flex items-center justify-center shadow-sm">
               <TargetIcon className="w-5 h-5" />
             </div>
             <div>
@@ -183,7 +183,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. November Doctor Coverage Drive"
-              className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 ${
+              className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 ${
                 fieldErrors.title ? 'border-rose-400 bg-rose-50/30' : 'border-slate-200 bg-slate-50/40'
               }`}
             />
@@ -199,7 +199,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
               <select
                 value={metricType}
                 onChange={(e) => setMetricType(e.target.value as MetricType)}
-                className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20"
+                className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
               >
                 <option value="doctor_visits">Doctor Visits</option>
                 <option value="revenue">Revenue (INR)</option>
@@ -219,7 +219,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
                 value={targetValue}
                 onChange={(e) => setTargetValue(e.target.value)}
                 placeholder={['revenue', 'collections'].includes(metricType) ? '₹ 5,00,000' : '120'}
-                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 ${
+                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 ${
                   fieldErrors.target_value ? 'border-rose-400 bg-rose-50/30' : 'border-slate-200 bg-slate-50/40'
                 }`}
               />
@@ -239,7 +239,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 ${
+                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 ${
                   fieldErrors.start_date ? 'border-rose-400 bg-rose-50/30' : 'border-slate-200 bg-slate-50/40'
                 }`}
               />
@@ -256,7 +256,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 ${
+                className={`w-full px-4 py-2.5 rounded-2xl border text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 ${
                   fieldErrors.end_date ? 'border-rose-400 bg-rose-50/30' : 'border-slate-200 bg-slate-50/40'
                 }`}
               />
@@ -275,7 +275,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
               <button
                 type="button"
                 onClick={handleAddAssignment}
-                className="text-xs font-bold text-[#00897B] hover:text-[#00796B] flex items-center gap-1"
+                className="text-xs font-bold text-[#0284C7] hover:text-[#0369A1] flex items-center gap-1"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Assignee
@@ -354,7 +354,7 @@ export const CreateTargetModal: React.FC<CreateTargetModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-[#00897B] hover:bg-[#00796B] transition-all shadow-sm shadow-teal-700/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-sm shadow-[#0284C7]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

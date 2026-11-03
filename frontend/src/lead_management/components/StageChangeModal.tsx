@@ -125,12 +125,12 @@ export const StageChangeModal: React.FC<StageChangeModalProps> = ({
                     onClick={() => setSelectedStage(s.value)}
                     className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'border-[#6B52B6] bg-purple-50/80 shadow-sm ring-1 ring-[#6B52B6]'
+                        ? 'border-[#0284C7] bg-sky-50/80 shadow-sm ring-1 ring-[#0284C7]'
                         : 'border-slate-200/80 hover:border-slate-300 bg-white'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`text-xs font-black ${isSelected ? 'text-[#6B52B6]' : 'text-slate-800'}`}>
+                      <span className={`text-xs font-black ${isSelected ? 'text-[#0284C7]' : 'text-slate-800'}`}>
                         {s.label}
                       </span>
                       {isCurrent && (
@@ -190,7 +190,7 @@ export const StageChangeModal: React.FC<StageChangeModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="E.g., Approved by Regional Manager in weekly pipeline call"
-              className="w-full text-xs p-3.5 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+              className="w-full text-xs p-3.5 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
             />
           </div>
 
@@ -206,7 +206,7 @@ export const StageChangeModal: React.FC<StageChangeModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-md shadow-[#6B52B6]/20 transition-all cursor-pointer disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? 'Updating...' : 'Save Stage Change'}
             </button>

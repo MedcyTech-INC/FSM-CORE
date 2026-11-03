@@ -86,7 +86,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-100 flex items-center justify-center text-[#00897B]">
+            <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-[#0284C7]">
               <Sliders className="w-4 h-4" />
             </div>
             <div>
@@ -126,7 +126,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
                 onChange={(e) => setIsActive(e.target.checked)}
                 className="sr-only peer"
               />
-              <div className="w-10 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#00897B]"></div>
+              <div className="w-10 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#0284C7]"></div>
             </label>
           </div>
 
@@ -141,7 +141,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
                 min="1"
                 value={thresholdDays}
                 onChange={(e) => setThresholdDays(parseInt(e.target.value) || 1)}
-                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
                 required
               />
             </div>
@@ -155,7 +155,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
                 step="0.01"
                 value={thresholdValue}
                 onChange={(e) => setThresholdValue(parseFloat(e.target.value) || 0)}
-                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
                 required
               />
             </div>
@@ -177,7 +177,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
                   step="0.05"
                   value={medRatio}
                   onChange={(e) => setMedRatio(parseFloat(e.target.value) || 1.0)}
-                  className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                  className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
                   required
                 />
               </div>
@@ -191,7 +191,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
                   step="0.05"
                   value={highRatio}
                   onChange={(e) => setHighRatio(parseFloat(e.target.value) || 2.0)}
-                  className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+                  className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
                   required
                 />
               </div>
@@ -274,7 +274,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
               placeholder="State the business rationale for adjusting this warning threshold..."
               value={reason}
               onChange={(e) => setReason(e.target.value)}
-              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 focus:border-[#00897B]"
+              className="w-full text-xs bg-white border border-slate-200 rounded-lg p-2.5 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7]"
               required
             />
             <span className="text-[10px] text-slate-400 mt-0.5 block">
@@ -295,7 +295,7 @@ export const EditRuleModal: React.FC<EditRuleModalProps> = ({
             <button
               type="submit"
               disabled={submitting}
-              className="px-5 py-2 text-xs font-bold text-white bg-[#00897B] hover:bg-[#00796B] rounded-xl shadow-md shadow-teal-700/20 disabled:opacity-50 transition-all"
+              className="px-5 py-2 text-xs font-bold text-white bg-[#0284C7] hover:bg-[#0369A1] rounded-xl shadow-md shadow-[#0284C7]/20 disabled:opacity-50 transition-all"
             >
               {submitting ? 'Saving...' : 'Apply Changes'}
             </button>

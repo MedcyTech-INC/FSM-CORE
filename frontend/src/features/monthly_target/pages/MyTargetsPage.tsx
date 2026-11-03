@@ -66,15 +66,15 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner Card */}
-      <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col xl:flex-row xl:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#E6F7F5] text-[#00897B] flex items-center justify-center border border-teal-100 shadow-sm">
+          <div className="w-14 h-14 rounded-2xl bg-[#F0F9FF] text-[#0284C7] flex items-center justify-center border border-sky-100 shadow-sm">
             <TargetIcon className="w-7 h-7 stroke-[2.2]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-black text-slate-900 tracking-tight">Monthly Targets</h2>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#E6F7F5] text-[#00897B] uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-[#F0F9FF] text-[#0284C7] uppercase tracking-wider">
                 My Progress
               </span>
             </div>
@@ -85,7 +85,7 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
         </div>
 
         {/* Right Action Switcher (if manager) & Refresh */}
-        <div className="flex flex-wrap items-center gap-2 self-start xl:self-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full xl:w-auto flex justify-between xl:justify-end">
           {canManageTargets && onNavigateToTeamTargets && (
             <button
               onClick={onNavigateToTeamTargets}
@@ -101,7 +101,7 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
             className="p-2.5 rounded-2xl bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors"
             title="Refresh Progress"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#00897B]' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin text-[#0284C7]' : ''}`} />
           </button>
         </div>
       </div>
@@ -111,7 +111,7 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
         <div className="bg-white p-4 md:p-5 rounded-3xl border border-[#EEF2F6] shadow-sm">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-[11px] font-bold uppercase tracking-wider">Active Targets</span>
-            <TargetIcon className="w-4 h-4 text-[#00897B]" />
+            <TargetIcon className="w-4 h-4 text-[#0284C7]" />
           </div>
           <span className="text-2xl md:text-3xl font-black text-slate-900">{activeTargets}</span>
           <span className="text-[11px] font-medium text-slate-400 block mt-0.5">
@@ -133,12 +133,12 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
         <div className="bg-white p-4 md:p-5 rounded-3xl border border-[#EEF2F6] shadow-sm">
           <div className="flex items-center justify-between text-slate-400 mb-2">
             <span className="text-[11px] font-bold uppercase tracking-wider">Avg Completion</span>
-            <TrendingUp className="w-4 h-4 text-[#00897B]" />
+            <TrendingUp className="w-4 h-4 text-[#0284C7]" />
           </div>
           <span className="text-2xl md:text-3xl font-black text-slate-900">{avgCompletion}%</span>
           <div className="w-full h-1.5 bg-slate-100 rounded-full mt-2 overflow-hidden">
             <div
-              className="h-full bg-[#00897B] rounded-full"
+              className="h-full bg-[#0284C7] rounded-full"
               style={{ width: `${Math.min(100, avgCompletion)}%` }}
             />
           </div>
@@ -193,7 +193,7 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
             placeholder="Search targets or metrics..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full sm:w-64 pl-10 pr-4 py-2 rounded-2xl border border-slate-200/80 bg-white text-xs font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20"
+            className="w-full sm:w-64 pl-10 pr-4 py-2 rounded-2xl border border-slate-200/80 bg-white text-xs font-semibold text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
           />
         </div>
       </div>
@@ -229,14 +229,14 @@ export const MyTargetsPage: React.FC<MyTargetsPageProps> = ({
           <p className="text-xs text-slate-500 max-w-sm mx-auto">{error}</p>
           <button
             onClick={loadProgress}
-            className="px-4 py-2 bg-[#00897B] text-white rounded-2xl text-xs font-bold hover:bg-[#00796B]"
+            className="px-4 py-2 bg-[#0284C7] text-white rounded-2xl text-xs font-bold hover:bg-[#0369A1]"
           >
             Try Again
           </button>
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="bg-white rounded-3xl p-12 border border-[#EEF2F6] text-center space-y-3">
-          <div className="w-14 h-14 rounded-2xl bg-teal-50 text-[#00897B] mx-auto flex items-center justify-center">
+          <div className="w-14 h-14 rounded-2xl bg-sky-50 text-[#0284C7] mx-auto flex items-center justify-center">
             <TargetIcon className="w-7 h-7" />
           </div>
           <h4 className="font-black text-slate-900 text-base">No targets found</h4>

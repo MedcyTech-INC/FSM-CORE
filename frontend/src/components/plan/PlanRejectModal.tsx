@@ -160,7 +160,7 @@ export const PlanRejectModal: React.FC<PlanRejectModalProps> = ({
               className="w-full text-xs font-medium text-slate-800 bg-slate-50 border border-slate-200 rounded-2xl p-3 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:bg-white transition-all leading-relaxed"
             />
             <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-[#0284C7] shrink-0" />
               <span>
                 The AI routing optimizer reads these instructions to automatically adjust doctor candidate selection and stop limits on the next run.
               </span>

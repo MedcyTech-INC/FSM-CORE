@@ -118,9 +118,9 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
   return (
     <div className="w-full mx-auto space-y-6 font-sans">
       {/* Modal Top Bar */}
-      <div className="flex items-center justify-between p-6 pb-0 border-b border-slate-100 pb-5">
+      <div className="flex items-center justify-between p-4 sm:p-6 pb-4 sm:pb-5 border-b border-slate-100">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B52B6] to-[#7B61C9] text-white flex items-center justify-center shadow-md shadow-[#6B52B6]/20 shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#0EA5E9] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/20 shrink-0">
             <Sparkles className="w-5 h-5 stroke-[2.2]" />
           </div>
           <div>
@@ -142,7 +142,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
         </button>
       </div>
 
-      <div className="px-6 pb-6 space-y-6">
+      <div className="px-4 sm:px-6 pb-6 space-y-4 sm:space-y-6">
         {error && (
           <div className="p-4 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-2xl font-bold flex items-center gap-2">
             <span>⚠️</span>
@@ -155,10 +155,10 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
           <div className="p-5 rounded-2xl bg-slate-50/70 border border-slate-200/80 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-extrabold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-[#6B52B6]" />
+                <Building2 className="w-4 h-4 text-[#0284C7]" />
                 <span>Customer / Account Master</span>
               </h3>
-              <span className="text-[10px] text-[#6B52B6] font-extrabold bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200/60">
+              <span className="text-[10px] text-[#0284C7] font-extrabold bg-sky-50 px-2 py-0.5 rounded-md border border-sky-200/60">
                 REQUIRED
               </span>
             </div>
@@ -177,7 +177,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                     setSelectedCustomerId(undefined);
                   }}
                   placeholder="Type name (e.g. Dr. Sharma or Apollo City Clinic)"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
                 />
 
                 {/* Autocomplete Suggestion Dropdown */}
@@ -188,7 +188,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                         key={cust.id}
                         type="button"
                         onClick={() => handleSelectCustomer(cust)}
-                        className="w-full text-left p-3 hover:bg-purple-50/70 transition-colors flex items-center justify-between text-xs"
+                        className="w-full text-left p-3 hover:bg-sky-50/70 transition-colors flex items-center justify-between text-xs"
                       >
                         <div>
                           <span className="font-extrabold text-slate-900 block">{cust.name}</span>
@@ -196,7 +196,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                             {cust.customer_type} {cust.location_city ? `· ${cust.location_city}` : ''}
                           </span>
                         </div>
-                        <span className="text-[10px] font-black text-[#6B52B6] bg-purple-50 px-2.5 py-1 rounded-lg border border-purple-200/70">
+                        <span className="text-[10px] font-black text-[#0284C7] bg-sky-50 px-2.5 py-1 rounded-lg border border-sky-200/70">
                           SELECT
                         </span>
                       </button>
@@ -212,7 +212,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                 <select
                   value={customerType}
                   onChange={(e) => setCustomerType(e.target.value)}
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-bold text-slate-800"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-bold text-slate-800"
                 >
                   {CUSTOMER_TYPES.map((t) => (
                     <option key={t} value={t}>
@@ -236,7 +236,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="E.g., Holter Monitor Annual Lease or Antibiotics Bulk Contract"
-                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
               />
             </div>
 
@@ -251,7 +251,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                   value={interestedProductService}
                   onChange={(e) => setInterestedProductService(e.target.value)}
                   placeholder="E.g., Diagnostic Packages, ECG Machines, Dialysis Consumables"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
                 />
               </div>
 
@@ -265,7 +265,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                   value={customerResponse}
                   onChange={(e) => setCustomerResponse(e.target.value)}
                   placeholder="E.g., Requested Pricing Sheet, Wants On-Site Clinical Demo"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
                 />
               </div>
             </div>
@@ -334,7 +334,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                     value={expectedValue}
                     onChange={(e) => setExpectedValue(e.target.value)}
                     placeholder="E.g. 50000"
-                    className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-bold text-slate-900"
+                    className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-bold text-slate-900"
                   />
                 </div>
               </div>
@@ -349,7 +349,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                     type="date"
                     value={expectedCloseDate}
                     onChange={(e) => setExpectedCloseDate(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-semibold"
+                    className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-semibold"
                   />
                 </div>
               </div>
@@ -366,7 +366,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                   value={contactPerson}
                   onChange={(e) => setContactPerson(e.target.value)}
                   placeholder="E.g., Dr. Sharma"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
                 />
               </div>
 
@@ -379,7 +379,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                   value={contactPhone}
                   onChange={(e) => setContactPhone(e.target.value)}
                   placeholder="+91 98000 00000"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
                 />
               </div>
 
@@ -392,7 +392,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                   value={locationCity}
                   onChange={(e) => setLocationCity(e.target.value)}
                   placeholder="E.g., Mumbai, Pune"
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
                 />
               </div>
             </div>
@@ -407,7 +407,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="What are the specific requirements? Competitor pricing mentioned, urgency, or next steps?"
-                className="w-full text-xs p-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                className="w-full text-xs p-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
               />
             </div>
           </div>
@@ -424,7 +424,7 @@ export const LeadFormPage: React.FC<LeadFormPageProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-7 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] text-white hover:opacity-95 shadow-glow-brand disabled:opacity-50 transition-all cursor-pointer active:scale-95"
+              className="px-7 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] text-white hover:opacity-95 shadow-glow-brand disabled:opacity-50 transition-all cursor-pointer active:scale-95"
             >
               {isSubmitting ? 'Saving Opportunity...' : 'Save Opportunity'}
             </button>

@@ -24,22 +24,22 @@ export const WhyBadgePill: React.FC<WhyBadgePillProps> = ({ badge }) => {
       );
     case 'CONVERSION':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-teal-50 text-teal-800 border border-teal-200/80 shadow-xs">
-          <TrendingUp className="w-3 h-3 text-teal-600" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-[#0284C7] border border-sky-200/80 shadow-xs">
+          <TrendingUp className="w-3 h-3 text-[#0284C7]" />
           <span>{badge.text}</span>
         </span>
       );
     case 'PACING':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-teal-50 text-teal-800 border border-teal-200/80 shadow-xs">
-          <Target className="w-3 h-3 text-[#00897B]" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-[#0284C7] border border-sky-200/80 shadow-xs">
+          <Target className="w-3 h-3 text-[#0284C7]" />
           <span>{badge.text}</span>
         </span>
       );
     case 'PRIORITY':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-purple-50 text-purple-800 border border-purple-200/80 shadow-xs">
-          <Award className="w-3 h-3 text-purple-600" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-800 border border-sky-200/80 shadow-xs">
+          <Award className="w-3 h-3 text-sky-600" />
           <span>{badge.text}</span>
         </span>
       );

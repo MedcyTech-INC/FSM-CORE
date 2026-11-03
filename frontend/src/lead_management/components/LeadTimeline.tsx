@@ -27,7 +27,7 @@ export const LeadTimeline: React.FC<LeadTimelineProps> = ({ timeline }) => {
       case 'STAGE_CHANGED':
         return {
           icon: ArrowRight,
-          bg: 'bg-purple-100 text-purple-700',
+          bg: 'bg-sky-100 text-sky-700',
           title: `Stage changed to ${event.new_value}`,
         };
       case 'ASSIGNED':

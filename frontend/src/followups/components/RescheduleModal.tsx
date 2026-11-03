@@ -103,7 +103,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({
                 required
                 value={newDueDate}
                 onChange={(e) => setNewDueDate(e.target.value)}
-                className="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                className="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
               />
             </div>
             <div>
@@ -114,7 +114,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({
                 type="time"
                 value={newDueTime}
                 onChange={(e) => setNewDueTime(e.target.value)}
-                className="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                className="w-full text-xs p-3 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
               />
             </div>
           </div>
@@ -129,7 +129,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="E.g., Doctor called into emergency surgery; requested visit tomorrow afternoon."
-              className="w-full text-xs p-3.5 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium placeholder:text-slate-400 transition-all"
+              className="w-full text-xs p-3.5 rounded-2xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium placeholder:text-slate-400 transition-all"
             />
           </div>
 
@@ -144,7 +144,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-md shadow-[#6B52B6]/20 transition-all cursor-pointer disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? 'Updating...' : 'Save Reschedule'}
             </button>

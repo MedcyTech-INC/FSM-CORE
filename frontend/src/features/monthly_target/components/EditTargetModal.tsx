@@ -79,9 +79,9 @@ export const EditTargetModal: React.FC<EditTargetModalProps> = ({
 
       <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden z-10 flex flex-col">
         {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-teal-50/60 to-white">
+        <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-sky-50/60 to-white">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#00897B] text-white flex items-center justify-center shadow-sm">
+            <div className="w-10 h-10 rounded-2xl bg-[#0284C7] text-white flex items-center justify-center shadow-sm">
               <Edit3 className="w-5 h-5" />
             </div>
             <div>
@@ -119,7 +119,7 @@ export const EditTargetModal: React.FC<EditTargetModalProps> = ({
               type="number"
               value={targetValue}
               onChange={(e) => setTargetValue(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20"
+              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
             />
           </div>
 
@@ -131,7 +131,7 @@ export const EditTargetModal: React.FC<EditTargetModalProps> = ({
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20"
+              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
             />
             <p className="text-[11px] text-slate-400 mt-1">
               Shortening the end date automatically excludes activity beyond the new date.
@@ -147,7 +147,7 @@ export const EditTargetModal: React.FC<EditTargetModalProps> = ({
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="Provide a business rationale for auditing (e.g. Territory reorganization, mid-quarter quota adjustment)..."
-              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#00897B]/20 placeholder:text-slate-400"
+              className="w-full px-4 py-2.5 rounded-2xl border border-slate-200 bg-slate-50/40 text-sm font-semibold text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 placeholder:text-slate-400"
             />
           </div>
 
@@ -163,7 +163,7 @@ export const EditTargetModal: React.FC<EditTargetModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-[#00897B] hover:bg-[#00796B] transition-all shadow-sm shadow-teal-700/20 disabled:opacity-50 flex items-center gap-2"
+              className="px-6 py-2.5 rounded-2xl text-xs font-extrabold text-white bg-[#0284C7] hover:bg-[#0369A1] transition-all shadow-sm shadow-[#0284C7]/20 disabled:opacity-50 flex items-center gap-2"
             >
               {isSubmitting ? (
                 <>

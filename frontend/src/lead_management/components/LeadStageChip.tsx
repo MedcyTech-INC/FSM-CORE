@@ -11,7 +11,7 @@ export const LeadStageChip: React.FC<LeadStageChipProps> = ({ stage, size = 'md'
     NEW: { bg: 'bg-sky-50/80', text: 'text-sky-800', border: 'border-sky-200/70', dot: 'bg-sky-500' },
     CONTACTED: { bg: 'bg-indigo-50/80', text: 'text-indigo-800', border: 'border-indigo-200/70', dot: 'bg-indigo-500' },
     INTERESTED: { bg: 'bg-amber-50/80', text: 'text-amber-800', border: 'border-amber-200/80', dot: 'bg-amber-500' },
-    QUALIFIED: { bg: 'bg-purple-50/80', text: 'text-purple-800', border: 'border-purple-200/70', dot: 'bg-purple-500' },
+    QUALIFIED: { bg: 'bg-sky-50/80', text: 'text-sky-800', border: 'border-sky-200/70', dot: 'bg-sky-500' },
     CONVERTED: { bg: 'bg-emerald-50/90', text: 'text-emerald-800', border: 'border-emerald-300/80', dot: 'bg-emerald-600' },
     LOST: { bg: 'bg-slate-100/90', text: 'text-slate-600', border: 'border-slate-200', dot: 'bg-slate-400' },
   };
