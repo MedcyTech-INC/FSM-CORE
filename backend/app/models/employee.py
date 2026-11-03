@@ -37,6 +37,21 @@ class Employee(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     territory: Mapped[Optional[str]] = mapped_column(String(150), nullable=True, index=True)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False, index=True)
 
+    # Multi-Tenant & Branch Scoping
+    tenant_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("fsm_system.tenants.id", ondelete="CASCADE"),
+        nullable=True,
+        index=True
+    )
+    branch_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("fsm_app.branches.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True
+    )
+    is_tenant_root_admin: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
+
     # Hierarchical tree: Self-referential reporting_to
     reporting_to_id: Mapped[Optional[uuid.UUID]] = mapped_column(
         UUID(as_uuid=True),
@@ -49,6 +64,7 @@ class Employee(Base, UUIDPrimaryKeyMixin, TimestampMixin):
     metadata_json: Mapped[Optional[dict]] = mapped_column(JSONB, default=dict, nullable=True)
 
     # Relationships
+    branch: Mapped[Optional["Branch"]] = relationship("Branch", back_populates="employees")
     reporting_to: Mapped[Optional["Employee"]] = relationship(
         "Employee",
         remote_side="Employee.id",
@@ -61,6 +77,8 @@ class Employee(Base, UUIDPrimaryKeyMixin, TimestampMixin):
 
     __table_args__ = (
         Index("ix_employees_active_role", "is_active", "role"),
+        Index("ix_employees_tenant_branch", "tenant_id", "branch_id"),
+        Index("uq_employees_tenant_email", "tenant_id", "email"),
     )
 
     @property

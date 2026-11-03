@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthStore } from './store/authStore';
 import { useFeatureStore } from './store/featureStore';
+import { useTenantStore } from './store/tenantStore';
 import { LoginPage } from './pages/LoginPage';
 import { AppShell } from './components/AppShell';
 import { DashboardPage } from './pages/DashboardPage';
@@ -19,22 +20,27 @@ import { AlertsDashboardPage } from './features/revenue_leakage/pages/AlertsDash
 import { AlertDetailPage } from './features/revenue_leakage/pages/AlertDetailPage';
 import { RulesConfigPage } from './features/revenue_leakage/pages/RulesConfigPage';
 import { ScanRunsPage } from './features/revenue_leakage/pages/ScanRunsPage';
-import { DailyPlanPage } from './pages/DailyPlanPage';
+import { PlatformSuperAdminPage } from './pages/PlatformSuperAdminPage';
+
 export const App: React.FC = () => {
   const { user, isAuthenticated, loadSession } = useAuthStore();
   const { features, loadFeatures } = useFeatureStore();
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [selectedTargetId, setSelectedTargetId] = useState<string | null>(null);
   const [selectedAlertId, setSelectedAlertId] = useState<string | null>(null);
+  const [showSuperAdmin, setShowSuperAdmin] = useState<boolean>(false);
 
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
   const isManager = ['ADMIN', 'GM', 'ZSM', 'RSM'].includes(user?.role || '');
   const isSeniorManager = ['ADMIN', 'GM', 'ZSM'].includes(user?.role || '');
 
+  const { loadTenantContext } = useTenantStore();
+
   useEffect(() => {
     loadSession();
     loadFeatures();
-  }, [loadSession, loadFeatures]);
+    loadTenantContext();
+  }, [loadSession, loadFeatures, loadTenantContext]);
 
   // If active tab gets disabled via Setup Wizard or unauthorized role, gracefully fall back to dashboard
   useEffect(() => {
@@ -54,8 +60,20 @@ export const App: React.FC = () => {
     setCurrentTab(tab);
   };
 
+  if (showSuperAdmin || user?.role === 'SUPER_ADMIN') {
+    return (
+      <PlatformSuperAdminPage
+        onBackToApp={() => setShowSuperAdmin(false)}
+        onSelectTenant={(_slug) => {
+          setShowSuperAdmin(false);
+          setCurrentTab('dashboard');
+        }}
+      />
+    );
+  }
+
   if (!isAuthenticated) {
-    return <LoginPage />;
+    return <LoginPage onOpenSuperAdmin={() => setShowSuperAdmin(true)} />;
   }
 
   return (
@@ -115,7 +133,13 @@ export const App: React.FC = () => {
       {features.field_visits && currentTab === 'visits' && <VisitsPage />}
       {features.attendance && currentTab === 'attendance' && <AttendancePage />}
       {features.leaves && currentTab === 'leaves' && <LeavesPage />}
-      {features.tasks && currentTab === 'tasks' && <TasksPage />}    </AppShell>
+      {features.tasks && currentTab === 'tasks' && <TasksPage />}
+
+      {/* Platform Super-Admin Control Plane */}
+      {currentTab === 'platform-admin' && (
+        <PlatformSuperAdminPage onBackToApp={() => handleTabChange('dashboard')} />
+      )}
+    </AppShell>
   );
 };
 

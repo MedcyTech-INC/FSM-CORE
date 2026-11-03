@@ -1,3 +1,6 @@
+from app.models.tenant import Tenant, TenantFeature, TenantBranding
+from app.models.branch import Branch
+from app.models.customer import Customer
 from app.models.employee import Employee, EmployeeRole
 from app.models.refresh_token import RefreshToken
 from app.models.office_location import OfficeLocation
@@ -14,6 +17,11 @@ from app.lead_management.models import Lead, LeadCustomer, LeadHistory, LeadStag
 from app.followups.models import Followup, FollowupHistory, FollowupStatus, FollowupActionType, FollowupPriority
 
 __all__ = [
+    "Tenant",
+    "TenantFeature",
+    "TenantBranding",
+    "Branch",
+    "Customer",
     "Employee",
     "EmployeeRole",
     "RefreshToken",

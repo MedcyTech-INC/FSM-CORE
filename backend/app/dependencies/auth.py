@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,12 +17,13 @@ security = HTTPBearer(auto_error=False)
 
 
 async def get_current_employee(
+    request: Request,
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: AsyncSession = Depends(get_db)
 ) -> Employee:
     """
-    Validates the Bearer JWT token and resolves the active employee record.
-    Rejects deactivated employees and expired/forged signatures.
+    Validates the Bearer JWT token, resolves the active employee record,
+    and enforces cross-tenant token isolation.
     """
     if not credentials or not credentials.credentials:
         raise HTTPException(
@@ -74,6 +75,20 @@ async def get_current_employee(
             headers={"WWW-Authenticate": "Bearer"}
         )
 
+    # Cross-Tenant JWT Claim Validation
+    active_tenant_id = getattr(request.state, "tenant_id", None) if hasattr(request, "state") else None
+    token_tenant_id_str = payload.get("tenant_id")
+    if active_tenant_id and token_tenant_id_str:
+        try:
+            token_tenant_uuid = uuid.UUID(token_tenant_id_str)
+            if token_tenant_uuid != active_tenant_id:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied: Token was issued for a different tenant organization"
+                )
+        except ValueError:
+            pass
+
     stmt = select(Employee).where(Employee.id == employee_id)
     result = await db.execute(stmt)
     employee = result.scalar_one_or_none()
@@ -89,5 +104,13 @@ async def get_current_employee(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Employee account is deactivated"
         )
+
+    # Invariant: Verify employee belongs to active tenant
+    if active_tenant_id and getattr(employee, "tenant_id", None):
+        if employee.tenant_id != active_tenant_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Employee does not belong to the requested tenant"
+            )
 
     return employee
