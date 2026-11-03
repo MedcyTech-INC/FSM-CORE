@@ -12,84 +12,44 @@ from app.features.revenue_leakage.recipients import RecipientResolver
 from app.features.revenue_leakage.scanner import LeakageScanner
 
 
-async def run_nightly_scan():
-    """Runs the nightly scan across all 5 operational warning rules."""
-    async with AsyncSessionLocal() as db:
-        scanner = LeakageScanner()
-        runs = await scanner.scan_all_rules(db)
-        print(f"Nightly scan completed with {len(runs)} rule runs.")
-        for r in runs:
-            print(f"Rule {r.rule_code}: status={r.status}, created={r.alerts_created}, cleared={r.alerts_cleared}")
+async def run_nightly_scan(tenant_slug: Optional[str] = None):
+    """Runs the nightly scan across all 5 operational warning rules across active tenants."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_revenue_leakage_scanner(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Nightly scan completed. Executed across {len(summaries)} tenant(s) with {total} rule evaluations.")
+    return summaries
 
 
-async def run_daily_digest():
-    """Dispatches daily notification digests to managers."""
-    async with AsyncSessionLocal() as db:
-        org_provider = FakeOrgProvider()
-        notifier = FakeNotifier()
-        mgr = NotificationManager(notifier, RecipientResolver(org_provider))
-        today = datetime.now(timezone.utc).date()
-        sent = await mgr.send_daily_digests(db, today)
-        print(f"Daily digest completed. Dispatched {sent} manager digests.")
+async def run_daily_digest(tenant_slug: Optional[str] = None):
+    """Dispatches daily notification digests to managers across active tenants."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_daily_digest(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Daily digest completed. Dispatched {total} digests across {len(summaries)} tenant(s).")
+    return summaries
 
 
-async def run_escalation():
+async def run_escalation(tenant_slug: Optional[str] = None):
     """
-    Checks active alerts that exceed escalation_days working days without acknowledgment.
-    Escalates to next level, updates escalation_level and escalated_at, logs alert_action.
+    Checks active alerts that exceed escalation_days working days without acknowledgment across active tenants.
     """
-    async with AsyncSessionLocal() as db:
-        now = datetime.now(timezone.utc)
-        today = now.date()
-        system_user_id = uuid.UUID("00000000-0000-0000-0000-000000000001")
-        org_provider = FakeOrgProvider()
-        notifier = FakeNotifier()
-        mgr = NotificationManager(notifier, RecipientResolver(org_provider))
-
-        # Fetch active alerts
-        stmt = select(LeakageAlert).join(LeakageRule).where(LeakageAlert.status == "active")
-        res = await db.execute(stmt)
-        active_alerts = res.scalars().all()
-
-        escalated_count = 0
-        for alert in active_alerts:
-            rule = alert.rule
-            if not rule:
-                continue
-            working_days = await WorkingCalendar.count_working_days(
-                db, alert.first_detected_at.date(), today
-            )
-            if working_days >= rule.escalation_days and alert.escalation_level == 0:
-                alert.escalation_level = 1
-                alert.escalated_at = now
-                alert.version += 1
-
-                action = AlertAction(
-                    id=uuid.uuid4(),
-                    alert_id=alert.id,
-                    action_type="escalated",
-                    outcome=None,
-                    action_taken=f"Auto-escalated to Level 1 after {working_days} working days unacknowledged",
-                    evidence_reference=None,
-                    notes=None,
-                    action_by=system_user_id,
-                    created_at=now,
-                )
-                db.add(action)
-                await mgr.notify_alert(db, alert, kind="escalated")
-                escalated_count += 1
-
-        await db.commit()
-        print(f"Escalation job completed. Escalated {escalated_count} unacknowledged alerts.")
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_alert_escalation(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Escalation job completed. Escalated {total} alerts across {len(summaries)} tenant(s).")
+    return summaries
 
 
 if __name__ == "__main__":
     job_type = sys.argv[1] if len(sys.argv) > 1 else "scan"
+    tenant_filter = sys.argv[2] if len(sys.argv) > 2 else None
+
     if job_type == "scan":
-        asyncio.run(run_nightly_scan())
+        asyncio.run(run_nightly_scan(tenant_slug=tenant_filter))
     elif job_type == "digest":
-        asyncio.run(run_daily_digest())
+        asyncio.run(run_daily_digest(tenant_slug=tenant_filter))
     elif job_type == "escalate":
-        asyncio.run(run_escalation())
+        asyncio.run(run_escalation(tenant_slug=tenant_filter))
     else:
         print(f"Unknown job command: {job_type}. Valid: scan, digest, escalate")

@@ -226,37 +226,40 @@ class TargetJobs:
         return archived_count
 
 
-async def run_sweeper():
-    """Runs pending outbox sweeper batch (T-16 / MT-4)."""
-    async with AsyncSessionLocal() as db:
-        from app.features.monthly_target.outbox import OutboxSweeper
-        count = await OutboxSweeper.sweep_pending(db)
-        print(f"Sweeper job completed. Processed {count} pending outbox events.")
-        return count
+async def run_sweeper(tenant_slug: Optional[str] = None):
+    """Runs pending outbox sweeper batch across active tenants (T-16 / MT-4)."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_outbox_sweeper(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Sweeper completed. Processed {total} events across {len(summaries)} tenant(s).")
+    return total
 
 
-async def run_closing():
-    """Runs target closing job past end_date + grace_days (T-18)."""
-    async with AsyncSessionLocal() as db:
-        count = await TargetJobs.run_closing_job(db)
-        print(f"Closing job completed. Closed {count} targets.")
-        return count
+async def run_closing(tenant_slug: Optional[str] = None):
+    """Runs target closing job past end_date + grace_days across active tenants (T-18)."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_target_closing(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Closing job completed. Closed {total} targets across {len(summaries)} tenant(s).")
+    return total
 
 
-async def run_reconciliation():
-    """Runs nightly reconciliation job (T-19 / MT-4)."""
-    async with AsyncSessionLocal() as db:
-        run = await TargetJobs.run_nightly_reconciliation(db)
-        print(f"Reconciliation completed. Status={run.status}, targets_checked={run.targets_checked}, drifts_found={run.drifts_found}.")
-        return run
+async def run_reconciliation(tenant_slug: Optional[str] = None):
+    """Runs nightly reconciliation job across active tenants (T-19 / MT-4)."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_nightly_reconciliation(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Reconciliation completed. Checked {total} targets across {len(summaries)} tenant(s).")
+    return summaries
 
 
-async def run_archive():
-    """Runs archive job for closed targets older than threshold (T-25 / P-16)."""
-    async with AsyncSessionLocal() as db:
-        count = await TargetJobs.run_archive_job(db)
-        print(f"Archive job completed. Archived {count} targets.")
-        return count
+async def run_archive(tenant_slug: Optional[str] = None):
+    """Runs archive job for closed targets older than threshold across active tenants (T-25 / P-16)."""
+    from app.core.workers import MultiTenantWorkerDaemon
+    summaries = await MultiTenantWorkerDaemon.run_data_archiving(tenant_slug=tenant_slug)
+    total = sum(s.items_processed for s in summaries if s.success)
+    print(f"Multi-Tenant Archive job completed. Archived {total} targets across {len(summaries)} tenant(s).")
+    return total
 
 
 if __name__ == "__main__":
@@ -264,14 +267,16 @@ if __name__ == "__main__":
     import sys
 
     job_type = sys.argv[1] if len(sys.argv) > 1 else "sweeper"
+    tenant_filter = sys.argv[2] if len(sys.argv) > 2 else None
+
     if job_type == "sweeper":
-        asyncio.run(run_sweeper())
+        asyncio.run(run_sweeper(tenant_slug=tenant_filter))
     elif job_type == "closing":
-        asyncio.run(run_closing())
+        asyncio.run(run_closing(tenant_slug=tenant_filter))
     elif job_type == "reconcile":
-        asyncio.run(run_reconciliation())
+        asyncio.run(run_reconciliation(tenant_slug=tenant_filter))
     elif job_type == "archive":
-        asyncio.run(run_archive())
+        asyncio.run(run_archive(tenant_slug=tenant_filter))
     else:
         print(f"Unknown job command: {job_type}. Valid: sweeper, closing, reconcile, archive")
 
