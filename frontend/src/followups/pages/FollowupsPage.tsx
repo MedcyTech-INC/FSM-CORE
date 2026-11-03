@@ -47,7 +47,7 @@ export const FollowupsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50 border border-purple-200/70 text-[#6B52B6] text-[10px] font-black uppercase tracking-wider mb-1.5 shadow-subtle">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-50 border border-sky-200/70 text-[#0284C7] text-[10px] font-black uppercase tracking-wider mb-1.5 shadow-subtle">
             <BellRing className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Field Commitment Tracker</span>
           </div>
@@ -61,7 +61,7 @@ export const FollowupsPage: React.FC = () => {
 
         <button
           onClick={() => setIsCreatingFollowup(true)}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           <span>+ Schedule Next Action</span>
@@ -70,16 +70,16 @@ export const FollowupsPage: React.FC = () => {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5">
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-purple-200 transition-all">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-sky-200 transition-all">
           <div>
-            <span className="text-[10px] font-extrabold text-[#6B52B6] uppercase tracking-widest block">
+            <span className="text-[10px] font-extrabold text-[#0284C7] uppercase tracking-widest block">
               Due Today
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-purple-950 mt-1 block tracking-tight">
+            <span className="text-2xl sm:text-3xl font-black text-sky-950 mt-1 block tracking-tight">
               {dueSummary?.due_today ?? 0}
             </span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#6B52B6] flex items-center justify-center group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center group-hover:scale-105 transition-transform">
             <CalendarDays className="w-5 h-5 stroke-[2.2]" />
           </div>
         </div>
@@ -144,7 +144,7 @@ export const FollowupsPage: React.FC = () => {
                 onClick={() => setActiveTab(t.id)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
                   isSelected
-                    ? 'bg-[#6B52B6] text-white shadow-glow-brand'
+                    ? 'bg-[#0284C7] text-white shadow-glow-brand'
                     : t.isDanger
                     ? 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200/70'
                     : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/70'
@@ -182,7 +182,7 @@ export const FollowupsPage: React.FC = () => {
           <button
             onClick={() => setScope('my')}
             className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all ${
-              scope === 'my' ? 'bg-white text-[#6B52B6] shadow-sm' : 'text-slate-500 hover:text-slate-900'
+              scope === 'my' ? 'bg-white text-[#0284C7] shadow-sm' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             My Follow-ups
@@ -210,7 +210,7 @@ export const FollowupsPage: React.FC = () => {
           </p>
           <button
             onClick={() => setIsCreatingFollowup(true)}
-            className="mt-4 px-4 py-2 bg-purple-50 text-[#6B52B6] text-xs font-extrabold rounded-xl hover:bg-purple-100 border border-purple-200/70 shadow-subtle cursor-pointer"
+            className="mt-4 px-4 py-2 bg-sky-50 text-[#0284C7] text-xs font-extrabold rounded-xl hover:bg-sky-100 border border-sky-200/70 shadow-subtle cursor-pointer"
           >
             + Schedule an Action
           </button>

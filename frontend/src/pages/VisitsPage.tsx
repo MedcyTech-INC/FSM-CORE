@@ -92,7 +92,7 @@ export const VisitsPage: React.FC = () => {
       {/* Top Banner Card matching localhost_9590_call-capture.png */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-[#6B52B6] text-white flex items-center justify-center shadow-md shadow-[#6B52B6]/20">
+          <div className="w-14 h-14 rounded-2xl bg-[#0284C7] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/20">
             <Camera className="w-7 h-7" />
           </div>
           <div>
@@ -105,7 +105,7 @@ export const VisitsPage: React.FC = () => {
 
         <button
           onClick={() => setShowAddModal(true)}
-          className="px-6 py-3.5 bg-[#6B52B6] hover:bg-[#5B42A4] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#6B52B6]/20 transition-all flex items-center gap-2 self-start sm:self-auto"
+          className="px-6 py-3.5 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#0284C7]/20 transition-all flex items-center gap-2 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4 stroke-[3]" /> Add Field Visit
         </button>
@@ -120,7 +120,7 @@ export const VisitsPage: React.FC = () => {
       {/* Today's Assigned Visits Card matching screenshot */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="mb-6">
-          <div className="flex items-center gap-2 text-[#6B52B6] mb-1">
+          <div className="flex items-center gap-2 text-[#0284C7] mb-1">
             <Phone className="w-5 h-5 stroke-[2.2]" />
             <h3 className="text-xl font-bold text-slate-900 tracking-tight">
               Today's Assigned Visits ({visits.length})
@@ -144,11 +144,11 @@ export const VisitsPage: React.FC = () => {
             {visits.map((v) => (
               <div
                 key={v.id}
-                className="p-5 rounded-2xl border border-slate-200/80 hover:border-purple-200 bg-slate-50/50 hover:bg-white transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="p-5 rounded-2xl border border-slate-200/80 hover:border-sky-200 bg-slate-50/50 hover:bg-white transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#F5F3FF] text-[#6B52B6] border border-purple-200/70">
+                    <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#F0F9FF] text-[#0284C7] border border-sky-200/70">
                       {v.target_type}
                     </span>
                     <span
@@ -178,7 +178,7 @@ export const VisitsPage: React.FC = () => {
                   {v.status === 'SCHEDULED' && (
                     <button
                       onClick={() => handleStartArrival(v.id)}
-                      className="px-4 py-2 bg-[#6B52B6] hover:bg-[#5B42A4] text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+                      className="px-4 py-2 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-xl text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
                     >
                       <MapPin className="w-3.5 h-3.5" /> Check In Arrival
                     </button>
@@ -213,7 +213,7 @@ export const VisitsPage: React.FC = () => {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Enter discussion notes, products detailed, or client requests..."
-              className="w-full p-3.5 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#6B52B6] mb-4"
+              className="w-full p-3.5 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0284C7] mb-4"
             />
             <div className="flex justify-end gap-2">
               <button
@@ -224,7 +224,7 @@ export const VisitsPage: React.FC = () => {
               </button>
               <button
                 onClick={() => handleComplete(activeVisitId)}
-                className="px-5 py-2 bg-[#6B52B6] hover:bg-[#5B42A4] text-white text-xs font-bold rounded-xl"
+                className="px-5 py-2 bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold rounded-xl"
               >
                 Save & Complete
               </button>
@@ -299,7 +299,7 @@ export const VisitsPage: React.FC = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-[#6B52B6] hover:bg-[#5B42A4] text-white text-xs font-bold rounded-xl"
+                  className="px-5 py-2.5 bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold rounded-xl"
                 >
                   Schedule Stop
                 </button>

@@ -75,7 +75,7 @@ export const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
         {/* Header */}
         <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between bg-slate-50/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-purple-50 text-[#6B52B6] flex items-center justify-center shadow-subtle border border-purple-100/60">
+            <div className="w-10 h-10 rounded-2xl bg-sky-50 text-[#0284C7] flex items-center justify-center shadow-subtle border border-sky-100/60">
               <UserCheck className="w-5 h-5 stroke-[2.2]" />
             </div>
             <div>
@@ -108,7 +108,7 @@ export const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search team member by name or role..."
-              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
             />
           </div>
 
@@ -128,7 +128,7 @@ export const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
                     onClick={() => setSelectedEmpId(emp.id)}
                     className={`p-3 rounded-2xl border text-xs cursor-pointer flex items-center justify-between transition-all ${
                       isSelected
-                        ? 'border-[#6B52B6] bg-purple-50/80 ring-1 ring-[#6B52B6]'
+                        ? 'border-[#0284C7] bg-sky-50/80 ring-1 ring-[#0284C7]'
                         : 'border-slate-100 hover:border-slate-200 hover:bg-slate-50'
                     }`}
                   >
@@ -159,7 +159,7 @@ export const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="E.g., Reassigned to territory specialist per sales realignment."
-              className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+              className="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
             />
           </div>
 
@@ -175,7 +175,7 @@ export const AssignLeadModal: React.FC<AssignLeadModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting || selectedEmpId === currentEmployeeId}
-              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-md shadow-[#6B52B6]/20 transition-all cursor-pointer disabled:opacity-50"
+              className="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? 'Transferring...' : 'Confirm Reassign'}
             </button>

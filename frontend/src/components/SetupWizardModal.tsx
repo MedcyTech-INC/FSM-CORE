@@ -171,13 +171,13 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
         {/* Header */}
         <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#6B52B6] text-white flex items-center justify-center shadow-md shadow-[#6B52B6]/25">
+            <div className="w-12 h-12 rounded-2xl bg-[#0284C7] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/25">
               <Wand2 className="w-6 h-6" />
             </div>
             <div>
               <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
                 Client Setup Wizard
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-[#6B52B6] font-mono">
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-sky-100 text-[#0284C7] font-mono">
                   {enabledCount}/{modules.length} Active
                 </span>
               </h2>
@@ -203,7 +203,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
               <button
                 type="button"
                 onClick={() => applyPreset('pharma')}
-                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#6B52B6] hover:bg-purple-50/40 text-xs font-bold text-slate-700 text-left transition-all"
+                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#0284C7] hover:bg-sky-50/40 text-xs font-bold text-slate-700 text-left transition-all"
               >
                 <span className="block font-black text-slate-900 text-xs">Pharma Field</span>
                 <span className="text-[10px] text-slate-500 font-normal">Visits + Pipeline</span>
@@ -212,7 +212,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
               <button
                 type="button"
                 onClick={() => applyPreset('executive')}
-                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#6B52B6] hover:bg-purple-50/40 text-xs font-bold text-slate-700 text-left transition-all"
+                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#0284C7] hover:bg-sky-50/40 text-xs font-bold text-slate-700 text-left transition-all"
               >
                 <span className="block font-black text-slate-900 text-xs">Executive HQ</span>
                 <span className="text-[10px] text-slate-500 font-normal">Expenses + KPIs</span>
@@ -221,16 +221,16 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
               <button
                 type="button"
                 onClick={() => applyPreset('full')}
-                className="p-2.5 rounded-xl border border-purple-200 bg-purple-50/50 hover:border-[#6B52B6] text-xs font-bold text-[#6B52B6] text-left transition-all"
+                className="p-2.5 rounded-xl border border-sky-200 bg-sky-50/50 hover:border-[#0284C7] text-xs font-bold text-[#0284C7] text-left transition-all"
               >
-                <span className="block font-black text-[#6B52B6] text-xs">Enterprise All</span>
-                <span className="text-[10px] text-[#6B52B6]/80 font-normal">All 8 Modules Active</span>
+                <span className="block font-black text-[#0284C7] text-xs">Enterprise All</span>
+                <span className="text-[10px] text-[#0284C7]/80 font-normal">All 8 Modules Active</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => applyPreset('minimal')}
-                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#6B52B6] hover:bg-purple-50/40 text-xs font-bold text-slate-700 text-left transition-all"
+                className="p-2.5 rounded-xl border border-slate-200 hover:border-[#0284C7] hover:bg-sky-50/40 text-xs font-bold text-slate-700 text-left transition-all"
               >
                 <span className="block font-black text-slate-900 text-xs">Lite Mobile</span>
                 <span className="text-[10px] text-slate-500 font-normal">Clock-In & Visits</span>
@@ -253,7 +253,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
                     onClick={() => toggleFeature(mod.key)}
                     className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between cursor-pointer select-none ${
                       isEnabled
-                        ? 'border-purple-200 bg-purple-50/30 shadow-sm'
+                        ? 'border-sky-200 bg-sky-50/30 shadow-sm'
                         : 'border-slate-200 bg-white opacity-60 hover:opacity-100 hover:border-slate-300'
                     }`}
                   >
@@ -261,7 +261,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
                       <div
                         className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
                           isEnabled
-                            ? 'bg-purple-100 text-[#6B52B6]'
+                            ? 'bg-sky-100 text-[#0284C7]'
                             : 'bg-slate-100 text-slate-400'
                         }`}
                       >
@@ -293,7 +293,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
                         <div
                           className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
                             isEnabled
-                              ? 'bg-[#6B52B6] border-[#6B52B6] text-white'
+                              ? 'bg-[#0284C7] border-[#0284C7] text-white'
                               : 'border-slate-300 bg-white'
                           }`}
                         >
@@ -327,7 +327,7 @@ export const SetupWizardModal: React.FC<SetupWizardModalProps> = ({ isOpen, onCl
               type="button"
               onClick={handleApply}
               disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#6B52B6] hover:bg-[#5C45A0] text-white rounded-xl text-xs font-black shadow-md shadow-[#6B52B6]/25 transition-all disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-xl text-xs font-black shadow-md shadow-[#0284C7]/25 transition-all disabled:opacity-50"
             >
               {saving ? (
                 <>

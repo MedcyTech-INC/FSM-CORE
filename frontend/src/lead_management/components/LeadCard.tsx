@@ -50,7 +50,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
         </div>
 
         {/* Opportunity Title */}
-        <h3 className="font-extrabold text-slate-900 text-base leading-snug group-hover:text-[#6B52B6] transition-colors mb-1.5">
+        <h3 className="font-extrabold text-slate-900 text-base leading-snug group-hover:text-[#0284C7] transition-colors mb-1.5">
           {lead.title}
         </h3>
 
@@ -88,7 +88,7 @@ export const LeadCard: React.FC<LeadCardProps> = ({ lead, onClick }) => {
 
         {/* Opportunity details & value pill */}
         <div className="flex flex-wrap items-center gap-2 mb-4 text-xs font-semibold">
-          <span className="bg-purple-50/90 text-[#6B52B6] font-extrabold px-2.5 py-0.5 rounded-lg border border-purple-100/80 text-[11px]">
+          <span className="bg-sky-50/90 text-[#0284C7] font-extrabold px-2.5 py-0.5 rounded-lg border border-sky-100/80 text-[11px]">
             {lead.lead_type}
           </span>
           {formattedValue && (

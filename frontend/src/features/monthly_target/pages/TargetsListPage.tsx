@@ -82,7 +82,7 @@ export const TargetsListPage: React.FC<TargetsListPageProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-black text-slate-900 tracking-tight">Team Targets</h2>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-purple-50 text-purple-700 border border-purple-200 uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-sky-50 text-sky-700 border border-sky-200 uppercase tracking-wider">
                 Management
               </span>
             </div>

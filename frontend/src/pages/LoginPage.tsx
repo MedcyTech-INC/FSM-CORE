@@ -57,7 +57,7 @@ export const LoginPage: React.FC = () => {
               onClick={() => handleSelectRole('admin')}
               className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
                 selectedRole === 'admin'
-                  ? 'bg-[#6B52B6] text-white shadow-sm'
+                  ? 'bg-[#0284C7] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -71,7 +71,7 @@ export const LoginPage: React.FC = () => {
               onClick={() => handleSelectRole('field')}
               className={`text-xs px-2.5 py-1 rounded-md font-medium transition-all ${
                 selectedRole === 'field'
-                  ? 'bg-[#6B52B6] text-white shadow-sm'
+                  ? 'bg-[#0284C7] text-white shadow-sm'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
@@ -88,7 +88,7 @@ export const LoginPage: React.FC = () => {
           {/* Diamond Dot Icon */}
           <div className="flex justify-center mb-6">
             <svg
-              className="w-12 h-12 text-[#6B52B6]"
+              className="w-12 h-12 text-[#0284C7]"
               viewBox="0 0 40 40"
               fill="currentColor"
             >
@@ -106,7 +106,7 @@ export const LoginPage: React.FC = () => {
 
           {/* Heading */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-extrabold text-[#6B52B6] tracking-tight">
+            <h1 className="text-3xl font-extrabold text-[#0284C7] tracking-tight">
               Welcome to {branding.companyName}
             </h1>
             <p className="text-xs text-slate-400 mt-3 leading-relaxed max-w-xs mx-auto">
@@ -135,7 +135,7 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="Enter your email"
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#6B52B6] focus:ring-2 focus:ring-[#6B52B6]/20 transition-all bg-white"
+                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/20 transition-all bg-white"
               />
             </div>
 
@@ -160,7 +160,7 @@ export const LoginPage: React.FC = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="••••••••••••"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#6B52B6] focus:ring-2 focus:ring-[#6B52B6]/20 transition-all bg-white pr-10"
+                  className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-[#0284C7] focus:ring-2 focus:ring-[#0284C7]/20 transition-all bg-white pr-10"
                 />
                 <button
                   type="button"
@@ -177,7 +177,7 @@ export const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-8 py-2.5 rounded-lg bg-[#6B52B6] hover:bg-[#5B42A4] active:scale-[0.98] text-white text-sm font-semibold shadow-md shadow-[#6B52B6]/20 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[110px]"
+                className="px-8 py-2.5 rounded-lg bg-[#0284C7] hover:bg-[#0369A1] active:scale-[0.98] text-white text-sm font-semibold shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center min-w-[110px]"
               >
                 {isLoading ? (
                   <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
@@ -204,9 +204,9 @@ export const LoginPage: React.FC = () => {
       </div>
 
       {/* ===================================================================== */}
-      {/* RIGHT COLUMN: Purple Gradient with Floating UI Cards                  */}
+      {/* RIGHT COLUMN: Ice Blue Gradient with Floating UI Cards                  */}
       {/* ===================================================================== */}
-      <div className="w-full lg:w-1/2 min-h-screen bg-gradient-to-br from-[#7256C4] via-[#6548B4] to-[#5538A2] flex flex-col justify-between items-center p-8 sm:p-12 lg:p-16 relative overflow-hidden select-none">
+      <div className="w-full lg:w-1/2 min-h-screen bg-gradient-to-br from-[#0369A1] via-[#0284C7] to-[#075985] flex flex-col justify-between items-center p-8 sm:p-12 lg:p-16 relative overflow-hidden select-none">
         {/* Subtle decorative glow */}
         <div className="absolute top-1/4 -right-20 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -216,7 +216,7 @@ export const LoginPage: React.FC = () => {
         <div className="w-full max-w-md mx-auto relative flex flex-col items-center justify-center my-auto py-10">
           {/* TOP CARD: Total Revenues / Pipeline (Offset Top-Right) */}
           <div className="w-full flex justify-end z-20 -mb-5 sm:-mr-4">
-            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl shadow-indigo-950/40 border border-slate-100 flex items-center justify-between gap-6 w-72 sm:w-80 transition-transform hover:-translate-y-1 duration-200">
+            <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-2xl shadow-sky-950/40 border border-slate-100 flex items-center justify-between gap-6 w-72 sm:w-80 transition-transform hover:-translate-y-1 duration-200">
               <div>
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
                   <div className="w-5 h-5 rounded-md bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-black">
@@ -261,7 +261,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* MAIN CARD: Calendar Widget (Centered / Shifted Left) */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-2xl shadow-indigo-950/40 border border-slate-100 w-72 sm:w-84 z-10 -ml-4 sm:-ml-8 transition-transform hover:-translate-y-1 duration-200">
+          <div className="bg-white rounded-2xl p-6 sm:p-7 shadow-2xl shadow-sky-950/40 border border-slate-100 w-72 sm:w-84 z-10 -ml-4 sm:-ml-8 transition-transform hover:-translate-y-1 duration-200">
             {/* Month Header */}
             <div className="flex items-center justify-center gap-3 text-sm font-bold text-slate-800 mb-5">
               <button

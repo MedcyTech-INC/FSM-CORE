@@ -218,11 +218,11 @@ export const AnalyticsPage: React.FC = () => {
             <span className="text-3xl font-black text-slate-900 mt-1 block">
               ₹{(overview.kpis.pipeline_value / 10000000).toFixed(1)} Cr
             </span>
-            <span className="text-[11px] font-semibold text-purple-600 flex items-center gap-1 mt-1">
+            <span className="text-[11px] font-semibold text-sky-600 flex items-center gap-1 mt-1">
               Across 5 Funnel Stages
             </span>
           </div>
-          <div className="w-13 h-13 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center p-3.5">
+          <div className="w-13 h-13 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center p-3.5">
             <BarChart3 className="w-6 h-6" />
           </div>
         </div>
@@ -339,14 +339,14 @@ export const AnalyticsPage: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-purple-600" />
+                  <Target className="w-5 h-5 text-sky-600" />
                   Commercial Lead Conversion Funnel
                 </h2>
                 <p className="text-xs text-slate-500">
                   Stage-by-stage progression from prospect identification to active prescriber.
                 </p>
               </div>
-              <span className="text-xs font-bold text-purple-700 bg-purple-50 px-3 py-1 rounded-full border border-purple-200 font-mono">
+              <span className="text-xs font-bold text-sky-700 bg-sky-50 px-3 py-1 rounded-full border border-sky-200 font-mono">
                 Total Pipeline: ₹12.4 Cr
               </span>
             </div>
@@ -358,7 +358,7 @@ export const AnalyticsPage: React.FC = () => {
                   'bg-teal-500',
                   'bg-blue-500',
                   'bg-indigo-500',
-                  'bg-purple-500',
+                  'bg-sky-500',
                   'bg-rose-500',
                 ];
                 const barColor = colors[idx % colors.length];

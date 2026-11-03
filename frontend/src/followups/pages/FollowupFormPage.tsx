@@ -97,7 +97,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
       {/* Modal Top Bar */}
       <div className="flex items-center justify-between p-6 pb-0 border-b border-slate-100 pb-5">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#6B52B6] to-[#7B61C9] text-white flex items-center justify-center shadow-md shadow-[#6B52B6]/20 shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#0EA5E9] text-white flex items-center justify-center shadow-md shadow-[#0284C7]/20 shrink-0">
             <Clock className="w-5 h-5 stroke-[2.2]" />
           </div>
           <div>
@@ -135,8 +135,8 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
             </span>
 
             {prefillLeadId ? (
-              <div className="flex items-center gap-2 text-xs font-extrabold text-[#6B52B6] bg-purple-50/90 p-3 rounded-xl border border-purple-200/70 shadow-subtle">
-                <TrendingUp className="w-4 h-4 text-[#6B52B6]" />
+              <div className="flex items-center gap-2 text-xs font-extrabold text-[#0284C7] bg-sky-50/90 p-3 rounded-xl border border-sky-200/70 shadow-subtle">
+                <TrendingUp className="w-4 h-4 text-[#0284C7]" />
                 <span>Linked directly to active Opportunity</span>
               </div>
             ) : availableLeads.length > 0 ? (
@@ -154,7 +154,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
                       setCustomerName(matched.customer_name);
                     }
                   }}
-                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-medium"
+                  className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-medium"
                 >
                   <option value="">-- No specific lead (Routine Clinic / Doctor Relationship) --</option>
                   {availableLeads.map((l) => (
@@ -176,7 +176,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder="E.g., Dr. Jane Smith or Apollo City Hospital"
-                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="E.g., Deliver customized lab pricing sheet to Dr. Sharma"
-                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
               />
             </div>
           </div>
@@ -226,7 +226,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
                 required
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-semibold"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-semibold"
               />
             </div>
 
@@ -238,7 +238,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
                 type="time"
                 value={dueTime}
                 onChange={(e) => setDueTime(e.target.value)}
-                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 font-semibold"
+                className="w-full text-xs p-3 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 font-semibold"
               />
             </div>
 
@@ -268,7 +268,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="What documents, brochures, or discount clearances are needed prior to this action?"
-              className="w-full text-xs p-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] font-medium"
+              className="w-full text-xs p-3.5 rounded-xl border border-slate-200/90 focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] font-medium"
             />
           </div>
 
@@ -284,7 +284,7 @@ export const FollowupFormPage: React.FC<FollowupFormPageProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-7 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] text-white hover:opacity-95 shadow-glow-brand disabled:opacity-50 transition-all cursor-pointer active:scale-95"
+              className="px-7 py-3 rounded-xl text-xs font-black bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] text-white hover:opacity-95 shadow-glow-brand disabled:opacity-50 transition-all cursor-pointer active:scale-95"
             >
               {isSubmitting ? 'Scheduling Action...' : 'Schedule Action'}
             </button>

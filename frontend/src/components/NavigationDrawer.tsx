@@ -93,14 +93,14 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between pb-5 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] text-white flex items-center justify-center font-extrabold text-base shadow-md shadow-[#6B52B6]/25">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] text-white flex items-center justify-center font-extrabold text-base shadow-md shadow-[#0284C7]/25">
                 {branding.logoInitials}
               </div>
               <div>
                 <h3 className="font-extrabold text-slate-900 text-sm tracking-tight leading-tight">
                   {branding.companyName}
                 </h3>
-                <span className="text-[10px] font-bold text-[#6B52B6] tracking-wider uppercase block mt-0.5">
+                <span className="text-[10px] font-bold text-[#0284C7] tracking-wider uppercase block mt-0.5">
                   {branding.portalSubtitle}
                 </span>
               </div>
@@ -114,7 +114,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           </div>
 
           {/* User Profile */}
-          <div className="mt-5 p-3.5 rounded-2xl bg-gradient-to-br from-purple-50/50 via-white to-slate-50 border border-purple-200/60 shadow-sm flex items-center justify-between">
+          <div className="mt-5 p-3.5 rounded-2xl bg-gradient-to-br from-sky-50/50 via-white to-slate-50 border border-sky-200/60 shadow-sm flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xs ring-1 ring-slate-200 shadow-sm">
                 {initials}
@@ -123,12 +123,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                 <h4 className="font-extrabold text-slate-900 text-xs leading-tight">
                   {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Field User' : 'Field User'}
                 </h4>
-                <p className="text-[10px] font-bold text-[#6B52B6] uppercase tracking-tight mt-0.5">
+                <p className="text-[10px] font-bold text-[#0284C7] uppercase tracking-tight mt-0.5">
                   {user?.rank || user?.role || 'Field Executive'}
                 </p>
               </div>
             </div>
-            <span className="text-[9px] font-black uppercase px-2 py-0.5 bg-white text-[#6B52B6] rounded-md border border-purple-200 shadow-sm">
+            <span className="text-[9px] font-black uppercase px-2 py-0.5 bg-white text-[#0284C7] rounded-md border border-sky-200 shadow-sm">
               ONLINE
             </span>
           </div>
@@ -136,7 +136,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           {/* Section: Sales Pipeline */}
           {pipelineItems.length > 0 && (
             <div className="mt-6">
-              <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+              <span className="text-[10px] font-extrabold text-[#0284C7] tracking-widest uppercase block mb-2 px-3">
                 Sales Pipeline
               </span>
               <nav className="space-y-1">
@@ -152,16 +152,16 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       }}
                       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
-                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100 text-[#6B52B6]">
+                        <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-[#0284C7]">
                           {item.badge}
                         </span>
                       )}
@@ -174,7 +174,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
 
           {/* Section: Targets & Quotas */}
           <div className="mt-5 pt-4 border-t border-slate-100">
-            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+            <span className="text-[10px] font-extrabold text-[#0284C7] tracking-widest uppercase block mb-2 px-3">
               Revenue & Targets
             </span>
             <nav className="space-y-1">
@@ -190,12 +190,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                     }}
                     className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                        ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200 shadow-sm'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                      <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                       <span>{item.label}</span>
                     </div>
                     {item.badge && (
@@ -228,12 +228,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       }}
                       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                         <span>{item.label}</span>
                       </div>
                     </button>
@@ -262,12 +262,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       }}
                       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                         <span>{item.label}</span>
                       </div>
                       {'badge' in item && item.badge && (
@@ -301,12 +301,12 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                       }}
                       className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         isActive
-                          ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200 shadow-sm'
+                          ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200 shadow-sm'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                        <Icon className={`w-4 h-4 stroke-[2.2] ${isActive ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                         <span>{item.label}</span>
                       </div>
                     </button>
@@ -327,13 +327,13 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
                   onOpenWizard();
                   onClose();
                 }}
-                className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-purple-50 border border-purple-200 text-[#6B52B6] font-bold text-xs hover:bg-purple-100 transition-all shadow-sm"
+                className="w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-sky-50 border border-sky-200 text-[#0284C7] font-bold text-xs hover:bg-sky-100 transition-all shadow-sm"
               >
                 <div className="flex items-center gap-2.5">
-                  <Wand2 className="w-4 h-4 text-[#6B52B6]" />
+                  <Wand2 className="w-4 h-4 text-[#0284C7]" />
                   <span>Client Setup Wizard</span>
                 </div>
-                <span className="text-[10px] bg-purple-200 text-[#6B52B6] px-2 py-0.5 rounded-full uppercase font-mono font-bold">
+                <span className="text-[10px] bg-sky-200 text-[#0284C7] px-2 py-0.5 rounded-full uppercase font-mono font-bold">
                   Config
                 </span>
               </button>

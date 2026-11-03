@@ -42,7 +42,7 @@ export const LeavesPage: React.FC = () => {
 
         {/* Manager Mode Toggle Switch Pill */}
         <div className="flex items-center gap-2.5 px-4 py-2 bg-slate-50/80 border border-slate-200/80 rounded-2xl self-start sm:self-auto">
-          <span className="w-2 h-2 rounded-full bg-[#6B52B6]" />
+          <span className="w-2 h-2 rounded-full bg-[#0284C7]" />
           <span className="text-[11px] font-extrabold text-slate-600 tracking-wider uppercase">
             Manager Mode
           </span>
@@ -50,7 +50,7 @@ export const LeavesPage: React.FC = () => {
             type="button"
             onClick={() => setManagerMode(!managerMode)}
             className={`w-11 h-6 rounded-full transition-colors relative ml-1 p-0.5 ${
-              managerMode ? 'bg-[#6B52B6]' : 'bg-slate-300'
+              managerMode ? 'bg-[#0284C7]' : 'bg-slate-300'
             }`}
           >
             <div
@@ -77,7 +77,7 @@ export const LeavesPage: React.FC = () => {
       {/* Apply for Leave Card matching localhost_9590_leave.png */}
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#EEF2F6] shadow-sm">
         <div className="flex items-center gap-2.5 mb-6">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#6B52B6]" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#0284C7]" />
           <h3 className="text-xl font-bold text-slate-900 tracking-tight">Apply for Leave</h3>
         </div>
 
@@ -90,7 +90,7 @@ export const LeavesPage: React.FC = () => {
             <select
               value={leaveType}
               onChange={(e) => setLeaveType(e.target.value)}
-              className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#6B52B6]"
+              className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
             >
               <option value="Monthly Leave Quota">Monthly Leave Quota</option>
               <option value="Casual Leave">Casual Leave</option>
@@ -112,7 +112,7 @@ export const LeavesPage: React.FC = () => {
                   required
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
-                  className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#6B52B6]"
+                  className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
                 />
               </div>
             </div>
@@ -127,7 +127,7 @@ export const LeavesPage: React.FC = () => {
                   required
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
-                  className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#6B52B6]"
+                  className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
                 />
               </div>
             </div>
@@ -144,14 +144,14 @@ export const LeavesPage: React.FC = () => {
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               placeholder="e.g., Not feeling well, family event..."
-              className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-[#6B52B6]"
+              className="w-full p-4 rounded-2xl bg-white border border-slate-200 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-[#0284C7]"
             />
           </div>
 
           {/* Submit Button matching screenshot */}
           <button
             type="submit"
-            className="w-full py-4 bg-[#6B52B6] hover:bg-[#5B42A4] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#6B52B6]/20 transition-all text-center"
+            className="w-full py-4 bg-[#0284C7] hover:bg-[#0369A1] text-white rounded-2xl font-bold text-sm shadow-md shadow-[#0284C7]/20 transition-all text-center"
           >
             Submit Leave Application
           </button>

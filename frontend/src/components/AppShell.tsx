@@ -86,7 +86,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
   const canViewAnalytics = user?.role === 'ADMIN' || user?.role === 'GM';
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex flex-col selection:bg-[#6B52B6] selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans flex flex-col selection:bg-[#0284C7] selection:text-white">
       {/* Slide-out Mobile Navigation Drawer */}
       <NavigationDrawer
         isOpen={drawerOpen}
@@ -112,15 +112,15 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
             className="flex items-center gap-3 cursor-pointer group select-none"
             onClick={() => onTabChange('dashboard')}
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] flex items-center justify-center text-white font-extrabold text-base shadow-md shadow-[#6B52B6]/25 group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] flex items-center justify-center text-white font-extrabold text-base shadow-md shadow-[#0284C7]/25 group-hover:scale-105 transition-transform">
               {branding.logoInitials}
             </div>
             <div>
               <div className="flex items-center gap-1.5 leading-none">
-                <span className="font-extrabold text-slate-900 tracking-tight text-sm uppercase group-hover:text-[#6B52B6] transition-colors">
+                <span className="font-extrabold text-slate-900 tracking-tight text-sm uppercase group-hover:text-[#0284C7] transition-colors">
                   {branding.companyName}
                 </span>
-                <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md bg-purple-50 text-[#6B52B6] border border-purple-200/70 tracking-wider">
+                <span className="text-[9px] font-black uppercase px-1.5 py-0.5 rounded-md bg-sky-50 text-[#0284C7] border border-sky-200/70 tracking-wider">
                   PRO
                 </span>
               </div>
@@ -141,7 +141,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               <span className="font-bold text-xs text-slate-900 block truncate max-w-[120px]">
                 {user ? `${user.first_name} ${user.last_name}` : 'Alex Vance'}
               </span>
-              <span className="text-[10px] font-semibold text-[#6B52B6] uppercase tracking-tight block mt-0.5">
+              <span className="text-[10px] font-semibold text-[#0284C7] uppercase tracking-tight block mt-0.5">
                 {user?.rank || 'General Director'}
               </span>
             </div>
@@ -153,19 +153,19 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
         <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
           {/* SECTION: Commercial Pipeline */}
           <div>
-            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+            <span className="text-[10px] font-extrabold text-[#0284C7] tracking-widest uppercase block mb-2 px-3">
               Sales Pipeline
             </span>
             <nav className="space-y-1">
               <button
                 onClick={() => onTabChange('dashboard')}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'dashboard'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                    ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                   }`}
               >
                 <div className="flex items-center gap-3">
-                  <Home className={`w-4 h-4 stroke-[2.2] ${currentTab === 'dashboard' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                  <Home className={`w-4 h-4 stroke-[2.2] ${currentTab === 'dashboard' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                   <span>Dashboard</span>
                 </div>
               </button>
@@ -174,15 +174,15 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 onClick={() => onTabChange('daily-plan')}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                   currentTab === 'daily-plan'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                    ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Route className={`w-4 h-4 stroke-[2.2] ${currentTab === 'daily-plan' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                  <Route className={`w-4 h-4 stroke-[2.2] ${currentTab === 'daily-plan' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                   <span>AI Daily Sales Plan</span>
                 </div>
-                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100/80 text-[#6B52B6]">
+                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-100/80 text-[#0284C7]">
                   AI
                 </span>
               </button>
@@ -191,15 +191,15 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('leads')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'leads'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <TrendingUp className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leads' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <TrendingUp className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leads' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Lead Management</span>
                   </div>
-                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-100/80 text-[#6B52B6]">
+                  <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-100/80 text-[#0284C7]">
                     Pipeline
                   </span>
                 </button>
@@ -209,12 +209,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('followups')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'followups'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <BellRing className={`w-4 h-4 stroke-[2.2] ${currentTab === 'followups' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <BellRing className={`w-4 h-4 stroke-[2.2] ${currentTab === 'followups' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Follow-ups</span>
                   </div>
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">
@@ -227,19 +227,19 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
 
           {/* SECTION: Targets & Risk */}
           <div>
-            <span className="text-[10px] font-extrabold text-[#6B52B6] tracking-widest uppercase block mb-2 px-3">
+            <span className="text-[10px] font-extrabold text-[#0284C7] tracking-widest uppercase block mb-2 px-3">
               Targets & Risk
             </span>
             <nav className="space-y-1">
               <button
                 onClick={() => onTabChange('targets')}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'targets' || currentTab === 'team-targets'
-                    ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                    ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                   }`}
               >
                 <div className="flex items-center gap-3">
-                  <Target className={`w-4 h-4 stroke-[2.2] ${currentTab === 'targets' || currentTab === 'team-targets' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                  <Target className={`w-4 h-4 stroke-[2.2] ${currentTab === 'targets' || currentTab === 'team-targets' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                   <span>Monthly Targets</span>
                 </div>
               </button>
@@ -248,12 +248,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('revenue-leakage')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'revenue-leakage' || currentTab === 'leakage-rules' || currentTab === 'leakage-scans'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <ShieldAlert className={`w-4 h-4 stroke-[2.2] ${currentTab === 'revenue-leakage' || currentTab === 'leakage-rules' || currentTab === 'leakage-scans' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <ShieldAlert className={`w-4 h-4 stroke-[2.2] ${currentTab === 'revenue-leakage' || currentTab === 'leakage-rules' || currentTab === 'leakage-scans' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Revenue Leakage</span>
                   </div>
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700">
@@ -274,12 +274,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('visits')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'visits'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Camera className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <Camera className={`w-4 h-4 stroke-[2.2] ${currentTab === 'visits' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Visit Log</span>
                   </div>
                 </button>
@@ -289,12 +289,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('tasks')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'tasks'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <CheckSquare className={`w-4 h-4 stroke-[2.2] ${currentTab === 'tasks' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <CheckSquare className={`w-4 h-4 stroke-[2.2] ${currentTab === 'tasks' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Work Assignment</span>
                   </div>
                 </button>
@@ -312,12 +312,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('expenses')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'expenses'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Receipt className={`w-4 h-4 stroke-[2.2] ${currentTab === 'expenses' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <Receipt className={`w-4 h-4 stroke-[2.2] ${currentTab === 'expenses' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Expense Claims</span>
                   </div>
                 </button>
@@ -327,12 +327,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('analytics')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'analytics'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <BarChart3 className={`w-4 h-4 stroke-[2.2] ${currentTab === 'analytics' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <BarChart3 className={`w-4 h-4 stroke-[2.2] ${currentTab === 'analytics' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Executive Analytics</span>
                   </div>
                   <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
@@ -353,12 +353,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('attendance')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'attendance'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <CalendarDays className={`w-4 h-4 stroke-[2.2] ${currentTab === 'attendance' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <CalendarDays className={`w-4 h-4 stroke-[2.2] ${currentTab === 'attendance' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>My Attendance</span>
                   </div>
                 </button>
@@ -368,12 +368,12 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
                 <button
                   onClick={() => onTabChange('leaves')}
                   className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${currentTab === 'leaves'
-                      ? 'bg-purple-50 text-[#6B52B6] font-extrabold border border-purple-200/80 shadow-sm'
+                      ? 'bg-sky-50 text-[#0284C7] font-extrabold border border-sky-200/80 shadow-sm'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-semibold'
                     }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Moon className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leaves' ? 'text-[#6B52B6]' : 'text-slate-400'}`} />
+                    <Moon className={`w-4 h-4 stroke-[2.2] ${currentTab === 'leaves' ? 'text-[#0284C7]' : 'text-slate-400'}`} />
                     <span>Leave Requests</span>
                   </div>
                 </button>
@@ -429,14 +429,14 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               {/* Persona Quick Switcher Pill (Manager <-> Field Rep) */}
               <button
                 onClick={() => togglePersona()}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm border hover:scale-[1.02] bg-gradient-to-r from-purple-50 via-white to-purple-50 text-[#6B52B6] border-purple-200"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm border hover:scale-[1.02] bg-gradient-to-r from-sky-50 via-white to-sky-50 text-[#0284C7] border-sky-200"
                 title="Click to switch between Manager View and Field Representative View"
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>
                   {user?.role === 'MR' ? '💼 Rep: Rahul' : '👔 Mgr: Alex'}
                 </span>
-                <span className="text-[10px] font-bold text-[#6B52B6] bg-purple-100/80 px-1.5 py-0.5 rounded-full ml-0.5">
+                <span className="text-[10px] font-bold text-[#0284C7] bg-sky-100/80 px-1.5 py-0.5 rounded-full ml-0.5">
                   Switch
                 </span>
               </button>
@@ -444,15 +444,15 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
               {/* Setup Wizard Button */}
               <button
                 onClick={() => setWizardOpen(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-50 border border-purple-200 text-[#6B52B6] hover:bg-purple-100 rounded-full text-xs font-bold transition-all shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-50 border border-sky-200 text-[#0284C7] hover:bg-sky-100 rounded-full text-xs font-bold transition-all shadow-sm"
                 title="Launch Client Setup Wizard"
               >
-                <Wand2 className="w-3.5 h-3.5 text-[#6B52B6] animate-pulse" />
+                <Wand2 className="w-3.5 h-3.5 text-[#0284C7] animate-pulse" />
                 <span className="hidden sm:inline">Setup Wizard</span>
               </button>
 
               {/* Desktop Search Input */}
-              <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 bg-slate-100/80 border border-slate-200/80 rounded-xl text-xs text-slate-500 w-52 xl:w-60 focus-within:ring-2 focus-within:ring-[#6B52B6]/20 focus-within:border-[#6B52B6] transition-all">
+              <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 bg-slate-100/80 border border-slate-200/80 rounded-xl text-xs text-slate-500 w-52 xl:w-60 focus-within:ring-2 focus-within:ring-[#0284C7]/20 focus-within:border-[#0284C7] transition-all">
                 <Search className="w-4 h-4 text-slate-400 shrink-0" />
                 <input
                   type="text"
@@ -501,7 +501,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
           <button
             onClick={() => onTabChange('dashboard')}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${currentTab === 'dashboard'
-                ? 'text-[#6B52B6] font-extrabold bg-purple-50 scale-105'
+                ? 'text-[#0284C7] font-extrabold bg-sky-50 scale-105'
                 : 'text-slate-400 hover:text-slate-600 font-semibold'
               }`}
           >
@@ -513,7 +513,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
           <button
             onClick={() => onTabChange('leads')}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${currentTab === 'leads'
-                ? 'text-[#6B52B6] font-extrabold bg-purple-50 scale-105'
+                ? 'text-[#0284C7] font-extrabold bg-sky-50 scale-105'
                 : 'text-slate-400 hover:text-slate-600 font-semibold'
               }`}
           >
@@ -525,7 +525,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
           <button
             onClick={() => onTabChange('followups')}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${currentTab === 'followups'
-                ? 'text-[#6B52B6] font-extrabold bg-purple-50 scale-105'
+                ? 'text-[#0284C7] font-extrabold bg-sky-50 scale-105'
                 : 'text-slate-400 hover:text-slate-600 font-semibold'
               }`}
           >
@@ -537,7 +537,7 @@ export const AppShell: React.FC<AppShellProps> = ({ currentTab, onTabChange, chi
           <button
             onClick={() => onTabChange('targets')}
             className={`flex flex-col items-center gap-1 py-1 px-3 rounded-2xl transition-all ${currentTab === 'targets' || currentTab === 'team-targets'
-                ? 'text-[#6B52B6] font-extrabold bg-purple-50 scale-105'
+                ? 'text-[#0284C7] font-extrabold bg-sky-50 scale-105'
                 : 'text-slate-400 hover:text-slate-600 font-semibold'
               }`}
           >

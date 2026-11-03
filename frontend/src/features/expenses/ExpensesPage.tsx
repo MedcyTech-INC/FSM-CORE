@@ -31,7 +31,7 @@ const CATEGORIES = [
   { id: 'fuel', label: 'Fuel / Mileage', icon: Fuel, color: 'text-amber-600 bg-amber-50 border-amber-200' },
   { id: 'food_allowance', label: 'Food Allowance', icon: Utensils, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
   { id: 'travel_ticket', label: 'Travel Ticket', icon: Ticket, color: 'text-blue-600 bg-blue-50 border-blue-200' },
-  { id: 'accommodation', label: 'Accommodation', icon: Building, color: 'text-purple-600 bg-purple-50 border-purple-200' },
+  { id: 'accommodation', label: 'Accommodation', icon: Building, color: 'text-sky-600 bg-sky-50 border-sky-200' },
   { id: 'toll_parking', label: 'Toll & Parking', icon: Car, color: 'text-indigo-600 bg-indigo-50 border-indigo-200' },
   { id: 'client_entertainment', label: 'Client Entertainment', icon: DollarSign, color: 'text-rose-600 bg-rose-50 border-rose-200' },
   { id: 'miscellaneous', label: 'Miscellaneous', icon: Tag, color: 'text-slate-600 bg-slate-50 border-slate-200' },
@@ -309,7 +309,7 @@ export const ExpensesPage: React.FC = () => {
         );
       case 'pending_zsm_approval':
         return (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-purple-100 text-purple-800 border border-purple-200">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider bg-sky-100 text-sky-800 border border-sky-200">
             Pending ZSM Approval (&gt;₹5,000)
           </span>
         );
@@ -816,7 +816,7 @@ export const ExpensesPage: React.FC = () => {
                       {renderStatusBadge(claim.status)}
 
                       {claim.amount > 5000 && claim.status === 'submitted' && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">
                           High Value (&gt; ₹5,000)
                         </span>
                       )}
@@ -1014,7 +1014,7 @@ export const ExpensesPage: React.FC = () => {
               <p><strong>Category:</strong> {selectedClaim.category}</p>
               <p><strong>Amount:</strong> ₹{selectedClaim.amount.toFixed(2)}</p>
               {selectedClaim.amount > 5000 && (
-                <p className="text-purple-700 font-bold">
+                <p className="text-sky-700 font-bold">
                   * Amount exceeds ₹5,000 threshold and will be routed to ZSM for clearance.
                 </p>
               )}

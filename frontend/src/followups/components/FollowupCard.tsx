@@ -62,14 +62,14 @@ export const FollowupCard: React.FC<FollowupCardProps> = ({ followup, onRefresh 
       className={`card-elevation rounded-2xl p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 ${
         followup.is_overdue
           ? 'border-rose-300/90 ring-1 ring-rose-200 bg-gradient-to-br from-rose-50/40 via-white to-white shadow-glow-rose'
-          : 'border-slate-200/80 hover:border-purple-200'
+          : 'border-slate-200/80 hover:border-sky-200'
       }`}
     >
       <div>
         {/* Top: Action Type & Status Badge */}
         <div className="flex items-start justify-between gap-2 mb-2.5">
           <div className="flex items-center gap-2">
-            <span className="w-7 h-7 rounded-lg bg-purple-50 text-[#6B52B6] flex items-center justify-center shrink-0 shadow-subtle">
+            <span className="w-7 h-7 rounded-lg bg-sky-50 text-[#0284C7] flex items-center justify-center shrink-0 shadow-subtle">
               <ActionIcon className="w-3.5 h-3.5 stroke-[2.2]" />
             </span>
             <span className="text-xs font-black text-slate-800 uppercase tracking-wider">
@@ -94,8 +94,8 @@ export const FollowupCard: React.FC<FollowupCardProps> = ({ followup, onRefresh 
           )}
 
           {followup.lead_title && (
-            <div className="flex items-center gap-1.5 truncate text-[11px] text-[#6B52B6] bg-purple-50/90 px-2.5 py-0.5 rounded-lg border border-purple-200/60 w-fit font-bold">
-              <TrendingUp className="w-3 h-3 text-[#6B52B6] shrink-0" />
+            <div className="flex items-center gap-1.5 truncate text-[11px] text-[#0284C7] bg-sky-50/90 px-2.5 py-0.5 rounded-lg border border-sky-200/60 w-fit font-bold">
+              <TrendingUp className="w-3 h-3 text-[#0284C7] shrink-0" />
               <span className="truncate">{followup.lead_title}</span>
             </div>
           )}
@@ -167,7 +167,7 @@ export const FollowupCard: React.FC<FollowupCardProps> = ({ followup, onRefresh 
 
             <button
               onClick={() => setIsCompleteOpen(true)}
-              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-[#6B52B6] hover:opacity-95 text-white text-xs font-black px-3.5 py-1.5 rounded-xl shadow-glow-emerald transition-all active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-emerald-600 to-[#0284C7] hover:opacity-95 text-white text-xs font-black px-3.5 py-1.5 rounded-xl shadow-glow-emerald transition-all active:scale-95 cursor-pointer"
             >
               <CheckCircle className="w-3.5 h-3.5" />
               <span>Mark Done</span>

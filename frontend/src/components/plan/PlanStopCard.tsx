@@ -104,7 +104,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
           <div className="flex items-center gap-2">
             {/* Stop Type Tag */}
             {item.stop_type === 'MANAGER_MANDATORY' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 border border-purple-200 uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200 uppercase tracking-wider">
                 <Shield className="w-3 h-3" />
                 Mandatory
               </span>
@@ -186,7 +186,7 @@ export const PlanStopCard: React.FC<PlanStopCardProps> = ({ item }) => {
                     <div>
                       <span className="font-semibold text-slate-800">{obl.obligation_title}</span>
                       {obl.is_mandatory && (
-                        <span className="ml-1.5 text-[9px] font-bold text-purple-700 bg-purple-50 border border-purple-200 px-1.5 py-0.2 rounded uppercase">
+                        <span className="ml-1.5 text-[9px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-1.5 py-0.2 rounded uppercase">
                           Required
                         </span>
                       )}

@@ -56,7 +56,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
   if (isLoading || !selectedLead) {
     return (
       <div className="py-24 text-center space-y-3">
-        <div className="w-9 h-9 border-3 border-[#6B52B6] border-t-transparent rounded-full animate-spin mx-auto" />
+        <div className="w-9 h-9 border-3 border-[#0284C7] border-t-transparent rounded-full animate-spin mx-auto" />
         <p className="text-xs font-bold text-slate-500">Loading opportunity details...</p>
       </div>
     );
@@ -83,7 +83,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
         <div className="flex items-center gap-2.5 self-start sm:self-auto flex-wrap">
           <button
             onClick={() => setIsAddingFollowup(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-purple-50 text-[#6B52B6] hover:bg-purple-100 border border-purple-200/80 text-xs font-extrabold rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-sky-50 text-[#0284C7] hover:bg-sky-100 border border-sky-200/80 text-xs font-extrabold rounded-xl shadow-sm transition-all active:scale-95 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Schedule Follow-up</span>
@@ -99,7 +99,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
 
           <button
             onClick={() => setIsStageModalOpen(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#6B52B6] hover:bg-[#5B42A4] text-white text-xs font-extrabold rounded-xl shadow-md shadow-[#6B52B6]/25 transition-all active:scale-95 cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-extrabold rounded-xl shadow-md shadow-[#0284C7]/25 transition-all active:scale-95 cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 stroke-[2.2]" />
             <span>Change Stage</span>
@@ -118,7 +118,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-2">
-              <div className="w-6 h-6 rounded-lg bg-purple-50 text-[#6B52B6] flex items-center justify-center">
+              <div className="w-6 h-6 rounded-lg bg-sky-50 text-[#0284C7] flex items-center justify-center">
                 <Building2 className="w-3.5 h-3.5" />
               </div>
               <span className="font-extrabold text-slate-800 text-sm">
@@ -191,12 +191,12 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
         {(selectedLead.interested_product_service || selectedLead.customer_response) && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1 text-xs">
             {selectedLead.interested_product_service && (
-              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-100">
-                <span className="text-[10px] font-extrabold text-[#6B52B6] uppercase tracking-widest block mb-1 flex items-center gap-1.5">
+              <div className="bg-sky-50/70 p-4 rounded-2xl border border-sky-100">
+                <span className="text-[10px] font-extrabold text-[#0284C7] uppercase tracking-widest block mb-1 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Interested Product / Service</span>
                 </span>
-                <span className="font-extrabold text-purple-950 text-sm block">
+                <span className="font-extrabold text-sky-950 text-sm block">
                   {selectedLead.interested_product_service}
                 </span>
               </div>
@@ -273,7 +273,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
 
               {selectedLead.contact_phone && (
                 <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-8 h-8 rounded-xl bg-purple-50 text-[#6B52B6] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
@@ -282,7 +282,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
                     </span>
                     <a
                       href={`tel:${selectedLead.contact_phone}`}
-                      className="font-bold text-[#6B52B6] hover:text-[#5B42A4] hover:underline"
+                      className="font-bold text-[#0284C7] hover:text-[#0369A1] hover:underline"
                     >
                       {selectedLead.contact_phone}
                     </a>
@@ -338,7 +338,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
 
               <button
                 onClick={() => setIsAddingFollowup(true)}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-purple-50 text-[#6B52B6] hover:bg-purple-100 text-xs font-black rounded-xl border border-purple-200/70 transition-all shadow-sm cursor-pointer active:scale-95"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-sky-50 text-[#0284C7] hover:bg-sky-100 text-xs font-black rounded-xl border border-sky-200/70 transition-all shadow-sm cursor-pointer active:scale-95"
               >
                 <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>Add Follow-up</span>
@@ -354,7 +354,7 @@ export const LeadDetailPage: React.FC<LeadDetailPageProps> = ({ leadId, onBack }
                 </p>
                 <button
                   onClick={() => setIsAddingFollowup(true)}
-                  className="mt-4 px-4 py-2 bg-[#6B52B6] hover:bg-[#5B42A4] text-white text-xs font-bold rounded-xl shadow-md shadow-[#6B52B6]/20 transition-all cursor-pointer"
+                  className="mt-4 px-4 py-2 bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-bold rounded-xl shadow-md shadow-[#0284C7]/20 transition-all cursor-pointer"
                 >
                   Schedule Next Action
                 </button>

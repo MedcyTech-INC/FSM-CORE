@@ -38,8 +38,8 @@ export const WhyBadgePill: React.FC<WhyBadgePillProps> = ({ badge }) => {
       );
     case 'PRIORITY':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-purple-50 text-purple-800 border border-purple-200/80 shadow-xs">
-          <Award className="w-3 h-3 text-purple-600" />
+        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-50 text-sky-800 border border-sky-200/80 shadow-xs">
+          <Award className="w-3 h-3 text-sky-600" />
           <span>{badge.text}</span>
         </span>
       );

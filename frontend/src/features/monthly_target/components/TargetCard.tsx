@@ -70,7 +70,7 @@ const getScopeBadge = (scope: EntityType) => {
       return {
         label: 'Branch Target',
         icon: Building2,
-        bg: 'bg-purple-50 text-purple-700 border-purple-200/80',
+        bg: 'bg-sky-50 text-sky-700 border-sky-200/80',
       };
     default:
       return {

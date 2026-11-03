@@ -4,11 +4,6 @@ import {
   Play,
   Square,
   AlertCircle,
-  ShieldAlert,
-  Target,
-  ChevronRight,
-  TrendingUp,
-  AlertTriangle,
 } from 'lucide-react';
 import { api } from '../api/client';
 import { AttendanceRecord, LeaveBalance } from '../types/api';
@@ -81,10 +76,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         {/* Leave Balance Card */}
         <div
           onClick={() => onNavigate?.('leaves')}
-          className="inline-flex items-center gap-3.5 bg-white px-5 py-3 rounded-2xl border border-slate-200/80 shadow-sm self-start sm:self-auto cursor-pointer hover:border-[#6B52B6]/50 hover:shadow-md transition-all group"
+          className="inline-flex items-center gap-3.5 bg-white px-5 py-3 rounded-2xl border border-slate-200/80 shadow-sm self-start sm:self-auto cursor-pointer hover:border-[#0284C7]/50 hover:shadow-md transition-all group"
           title="View Leave Requests"
         >
-          <div className="w-11 h-11 rounded-xl border border-slate-200/80 flex items-center justify-center text-[#6B52B6] bg-purple-50 group-hover:scale-105 transition-transform">
+          <div className="w-11 h-11 rounded-xl border border-slate-200/80 flex items-center justify-center text-[#0284C7] bg-sky-50 group-hover:scale-105 transition-transform">
             <Coffee className="w-5 h-5 stroke-[2]" />
           </div>
           <div>
@@ -110,7 +105,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-2xl border border-slate-200/80 flex items-center justify-center text-slate-700 bg-slate-50 shadow-inner">
             {isPunchedIn ? (
-              <span className="w-4 h-4 rounded-full bg-[#6B52B6] animate-pulse" />
+              <span className="w-4 h-4 rounded-full bg-[#0284C7] animate-pulse" />
             ) : (
               <Play className="w-6 h-6 ml-0.5 text-slate-700" />
             )}
@@ -137,7 +132,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
               disabled={gpsLoading}
               className={`px-8 py-3.5 rounded-2xl font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${isPunchedIn
                 ? 'bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20'
-                : 'bg-[#6B52B6] hover:bg-[#5B42A4] text-white shadow-[#6B52B6]/25'
+                : 'bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-[#0284C7]/25'
                 }`}
             >
               {gpsLoading ? (
@@ -192,12 +187,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
       <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-200/80 shadow-sm">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="text-[#6B52B6]">
+            <div className="text-[#0284C7]">
               <Play className="w-5 h-5 fill-current" />
             </div>
             <h3 className="text-xl font-bold text-slate-900 tracking-tight">Attendance Summary</h3>
           </div>
-          <span className="px-3 py-1 bg-purple-50 text-[#6B52B6] text-[11px] font-extrabold rounded-xl uppercase tracking-wider border border-purple-100">
+          <span className="px-3 py-1 bg-sky-50 text-[#0284C7] text-[11px] font-extrabold rounded-xl uppercase tracking-wider border border-sky-100">
             This Month
           </span>
         </div>
@@ -224,8 +219,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onNavigate }) => {
             <span className="text-[11px] font-bold text-slate-400 uppercase">Fri</span>
             <span className="text-lg font-black text-slate-800">8.4 hrs</span>
           </div>
-          <div className="h-28 bg-[#6B52B6] text-white rounded-2xl p-4 flex flex-col justify-between shadow-md shadow-[#6B52B6]/25">
-            <span className="text-[11px] font-bold text-purple-200 uppercase">Today</span>
+          <div className="h-28 bg-[#0284C7] text-white rounded-2xl p-4 flex flex-col justify-between shadow-md shadow-[#0284C7]/25">
+            <span className="text-[11px] font-bold text-sky-200 uppercase">Today</span>
             <span className="text-lg font-black text-white">Active</span>
           </div>
         </div>

@@ -107,7 +107,7 @@ export const LeadsPage: React.FC = () => {
       {/* Page Title & Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-purple-50 border border-purple-200/70 text-[#6B52B6] text-[10px] font-black uppercase tracking-wider mb-1.5 shadow-subtle">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-sky-50 border border-sky-200/70 text-[#0284C7] text-[10px] font-black uppercase tracking-wider mb-1.5 shadow-subtle">
             <TrendingUp className="w-3.5 h-3.5 stroke-[2.5]" />
             <span>Healthcare Commercial Pipeline</span>
           </div>
@@ -121,7 +121,7 @@ export const LeadsPage: React.FC = () => {
 
         <button
           onClick={() => setIsCreatingLead(true)}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#6B52B6] via-[#7B61C9] to-[#8C74DC] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#0284C7] via-[#0EA5E9] to-[#38BDF8] hover:opacity-95 text-white font-extrabold text-xs sm:text-sm px-5 py-3 rounded-2xl shadow-glow-brand transition-all transform active:scale-95 self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
           <span>+ Add Opportunity</span>
@@ -146,16 +146,16 @@ export const LeadsPage: React.FC = () => {
         </div>
 
         {/* Interested Leads */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-purple-200 transition-all">
+        <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex items-center justify-between group hover:border-sky-200 transition-all">
           <div>
-            <span className="text-[10px] font-extrabold text-[#6B52B6] uppercase tracking-widest block">
+            <span className="text-[10px] font-extrabold text-[#0284C7] uppercase tracking-widest block">
               Interested
             </span>
-            <span className="text-2xl sm:text-3xl font-black text-[#6B52B6] mt-1 block tracking-tight">
+            <span className="text-2xl sm:text-3xl font-black text-[#0284C7] mt-1 block tracking-tight">
               {summary?.interested_leads ?? leads.filter((l) => l.stage === 'INTERESTED').length}
             </span>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-purple-50 text-[#6B52B6] flex items-center justify-center group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center group-hover:scale-105 transition-transform">
             <Sparkles className="w-5 h-5 stroke-[2.2]" />
           </div>
         </div>
@@ -226,7 +226,7 @@ export const LeadsPage: React.FC = () => {
               placeholder="Search opportunity, clinic, doctor, or city..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6B52B6]/20 focus:border-[#6B52B6] transition-all font-medium"
+              className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-slate-200/90 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20 focus:border-[#0284C7] transition-all font-medium"
             />
           </form>
 
@@ -246,7 +246,7 @@ export const LeadsPage: React.FC = () => {
               onClick={() => setScope('my')}
               className={`px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
                 scope === 'my'
-                  ? 'bg-white text-[#6B52B6] shadow-sm'
+                  ? 'bg-white text-[#0284C7] shadow-sm'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
             >
@@ -268,7 +268,7 @@ export const LeadsPage: React.FC = () => {
                   isSelected
                     ? s.value === 'ATTENTION'
                       ? 'bg-amber-600 text-white shadow-glow-amber'
-                      : 'bg-[#6B52B6] text-white shadow-glow-brand'
+                      : 'bg-[#0284C7] text-white shadow-glow-brand'
                     : s.value === 'ATTENTION'
                     ? 'bg-amber-50 text-amber-800 hover:bg-amber-100/80 border border-amber-200'
                     : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/80'
@@ -301,7 +301,7 @@ export const LeadsPage: React.FC = () => {
           </p>
           <button
             onClick={() => setIsCreatingLead(true)}
-            className="mt-5 px-5 py-2.5 bg-purple-50 text-[#6B52B6] text-xs font-black rounded-xl hover:bg-purple-100 border border-purple-200/80 transition-colors shadow-subtle"
+            className="mt-5 px-5 py-2.5 bg-sky-50 text-[#0284C7] text-xs font-black rounded-xl hover:bg-sky-100 border border-sky-200/80 transition-colors shadow-subtle"
           >
             + Create First Lead
           </button>
